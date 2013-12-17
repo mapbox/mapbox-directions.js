@@ -14,13 +14,15 @@ module.exports = L.LayerGroup.extend({
 
         this.directions
             .on('origin', this._origin, this)
-            .on('destination', this._destination, this);
+            .on('destination', this._destination, this)
+            .on('load', this._load, this);
     },
 
     onRemove: function() {
         this.directions
             .off('origin', this._origin, this)
-            .off('destination', this._destination, this);
+            .off('destination', this._destination, this)
+            .off('load', this._load, this);
 
         this._map
             .off('click', this._click, this);
@@ -57,6 +59,7 @@ module.exports = L.LayerGroup.extend({
     },
 
     _load: function(e) {
-
+        this.routeLayer = L.geoJson(e.routes[0].geometry);
+        this.addLayer(this.routeLayer);
     }
 });

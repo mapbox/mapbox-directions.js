@@ -1,12 +1,17 @@
 'use strict';
 
-var corslite = require('corslite');
+var corslite = require('corslite'),
+    JSON3 = require('JSON3');
 
 module.exports = L.Class.extend({
     includes: [L.Mixin.Events],
 
     options: {
-        url: 'https://api.directions.mapbox.com/alpha/jfire/directions/{mode}/{waypoints}'
+        url: 'https://api.directions.mapbox.com/alpha/jfire/directions/driving/{waypoints}.json'
+    },
+
+    initialize: function(options) {
+        L.setOptions(this, options);
     },
 
     getOrigin: function () {
@@ -31,7 +36,6 @@ module.exports = L.Class.extend({
 
     queryURL: function () {
         return L.Util.template(this.options.url, {
-            mode: 'driving',
             waypoints: [this.origin, this.destination].map(function (latLng) {
                 return latLng.lng + ',' + latLng.lat;
             }).join(';')

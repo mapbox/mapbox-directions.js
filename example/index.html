@@ -19,10 +19,14 @@
 <div id='map'></div>
 <script>
     var map = L.mapbox.map('map', 'examples.map-9ijuk24y')
-            .setView([40, -74.50], 9);
+        .setView([52.515, 13.377], 13);
 
-    var directionsLayer = L.directions.layer()
-            .addTo(map);
+    var directions = L.directions({
+        url: 'http://localhost:8889/alpha/jfire/directions/driving/{waypoints}.json'
+    });
+
+    var directionsLayer = L.directions.layer(directions)
+        .addTo(map);
 </script>
 </body>
 </html>
