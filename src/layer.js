@@ -2,7 +2,7 @@
 
 module.exports = L.LayerGroup.extend({
     initialize: function(directions) {
-        this.directions = directions || new L.Directions();
+        this._directions = directions || new L.Directions();
         L.LayerGroup.prototype.initialize.apply(this);
     },
 
@@ -12,14 +12,14 @@ module.exports = L.LayerGroup.extend({
         this._map
             .on('click', this._click, this);
 
-        this.directions
+        this._directions
             .on('origin', this._origin, this)
             .on('destination', this._destination, this)
             .on('load', this._load, this);
     },
 
     onRemove: function() {
-        this.directions
+        this._directions
             .off('origin', this._origin, this)
             .off('destination', this._destination, this)
             .off('load', this._load, this);
@@ -31,10 +31,10 @@ module.exports = L.LayerGroup.extend({
     },
 
     _click: function(e) {
-        if (!this.directions.getOrigin()) {
-            this.directions.setOrigin(e.latlng);
-        } else if (!this.directions.getDestination()) {
-            this.directions.setDestination(e.latlng).query();
+        if (!this._directions.getOrigin()) {
+            this._directions.setOrigin(e.latlng);
+        } else if (!this._directions.getDestination()) {
+            this._directions.setDestination(e.latlng).query();
         }
     },
 
@@ -71,13 +71,13 @@ module.exports = L.LayerGroup.extend({
     _drag: function(e) {
         var latLng = e.target.getLatLng();
         if (e.target === this.originMarker) {
-            this.directions.setOrigin(latLng);
+            this._directions.setOrigin(latLng);
         } else if (e.target === this.destinationMarker) {
-            this.directions.setDestination(latLng);
+            this._directions.setDestination(latLng);
         }
 
-        if (this.directions.getOrigin() && this.directions.getDestination()) {
-            this.directions.query();
+        if (this._directions.getOrigin() && this._directions.getDestination()) {
+            this._directions.query();
         }
     },
 
