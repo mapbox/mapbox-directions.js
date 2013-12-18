@@ -43,7 +43,7 @@ module.exports = L.Class.extend({
     },
 
     query: function () {
-        if (!this.getOrigin() || !this.getDestination()) return;
+        if (!this.getOrigin() || !this.getDestination()) return this;
 
         corslite(this.queryURL(), L.bind(function (err, resp) {
             if (err) {
@@ -59,5 +59,7 @@ module.exports = L.Class.extend({
             this.directions = resp;
             this.fire('load', this.directions);
         }, this));
+
+        return this;
     }
 });

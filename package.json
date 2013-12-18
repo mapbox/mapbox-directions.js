@@ -14,6 +14,7 @@
   "devDependencies": {
     "mocha": "1",
     "expect.js": "0.2.0",
+    "sinon": "1.7.3",
     "browserify": "2",
     "jshint": "2"
   },
