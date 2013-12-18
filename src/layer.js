@@ -39,27 +39,56 @@ module.exports = L.LayerGroup.extend({
     },
 
     _origin: function(e) {
-        this.originMarker = L.marker(e.latlng, {
-            icon: L.mapbox.marker.icon({
-                'marker-size': 'small',
-                'marker-color': '#70BB4D'
-            })
-        });
-        this.addLayer(this.originMarker);
+        if (!this.originMarker) {
+            this.originMarker = L.marker(e.latlng, {
+                draggable: true,
+                icon: L.mapbox.marker.icon({
+                    'marker-size': 'small',
+                    'marker-color': '#70BB4D'
+                })
+            }).on('drag', this._drag, this);
+            this.addLayer(this.originMarker);
+        } else {
+            this.originMarker.setLatLng(e.latlng);
+        }
     },
 
     _destination: function(e) {
-        this.destinationMarker = L.marker(e.latlng, {
-            icon: L.mapbox.marker.icon({
-                'marker-size': 'small',
-                'marker-color': '#F53837'
-            })
-        });
-        this.addLayer(this.destinationMarker);
+        if (!this.destinationMarker) {
+            this.destinationMarker = L.marker(e.latlng, {
+                draggable: true,
+                icon: L.mapbox.marker.icon({
+                    'marker-size': 'small',
+                    'marker-color': '#F53837'
+                })
+            }).on('drag', this._drag, this);
+            this.addLayer(this.destinationMarker);
+        } else {
+            this.destinationMarker.setLatLng(e.latlng);
+        }
+    },
+
+    _drag: function(e) {
+        var latLng = e.target.getLatLng();
+        if (e.target === this.originMarker) {
+            this.directions.setOrigin(latLng);
+        } else if (e.target === this.destinationMarker) {
+            this.directions.setDestination(latLng);
+        }
+
+        if (this.directions.getOrigin() && this.directions.getDestination()) {
+            this.directions.query();
+        }
     },
 
     _load: function(e) {
-        this.routeLayer = L.geoJson(e.routes[0].geometry);
-        this.addLayer(this.routeLayer);
+        if (!this.routeLayer) {
+            this.routeLayer = L.geoJson(e.routes[0].geometry);
+            this.addLayer(this.routeLayer);
+        } else {
+            this.routeLayer
+                .clearLayers()
+                .addData(e.routes[0].geometry);
+        }
     }
 });
