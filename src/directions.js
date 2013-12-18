@@ -47,11 +47,17 @@ module.exports = L.Class.extend({
 
         corslite(this.queryURL(), L.bind(function (err, resp) {
             if (err) {
-                this.fire('error', {error: err});
-            } else {
-                this.directions = JSON3.parse(resp.responseText);
-                this.fire('load', this.directions);
+                return this.fire('error', {error: err});
             }
+
+            resp = JSON3.parse(resp.responseText);
+
+            if (resp.error) {
+                return this.fire('error', {error: resp.error});
+            }
+
+            this.directions = resp;
+            this.fire('load', this.directions);
         }, this));
     }
 });
