@@ -45,7 +45,13 @@ module.exports = L.Class.extend({
     query: function () {
         if (!this.getOrigin() || !this.getDestination()) return this;
 
-        corslite(this.queryURL(), L.bind(function (err, resp) {
+        if (this._query) {
+            this._query.abort();
+        }
+
+        this._query = corslite(this.queryURL(), L.bind(function (err, resp) {
+            this._query = null;
+
             if (err) {
                 return this.fire('error', {error: err});
             }

@@ -120,5 +120,17 @@ describe("Directions", function () {
                 [200, { "Content-Type": "application/json" }, JSON.stringify({routes: []})]);
             server.respond();
         });
+
+        it("aborts currently pending request", function () {
+            var directions = L.directions();
+
+            directions
+                .setOrigin(L.latLng(1, 2))
+                .setDestination(L.latLng(3, 4))
+                .query()
+                .query();
+
+            expect(server.requests[0].aborted).to.be(true);
+        });
     });
 });
