@@ -41,7 +41,13 @@ module.exports = L.Class.extend({
     },
 
     _reverse: function () {
-        this._directions.reverse();
+        var o = this._originInput.value,
+            d = this._destinationInput.value;
+
+        this._originInput.value = d;
+        this._destinationInput.value = o;
+
+        this._directions.reverse().query();
     },
 
     _origin: function (e) {

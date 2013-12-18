@@ -34,6 +34,19 @@ module.exports = L.Class.extend({
         return this;
     },
 
+    reverse: function () {
+        var o = this.origin,
+            d = this.destination;
+
+        this.origin = d;
+        this.destination = o;
+
+        this.fire('origin', {latlng: this.origin})
+            .fire('destination', {latlng: this.destination});
+
+        return this;
+    },
+
     queryURL: function () {
         return L.Util.template(this.options.url, {
             waypoints: [this.origin, this.destination].map(function (latLng) {

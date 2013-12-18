@@ -43,6 +43,37 @@ describe("Directions", function () {
         });
     });
 
+    describe("reverse", function () {
+        it("swaps origin and destination", function () {
+            var directions = L.directions();
+            directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
+            directions.reverse();
+            expect(directions.getOrigin()).to.eql(L.latLng(3, 4));
+            expect(directions.getDestination()).to.eql(L.latLng(1, 2));
+        });
+
+        it("fires events", function (done) {
+            var directions = L.directions();
+            directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
+
+            directions.on('origin', function (e) {
+                expect(e.latlng).to.eql(L.latLng(3, 4));
+            });
+
+            directions.on('destination', function (e) {
+                expect(e.latlng).to.eql(L.latLng(1, 2));
+                done();
+            });
+
+            directions.reverse();
+        });
+
+        it("returns this", function () {
+            var directions = L.directions();
+            expect(directions.reverse()).to.equal(directions);
+        });
+    });
+
     describe("queryURL", function () {
         it("constructs a URL with origin and destination", function () {
             var directions = L.directions();
