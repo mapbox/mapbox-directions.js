@@ -12,6 +12,7 @@
     "json3": "3.2.6"
   },
   "devDependencies": {
+    "hbsfy": "1",
     "mocha": "1",
     "expect.js": "0.2.0",
     "sinon": "1.7.3",

@@ -8,8 +8,8 @@ node_modules/.install: package.json
 dist:
 	mkdir -p dist
 
-dist/Leaflet.directions.js: node_modules/.install dist $(shell $(BROWSERIFY) --list index.js)
-	$(BROWSERIFY) --debug index.js > $@
+dist/Leaflet.directions.js: node_modules/.install dist $(shell $(BROWSERIFY) -t hbsfy --list index.js)
+	$(BROWSERIFY) -t hbsfy --debug index.js > $@
 
 clean:
 	rm -rf dist/*

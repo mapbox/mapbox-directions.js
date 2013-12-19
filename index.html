@@ -39,6 +39,9 @@
             <button id='zoom-destination' class='margin1 col1 button quiet icon marker'></button>
         </div>
     </div>
+
+    <div id='instructions' class='pad2 clearfix'>
+    </div>
 </div>
 
 <div id='map' class='col8'>
@@ -56,6 +59,9 @@
         .addTo(map);
 
     var directionsInputControl = L.directions.inputControl('inputs', directions)
+        .addTo(map);
+
+    var directionsInstructionsControl = L.directions.instructionsControl('instructions', directions)
         .addTo(map);
 </script>
 
