@@ -20,3 +20,5 @@ L.directions.inputControl = function(container, directions) {
 L.directions.instructionsControl = function(container, directions) {
     return new L.Directions.InstructionsControl(container, directions);
 };
+
+L.directions.format = require('./src/format');
