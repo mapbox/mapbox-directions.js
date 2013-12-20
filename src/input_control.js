@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = L.Class.extend({
+var InputControl = L.Class.extend({
     initialize: function (container, directions) {
         this._container = L.DomUtil.get(container);
         this._directions = directions;
@@ -63,3 +63,7 @@ module.exports = L.Class.extend({
         this._destinationInput.value = e.destination.properties.name;
     }
 });
+
+module.exports = function (container, directions) {
+    return new InputControl(container, directions);
+};

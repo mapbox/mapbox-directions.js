@@ -3,7 +3,7 @@
 var corslite = require('corslite'),
     JSON3 = require('JSON3');
 
-module.exports = L.Class.extend({
+var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
     options: {
@@ -47,6 +47,10 @@ module.exports = L.Class.extend({
         return this;
     },
 
+    highlightStep: function (step) {
+        this.fire('highlightStep', {step: step});
+    },
+
     queryURL: function () {
         return L.Util.template(this.options.url, {
             waypoints: [this.origin, this.destination].map(function (latLng) {
@@ -82,3 +86,7 @@ module.exports = L.Class.extend({
         return this;
     }
 });
+
+module.exports = function(options) {
+    return new Directions(options);
+};

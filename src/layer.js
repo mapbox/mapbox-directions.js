@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = L.LayerGroup.extend({
+var Layer = L.LayerGroup.extend({
     initialize: function(directions) {
         this._directions = directions || new L.Directions();
         L.LayerGroup.prototype.initialize.apply(this);
@@ -15,14 +15,16 @@ module.exports = L.LayerGroup.extend({
         this._directions
             .on('origin', this._origin, this)
             .on('destination', this._destination, this)
-            .on('load', this._load, this);
+            .on('load', this._load, this)
+            .on('highlightStep', this._highlightStep, this);
     },
 
     onRemove: function() {
         this._directions
             .off('origin', this._origin, this)
             .off('destination', this._destination, this)
-            .off('load', this._load, this);
+            .off('load', this._load, this)
+            .off('highlightStep', this._highlightStep, this);
 
         this._map
             .off('click', this._click, this);
@@ -90,5 +92,32 @@ module.exports = L.LayerGroup.extend({
                 .clearLayers()
                 .addData(e.routes[0].geometry);
         }
+    },
+
+    _highlightStep: function(e) {
+        if (!e.step) {
+            if (this.stepMarker) {
+                this.removeLayer(this.stepMarker);
+            }
+            return;
+        }
+
+        var latlng = L.GeoJSON.coordsToLatLng(e.step.maneuver.location.coordinates);
+        if (!this.stepMarker) {
+            this.stepMarker = L.marker(latlng, {
+                icon: L.mapbox.marker.icon({
+                    'marker-size': 'small',
+                    'marker-color': '#3786BD'
+                })
+            });
+        } else {
+            this.stepMarker.setLatLng(latlng);
+        }
+
+        this.addLayer(this.stepMarker);
     }
 });
+
+module.exports = function (directions) {
+    return new Layer(directions);
+};

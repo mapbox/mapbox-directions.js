@@ -3,26 +3,22 @@
 var d3 = require('./d3'),
     format = require('./format');
 
-module.exports = L.Class.extend({
-    initialize: function (container, directions) {
-        this._container = d3.select(L.DomUtil.get(container));
-        this._directions = directions;
+module.exports = function (container, directions) {
+    var control = {}, map;
 
-        directions
-            .on('load', this._load, this);
-    },
+    control.addTo = function (_) {
+        map = _;
+        return control;
+    };
 
-    addTo: function (map) {
-        this._map = map;
-        return this;
-    },
+    container = d3.select(L.DomUtil.get(container));
 
-    _load: function (e) {
+    directions.on('load', function (e) {
         var route = e.routes[0];
 
-        this._container.html('');
+        container.html('');
 
-        var header = this._container.append('div')
+        var header = container.append('div')
             .attr('class', 'header space-bottom1');
 
         header.append('h3')
@@ -36,7 +32,7 @@ module.exports = L.Class.extend({
             .attr('class', 'box pad1')
             .text(route.summary);
 
-        var legs = this._container.append('ol')
+        var legs = container.append('ol')
             .selectAll('li')
             .data(route.legs)
             .enter().append('li');
@@ -53,5 +49,19 @@ module.exports = L.Class.extend({
         steps.append('span')
             .attr('class', 'col2')
             .text(function (step) { return format.imperial(step.distance); });
-    }
-});
+
+        steps.on('mouseover', function (step) {
+            directions.highlightStep(step);
+        });
+
+        steps.on('mouseout', function () {
+            directions.highlightStep(null);
+        });
+
+        steps.on('click', function (step) {
+            map.panTo(L.GeoJSON.coordsToLatLng(step.maneuver.location.coordinates));
+        });
+    });
+
+    return control;
+};
