@@ -4,6 +4,31 @@ var Layer = L.LayerGroup.extend({
     initialize: function(directions) {
         this._directions = directions || new L.Directions();
         L.LayerGroup.prototype.initialize.apply(this);
+
+        this.originMarker = L.marker([0, 0], {
+            draggable: true,
+            icon: L.mapbox.marker.icon({
+                'marker-size': 'small',
+                'marker-color': '#70BB4D'
+            })
+        }).on('drag', this._drag, this);
+
+        this.destinationMarker = L.marker([0, 0], {
+            draggable: true,
+            icon: L.mapbox.marker.icon({
+                'marker-size': 'small',
+                'marker-color': '#F53837'
+            })
+        }).on('drag', this._drag, this);
+
+        this.stepMarker = L.marker([0, 0], {
+            icon: L.mapbox.marker.icon({
+                'marker-size': 'small',
+                'marker-color': '#3786BD'
+            })
+        });
+
+        this.routeLayer = L.geoJson();
     },
 
     onAdd: function() {
@@ -41,33 +66,13 @@ var Layer = L.LayerGroup.extend({
     },
 
     _origin: function(e) {
-        if (!this.originMarker) {
-            this.originMarker = L.marker(e.latlng, {
-                draggable: true,
-                icon: L.mapbox.marker.icon({
-                    'marker-size': 'small',
-                    'marker-color': '#70BB4D'
-                })
-            }).on('drag', this._drag, this);
-            this.addLayer(this.originMarker);
-        } else {
-            this.originMarker.setLatLng(e.latlng);
-        }
+        this.originMarker.setLatLng(e.latlng);
+        this.addLayer(this.originMarker);
     },
 
     _destination: function(e) {
-        if (!this.destinationMarker) {
-            this.destinationMarker = L.marker(e.latlng, {
-                draggable: true,
-                icon: L.mapbox.marker.icon({
-                    'marker-size': 'small',
-                    'marker-color': '#F53837'
-                })
-            }).on('drag', this._drag, this);
-            this.addLayer(this.destinationMarker);
-        } else {
-            this.destinationMarker.setLatLng(e.latlng);
-        }
+        this.destinationMarker.setLatLng(e.latlng);
+        this.addLayer(this.destinationMarker);
     },
 
     _drag: function(e) {
@@ -84,37 +89,19 @@ var Layer = L.LayerGroup.extend({
     },
 
     _load: function(e) {
-        if (!this.routeLayer) {
-            this.routeLayer = L.geoJson(e.routes[0].geometry);
-            this.addLayer(this.routeLayer);
-        } else {
-            this.routeLayer
-                .clearLayers()
-                .addData(e.routes[0].geometry);
-        }
+        this.routeLayer
+            .clearLayers()
+            .addData(e.routes[0].geometry);
+        this.addLayer(this.routeLayer);
     },
 
     _highlightStep: function(e) {
-        if (!e.step) {
-            if (this.stepMarker) {
-                this.removeLayer(this.stepMarker);
-            }
-            return;
-        }
-
-        var latlng = L.GeoJSON.coordsToLatLng(e.step.maneuver.location.coordinates);
-        if (!this.stepMarker) {
-            this.stepMarker = L.marker(latlng, {
-                icon: L.mapbox.marker.icon({
-                    'marker-size': 'small',
-                    'marker-color': '#3786BD'
-                })
-            });
+        if (e.step) {
+            this.stepMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.step.maneuver.location.coordinates));
+            this.addLayer(this.stepMarker);
         } else {
-            this.stepMarker.setLatLng(latlng);
+            this.removeLayer(this.stepMarker);
         }
-
-        this.addLayer(this.stepMarker);
     }
 });
 
