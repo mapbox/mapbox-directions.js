@@ -26,9 +26,3 @@ module.exports = {
         return m.toFixed(0) + ' m';
     }
 };
-
-var Handlebars = require("hbsfy/runtime");
-
-Handlebars.registerHelper("duration", module.exports.duration);
-Handlebars.registerHelper("imperial", module.exports.imperial);
-Handlebars.registerHelper("metric", module.exports.metric);

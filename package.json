@@ -9,15 +9,16 @@
   "dependencies": {
     "mapbox.js": "1.5.2",
     "corslite": "0.0.5",
-    "json3": "3.2.6"
+    "json3": "3.2.6",
+    "d3": "3.3.13"
   },
   "devDependencies": {
-    "hbsfy": "1",
     "mocha": "1",
     "expect.js": "0.2.0",
     "sinon": "1.7.3",
     "browserify": "2",
-    "jshint": "2"
+    "jshint": "2",
+    "smash": "0.0"
   },
   "license": "BSD-2-Clause"
 }
