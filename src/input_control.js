@@ -1,69 +1,74 @@
 'use strict';
 
-var InputControl = L.Class.extend({
-    initialize: function (container, directions) {
-        this._container = L.DomUtil.get(container);
-        this._directions = directions;
-
-        // TODO
-        this._originInput = L.DomUtil.get('origin');
-        this._destinationInput = L.DomUtil.get('destination');
-
-        this._originZoom = L.DomUtil.get('zoom-origin');
-        this._destinationZoom = L.DomUtil.get('zoom-destination');
-        this._reverseButton = L.DomUtil.get('reverse');
-
-        L.DomEvent.on(this._originZoom, 'click', this._zoomOrigin, this);
-        L.DomEvent.on(this._destinationZoom, 'click', this._zoomDestination, this);
-        L.DomEvent.on(this._reverseButton, 'click', this._reverse, this);
-
-        directions
-            .on('origin', this._origin, this)
-            .on('destination', this._destination, this)
-            .on('load', this._load, this);
-    },
-
-    addTo: function (map) {
-        this._map = map;
-        return this;
-    },
-
-    _zoomOrigin: function () {
-        if (this._directions.getOrigin()) {
-            this._map.panTo(this._directions.getOrigin());
-        }
-    },
-
-    _zoomDestination: function () {
-        if (this._directions.getDestination()) {
-            this._map.panTo(this._directions.getDestination());
-        }
-    },
-
-    _reverse: function () {
-        var o = this._originInput.value,
-            d = this._destinationInput.value;
-
-        this._originInput.value = d;
-        this._destinationInput.value = o;
-
-        this._directions.reverse().query();
-    },
-
-    _origin: function (e) {
-        this._originInput.value = e.latlng.toString();
-    },
-
-    _destination: function (e) {
-        this._destinationInput.value = e.latlng.toString();
-    },
-
-    _load: function (e) {
-        this._originInput.value = e.origin.properties.name;
-        this._destinationInput.value = e.destination.properties.name;
-    }
-});
+var d3 = require('./d3');
 
 module.exports = function (container, directions) {
-    return new InputControl(container, directions);
+    var control = {}, map;
+
+    control.addTo = function (_) {
+        map = _;
+        return control;
+    };
+
+    container = d3.select(L.DomUtil.get(container))
+        .classed('leaflet-directions-inputs', true);
+
+    var origin = container.append('div')
+        .attr('class', 'leaflet-directions-origin-input');
+
+    origin.append('button')
+        .attr('class', 'leaflet-directions-zoom-button')
+        .on('click', function () {
+            if (directions.getOrigin()) {
+                map.panTo(directions.getOrigin());
+            }
+        });
+
+    var originInput = origin.append('div').append('input')
+        .attr('type', 'text')
+        .attr('placeholder', 'Start');
+
+    var reverse = container.append('div')
+        .attr('class', 'leaflet-directions-reverse-input');
+
+    reverse.append('button')
+        .attr('class', 'leaflet-directions-reverse-button')
+        .on('click', function () {
+            var o = originInput.value,
+                d = destinationInput.value;
+
+            originInput.property('value', d);
+            destinationInput.property('value', o);
+
+            directions.reverse().query();
+        });
+
+    var destination = container.append('div')
+        .attr('class', 'leaflet-directions-destination-input');
+
+    destination.append('button')
+        .attr('class', 'leaflet-directions-zoom-button')
+        .on('click', function () {
+            if (directions.getDestination()) {
+                map.panTo(directions.getDestination());
+            }
+        });
+
+    var destinationInput = destination.append('div').append('input')
+        .attr('type', 'text')
+        .attr('placeholder', 'End');
+
+    directions
+        .on('origin', function (e) {
+            originInput.property('value', e.latlng.toString());
+        })
+        .on('destination', function (e) {
+            destinationInput.property('value', e.latlng.toString());
+        })
+        .on('load', function (e) {
+            originInput.property('value', e.origin.properties.name);
+            destinationInput.property('value', e.destination.properties.name);
+        });
+
+    return control;
 };
