@@ -16,20 +16,20 @@ module.exports = function (container, directions) {
     directions.on('load', function (e) {
         var route = e.routes[0];
 
-        container.html('');
+        container
+            .html('')
+            .classed('leaflet-directions-instructions', true);
 
         var header = container.append('div')
-            .attr('class', 'header space-bottom1');
+            .attr('class', 'leaflet-directions-instructions-header');
 
         header.append('h3')
-            .attr('class', 'pad1')
             .text('Directions ')
             .append('span')
-            .attr('class', 'quiet')
             .text('(' + format.imperial(route.distance) + ', ' + format.duration(route.duration) + ')');
 
         header.append('div')
-            .attr('class', 'box pad1')
+            .attr('class', 'leaflet-directions-route-summary')
             .text(route.summary);
 
         var legs = container.append('ol')
@@ -43,11 +43,11 @@ module.exports = function (container, directions) {
             .enter().append('li');
 
         steps.append('span')
-            .attr('class', 'col10')
+            .attr('class', 'leaflet-directions-step-maneuver')
             .text(function (step) { return step.maneuver.instruction; });
 
         steps.append('span')
-            .attr('class', 'col2')
+            .attr('class', 'leaflet-directions-step-distance')
             .text(function (step) { return format.imperial(step.distance); });
 
         steps.on('mouseover', function (step) {
