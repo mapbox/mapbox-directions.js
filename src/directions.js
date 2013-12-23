@@ -12,6 +12,7 @@ var Directions = L.Class.extend({
 
     initialize: function(options) {
         L.setOptions(this, options);
+        this._waypoints = [];
     },
 
     getOrigin: function () {
@@ -34,6 +35,14 @@ var Directions = L.Class.extend({
         return this;
     },
 
+    addWaypoint: function (index, latLng) {
+        this._waypoints.splice(index, 0, latLng);
+    },
+
+    setWaypoint: function (index, latLng) {
+        this._waypoints[index] = latLng;
+    },
+
     reverse: function () {
         var o = this.origin,
             d = this.destination;
@@ -52,8 +61,9 @@ var Directions = L.Class.extend({
     },
 
     queryURL: function () {
+        var points = [this.origin].concat(this._waypoints).concat([this.destination]);
         return L.Util.template(this.options.url, {
-            waypoints: [this.origin, this.destination].map(function (latLng) {
+            waypoints: points.map(function (latLng) {
                 return latLng.lng + ',' + latLng.lat;
             }).join(';')
         });
