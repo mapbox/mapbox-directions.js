@@ -12,7 +12,7 @@ dist/Leaflet.directions.js: node_modules/.install dist src/d3.js $(shell $(BROWS
 	$(BROWSERIFY) -t hbsfy --debug index.js > $@
 
 clean:
-	rm -rf dist/*
+	rm -rf dist/Leaflet.directions.js
 
 D3_FILES = \
 	node_modules/d3/src/start.js \
