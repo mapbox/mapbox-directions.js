@@ -48,7 +48,7 @@ module.exports = function (container, directions) {
 
         steps.append('span')
             .attr('class', 'leaflet-directions-step-distance')
-            .text(function (step) { return format.imperial(step.distance); });
+            .text(function (step) { return step.distance ? format.imperial(step.distance) : ''; });
 
         steps.on('mouseover', function (step) {
             directions.highlightStep(step);
