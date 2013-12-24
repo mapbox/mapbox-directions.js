@@ -42,6 +42,7 @@ var Layer = L.LayerGroup.extend({
             .on('dragend', this._dragEnd, this);
 
         this.routeLayer = L.geoJson();
+        this.routeHighlightLayer = L.geoJson();
 
         this.waypointMarkers = [];
     },
@@ -57,6 +58,8 @@ var Layer = L.LayerGroup.extend({
             .on('origin', this._origin, this)
             .on('destination', this._destination, this)
             .on('load', this._load, this)
+            .on('selectRoute', this._selectRoute, this)
+            .on('highlightRoute', this._highlightRoute, this)
             .on('highlightStep', this._highlightStep, this);
     },
 
@@ -65,6 +68,8 @@ var Layer = L.LayerGroup.extend({
             .off('origin', this._origin, this)
             .off('destination', this._destination, this)
             .off('load', this._load, this)
+            .off('selectRoute', this._selectRoute, this)
+            .off('highlightRoute', this._highlightRoute, this)
             .off('highlightStep', this._highlightStep, this);
 
         this._map
@@ -152,12 +157,6 @@ var Layer = L.LayerGroup.extend({
     },
 
     _load: function(e) {
-        this.routeLayer
-            .clearLayers()
-            .addData(e.routes[0].geometry);
-
-        this.addLayer(this.routeLayer);
-
         function waypointLatLng(i) {
             return L.GeoJSON.coordsToLatLng(e.waypoints[i].geometry.coordinates)
         }
@@ -196,6 +195,24 @@ var Layer = L.LayerGroup.extend({
         }
 
         this.waypointMarkers.length = e.waypoints.length;
+    },
+
+    _selectRoute: function(e) {
+        this.routeLayer
+            .clearLayers()
+            .addData(e.route.geometry);
+        this.addLayer(this.routeLayer);
+    },
+
+    _highlightRoute: function(e) {
+        if (e.route) {
+            this.routeHighlightLayer
+                .clearLayers()
+                .addData(e.route.geometry);
+            this.addLayer(this.routeHighlightLayer);
+        } else {
+            this.removeLayer(this.routeHighlightLayer);
+        }
     },
 
     _highlightStep: function(e) {

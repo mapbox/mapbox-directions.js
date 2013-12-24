@@ -64,6 +64,14 @@ var Directions = L.Class.extend({
         return this;
     },
 
+    selectRoute: function (route) {
+        this.fire('selectRoute', {route: route});
+    },
+
+    highlightRoute: function (route) {
+        this.fire('highlightRoute', {route: route});
+    },
+
     highlightStep: function (step) {
         this.fire('highlightStep', {step: step});
     },

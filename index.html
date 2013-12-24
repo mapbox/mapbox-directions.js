@@ -70,7 +70,7 @@
             box-sizing: border-box;
         }
 
-        #logo, #inputs {
+        #logo, #inputs, #routes {
             -webkit-flex-shrink: 0;
                -moz-flex-shrink: 0;
                 -ms-flex-shrink: 0;
@@ -94,6 +94,7 @@
     </div>
 
     <div id='inputs'></div>
+    <div id='routes'></div>
     <div id='instructions'></div>
 </div>
 
@@ -112,6 +113,9 @@
         .addTo(map);
 
     var directionsInputControl = L.directions.inputControl('inputs', directions)
+        .addTo(map);
+
+    var directionsRoutesControl = L.directions.routesControl('routes', directions)
         .addTo(map);
 
     var directionsInstructionsControl = L.directions.instructionsControl('instructions', directions)

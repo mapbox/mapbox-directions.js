@@ -1,3 +1,5 @@
+/* Inputs */
+
 .leaflet-directions-inputs {
     padding: 20px;
     background: #eee;
@@ -68,33 +70,50 @@
     padding: 10px 0 10px 0;
 }
 
+/* Routes */
+
+.leaflet-directions-routes {
+    padding: 20px;
+}
+
+.leaflet-directions-routes ul {
+    list-style: none;
+    margin: 0;
+}
+
+.leaflet-directions-routes ul,
+.leaflet-directions-routes li {
+    padding: 0;
+}
+
+.leaflet-directions-route {
+    cursor: pointer;
+}
+
+.leaflet-directions-route-active {
+    background: #f8f8f8;
+}
+
+.leaflet-directions-route-summary {
+    float: left;
+    width: 75%;
+}
+
+.leaflet-directions-route-details {
+    float: left;
+    width: 25%;
+    text-align: right;
+}
+
+/* Instructions */
+
 .leaflet-directions-instructions {
     padding: 20px;
 }
 
-.leaflet-directions-instructions-header {
-    margin-bottom: 10px;
-}
-
-.leaflet-directions-instructions-header h3 {
-    padding-bottom: 10px;
-    font-size: 15px;
-    line-height: 20px;
-    margin: 0;
-}
-
-.leaflet-directions-instructions-header h3 span {
-    color: #7f7f7f;
-    color: rgba(0,0,0,.5);
-}
-
-.leaflet-directions-route-summary {
-    padding: 10px;
-    border: 1px solid rgba(0,0,0,0.10);
-}
-
 .leaflet-directions-instructions ol {
     list-style: none;
+    margin: 0;
 }
 
 .leaflet-directions-instructions ol,
@@ -102,24 +121,28 @@
     padding: 0;
 }
 
+.leaflet-directions-step {
+    cursor: pointer;
+}
+
 .leaflet-directions-step-maneuver {
     float: left;
     width: 83.3333%;
-    cursor: pointer;
 }
 
 .leaflet-directions-step-distance {
     float: left;
     width: 16.6666%;
     text-align: right;
-    cursor: pointer;
 }
 
 /* Clearfix */
+
 .leaflet-directions-origin-input:after,
 .leaflet-directions-destination-input:after,
 .leaflet-directions-reverse-input:after,
-.leaflet-directions-instructions:after {
+.leaflet-directions-route:after,
+.leaflet-directions-step:after {
     content: '.';
     display: block;
     height: 0;

@@ -20,27 +20,17 @@ module.exports = function (container, directions) {
             .html('')
             .classed('leaflet-directions-instructions', true);
 
-        var header = container.append('div')
-            .attr('class', 'leaflet-directions-instructions-header');
-
-        header.append('h3')
-            .text('Directions ')
-            .append('span')
-            .text('(' + format.imperial(route.distance) + ', ' + format.duration(route.duration) + ')');
-
-        header.append('div')
-            .attr('class', 'leaflet-directions-route-summary')
-            .text(route.summary);
-
         var legs = container.append('ol')
             .selectAll('li')
             .data(route.legs)
-            .enter().append('li');
+            .enter().append('li')
+            .attr('class', 'leaflet-directions-leg');
 
         var steps = legs.append('ol')
             .selectAll('li')
             .data(function (leg) { return leg.steps; })
-            .enter().append('li');
+            .enter().append('li')
+            .attr('class', 'leaflet-directions-step');
 
         steps.append('span')
             .attr('class', 'leaflet-directions-step-maneuver')
