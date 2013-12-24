@@ -88,7 +88,7 @@ var Layer = L.LayerGroup.extend({
 
         var p = this._routePolyline().closestLayerPoint(e.layerPoint);
 
-        if (!p || p.distance > 20)
+        if (!p || p.distance > 15)
             return this.removeLayer(this.dragMarker);
 
         var m = this._map.project(e.latlng),
