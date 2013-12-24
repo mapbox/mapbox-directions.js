@@ -37,10 +37,17 @@ var Directions = L.Class.extend({
 
     addWaypoint: function (index, latLng) {
         this._waypoints.splice(index, 0, latLng);
+        return this;
+    },
+
+    removeWaypoint: function(index) {
+        this._waypoints.splice(index, 1);
+        return this;
     },
 
     setWaypoint: function (index, latLng) {
         this._waypoints[index] = latLng;
+        return this;
     },
 
     reverse: function () {

@@ -119,8 +119,12 @@ var Layer = L.LayerGroup.extend({
     },
 
     _dragStart: function(e) {
-        this._currentWaypoint = this._findWaypointIndex(e.target.getLatLng());
-        this._directions.addWaypoint(this._currentWaypoint, e.target.getLatLng());
+        if (e.target === this.dragMarker) {
+            this._currentWaypoint = this._findWaypointIndex(e.target.getLatLng());
+            this._directions.addWaypoint(this._currentWaypoint, e.target.getLatLng());
+        } else {
+            this._currentWaypoint = this.waypointMarkers.indexOf(e.target);
+        }
     },
 
     _drag: function(e) {
@@ -130,7 +134,7 @@ var Layer = L.LayerGroup.extend({
             this._directions.setOrigin(latLng);
         } else if (e.target === this.destinationMarker) {
             this._directions.setDestination(latLng);
-        } else if (e.target === this.dragMarker) {
+        } else {
             this._directions.setWaypoint(this._currentWaypoint, latLng);
         }
 
@@ -141,6 +145,10 @@ var Layer = L.LayerGroup.extend({
 
     _dragEnd: function() {
         this._currentWaypoint = undefined;
+    },
+
+    _removeWaypoint: function(e) {
+        this._directions.removeWaypoint(this.waypointMarkers.indexOf(e.target)).query();
     },
 
     _load: function(e) {
@@ -165,11 +173,18 @@ var Layer = L.LayerGroup.extend({
         // Add new
         for ( ; i < e.waypoints.length; i++) {
             var waypointMarker = L.marker(waypointLatLng(i), {
+                draggable: true,
                 icon: L.icon({
                     iconUrl: 'dist/marker-drag.png',
                     iconSize: new L.Point(18, 18)
                 })
             });
+
+            waypointMarker
+                .on('click', this._removeWaypoint, this)
+                .on('dragstart', this._dragStart, this)
+                .on('drag', this._drag, this)
+                .on('dragend', this._dragEnd, this);
 
             this.waypointMarkers.push(waypointMarker);
             this.addLayer(waypointMarker);
