@@ -56,6 +56,7 @@ var Directions = L.Class.extend({
 
         this.origin = d;
         this.destination = o;
+        this._waypoints.reverse();
 
         this.fire('origin', {latlng: this.origin})
             .fire('destination', {latlng: this.destination});
