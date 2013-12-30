@@ -114,15 +114,22 @@
 .leaflet-directions-instructions ol {
     list-style: none;
     margin: 0;
+    padding: 0;
 }
 
 .leaflet-directions-instructions ol,
 .leaflet-directions-instructions li {
-    padding: 0;
 }
 
 .leaflet-directions-step {
+    position: relative;
     cursor: pointer;
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.leaflet-directions-step:hover {
+    background: #f8f8f8;
 }
 
 .leaflet-directions-step-maneuver {
@@ -131,9 +138,15 @@
 }
 
 .leaflet-directions-step-distance {
-    float: left;
-    width: 16.6666%;
+    position: absolute;
+    right: 0;
+    bottom: -10px;
+    background: #fff;
+    padding-left: 5px;
     text-align: right;
+    font-size: 80%;
+    z-index: 1;
+    border-radius: 2px;
 }
 
 /* Clearfix */
