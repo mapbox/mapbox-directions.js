@@ -149,3 +149,10 @@
     clear: both;
     visibility: hidden;
 }
+
+/* Mapbox */
+
+.mapbox-directions-direction,
+.mapbox-directions-way-name {
+    font-weight: bold;
+}

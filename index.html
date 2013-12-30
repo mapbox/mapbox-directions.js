@@ -106,7 +106,7 @@
         .setView([52.515, 13.377], 13);
 
     var directions = L.directions({
-        url: 'http://localhost:8889/alpha/jfire/directions/driving/{waypoints}.json'
+        url: 'http://localhost:8889/alpha/jfire/directions/driving/{waypoints}.json?instructions=html'
     });
 
     var directionsLayer = L.directions.layer(directions)

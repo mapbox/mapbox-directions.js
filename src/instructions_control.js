@@ -34,7 +34,7 @@ module.exports = function (container, directions) {
 
         steps.append('span')
             .attr('class', 'leaflet-directions-step-maneuver')
-            .text(function (step) { return step.maneuver.instruction; });
+            .html(function (step) { return step.maneuver.instruction; });
 
         steps.append('span')
             .attr('class', 'leaflet-directions-step-distance')
