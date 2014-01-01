@@ -25,13 +25,13 @@ var Directions = L.Class.extend({
 
     setOrigin: function (origin) {
         this.origin = origin;
-        this.fire('origin', {latlng: origin});
+        this.fire('origin', {origin: origin});
         return this;
     },
 
     setDestination: function (destination) {
         this.destination = destination;
-        this.fire('destination', {latlng: destination});
+        this.fire('destination', {destination: destination});
         return this;
     },
 
@@ -58,8 +58,8 @@ var Directions = L.Class.extend({
         this.destination = o;
         this._waypoints.reverse();
 
-        this.fire('origin', {latlng: this.origin})
-            .fire('destination', {latlng: this.destination});
+        this.fire('origin', {origin: this.origin})
+            .fire('destination', {destination: this.destination});
 
         return this;
     },
@@ -79,8 +79,12 @@ var Directions = L.Class.extend({
     queryURL: function () {
         var points = [this.origin].concat(this._waypoints).concat([this.destination]);
         return L.Util.template(this.options.url, {
-            waypoints: points.map(function (latLng) {
-                return latLng.lng + ',' + latLng.lat;
+            waypoints: points.map(function (point) {
+                if (point instanceof L.LatLng) {
+                    return point.lng + ',' + point.lat;
+                } else {
+                    return point;
+                }
             }).join(';')
         });
     },

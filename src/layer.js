@@ -114,13 +114,17 @@ var Layer = L.LayerGroup.extend({
     },
 
     _origin: function(e) {
-        this.originMarker.setLatLng(e.latlng);
-        this.addLayer(this.originMarker);
+        if (e.origin instanceof L.LatLng) {
+            this.originMarker.setLatLng(e.origin);
+            this.addLayer(this.originMarker);
+        }
     },
 
     _destination: function(e) {
-        this.destinationMarker.setLatLng(e.latlng);
-        this.addLayer(this.destinationMarker);
+        if (e.destination instanceof L.LatLng) {
+            this.destinationMarker.setLatLng(e.destination);
+            this.addLayer(this.destinationMarker);
+        }
     },
 
     _dragStart: function(e) {
@@ -157,6 +161,12 @@ var Layer = L.LayerGroup.extend({
     },
 
     _load: function(e) {
+        this.originMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.origin.geometry.coordinates));
+        this.addLayer(this.originMarker);
+
+        this.destinationMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.destination.geometry.coordinates));
+        this.addLayer(this.destinationMarker);
+
         function waypointLatLng(i) {
             return L.GeoJSON.coordsToLatLng(e.waypoints[i].geometry.coordinates)
         }

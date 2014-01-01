@@ -13,22 +13,35 @@ module.exports = function (container, directions) {
     container = d3.select(L.DomUtil.get(container))
         .classed('leaflet-directions-inputs', true);
 
-    var origin = container.append('div')
+    var form = container.append('form')
+        .on('submit', function() {
+            d3.event.preventDefault();
+
+            directions
+                .setOrigin(originInput.property('value'))
+                .setDestination(destinationInput.property('value'));
+
+            if (directions.queryable())
+                directions.query();
+        });
+
+    var origin = form.append('div')
         .attr('class', 'leaflet-directions-origin-input');
 
     origin.append('button')
         .attr('class', 'leaflet-directions-zoom-button')
         .on('click', function () {
-            if (directions.getOrigin()) {
+            if (directions.getOrigin() instanceof L.LatLng) {
                 map.panTo(directions.getOrigin());
             }
         });
 
     var originInput = origin.append('div').append('input')
         .attr('type', 'text')
-        .attr('placeholder', 'Start');
+        .attr('placeholder', 'Start')
+        .attr('tabindex', 1);
 
-    var reverse = container.append('div')
+    var reverse = form.append('div')
         .attr('class', 'leaflet-directions-reverse-input');
 
     reverse.append('button')
@@ -43,27 +56,28 @@ module.exports = function (container, directions) {
             directions.reverse().query();
         });
 
-    var destination = container.append('div')
+    var destination = form.append('div')
         .attr('class', 'leaflet-directions-destination-input');
 
     destination.append('button')
         .attr('class', 'leaflet-directions-zoom-button')
         .on('click', function () {
-            if (directions.getDestination()) {
+            if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());
             }
         });
 
     var destinationInput = destination.append('div').append('input')
         .attr('type', 'text')
-        .attr('placeholder', 'End');
+        .attr('placeholder', 'End')
+        .attr('tabindex', 1);
 
     directions
         .on('origin', function (e) {
-            originInput.property('value', e.latlng.toString());
+            originInput.property('value', e.origin.toString());
         })
         .on('destination', function (e) {
-            destinationInput.property('value', e.latlng.toString());
+            destinationInput.property('value', e.destination.toString());
         })
         .on('load', function (e) {
             originInput.property('value', e.origin.properties.name);
