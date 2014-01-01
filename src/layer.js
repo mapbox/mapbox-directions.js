@@ -143,7 +143,7 @@ var Layer = L.LayerGroup.extend({
             this._directions.setWaypoint(this._currentWaypoint, latLng);
         }
 
-        if (this._directions.getOrigin() && this._directions.getDestination()) {
+        if (this._directions.queryable()) {
             this._directions.query();
         }
     },

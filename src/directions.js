@@ -85,8 +85,12 @@ var Directions = L.Class.extend({
         });
     },
 
+    queryable: function () {
+        return this.getOrigin() && this.getDestination();
+    },
+
     query: function () {
-        if (!this.getOrigin() || !this.getDestination()) return this;
+        if (!this.queryable()) return this;
 
         if (this._query) {
             this._query.abort();
