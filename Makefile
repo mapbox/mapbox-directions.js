@@ -1,6 +1,6 @@
 BROWSERIFY = node_modules/.bin/browserify
 
-all: dist/Leaflet.directions.js
+all: dist/mapbox.directions.js
 
 node_modules/.install: package.json
 	npm install && touch node_modules/.install
@@ -8,11 +8,11 @@ node_modules/.install: package.json
 dist:
 	mkdir -p dist
 
-dist/Leaflet.directions.js: node_modules/.install dist src/d3.js $(shell $(BROWSERIFY) -t hbsfy --list index.js)
+dist/mapbox.directions.js: node_modules/.install dist src/d3.js $(shell $(BROWSERIFY) -t hbsfy --list index.js)
 	$(BROWSERIFY) -t hbsfy --debug index.js > $@
 
 clean:
-	rm -rf dist/Leaflet.directions.js
+	rm -rf dist/mapbox.directions.js
 
 D3_FILES = \
 	node_modules/d3/src/start.js \

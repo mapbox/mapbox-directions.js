@@ -1,13 +1,13 @@
 /* Inputs */
 
-.leaflet-directions-inputs {
+.mapbox-directions-inputs {
     padding: 20px;
     background: #eee;
     border-bottom: 1px solid rgba(0,0,0,0.10);
     border-top: 1px solid rgba(0,0,0,0.10);
 }
 
-.leaflet-directions-inputs input {
+.mapbox-directions-inputs input {
     width: 100%;
     background-color: #fff;
     border: 1px solid rgba(0,0,0,0.1);
@@ -20,7 +20,7 @@
     box-sizing: border-box;
 }
 
-.leaflet-directions-inputs button {
+.mapbox-directions-inputs button {
     height: 40px;
     width: 40px;
     margin: 0 0 0 10px;
@@ -33,7 +33,7 @@
     border-radius: 3px;
 }
 
-.leaflet-directions-inputs button:before {
+.mapbox-directions-inputs button:before {
     background-image: url('https://www.mapbox.com/base/latest/icon-ffffff.png');
     -webkit-background-size: 3260px 60px;
     background-size: 3260px 60px;
@@ -46,60 +46,60 @@
     vertical-align: top;
 }
 
-.leaflet-directions-zoom-button:before {
+.mapbox-directions-zoom-button:before {
     background-position: -720px 0;
 }
 
-.leaflet-directions-reverse-button:before {
+.mapbox-directions-reverse-button:before {
     background-position: -2200px 0;
 }
 
-.leaflet-directions-origin-input > div,
-.leaflet-directions-destination-input > div {
+.mapbox-directions-origin-input > div,
+.mapbox-directions-destination-input > div {
     position: relative;
     overflow: hidden;
 }
 
-.leaflet-directions-origin-input > button,
-.leaflet-directions-destination-input > button,
-.leaflet-directions-reverse-input > button {
+.mapbox-directions-origin-input > button,
+.mapbox-directions-destination-input > button,
+.mapbox-directions-reverse-input > button {
     float: right;
 }
 
-.leaflet-directions-reverse-input {
+.mapbox-directions-reverse-input {
     padding: 10px 0 10px 0;
 }
 
 /* Routes */
 
-.leaflet-directions-routes {
+.mapbox-directions-routes {
     padding: 20px;
 }
 
-.leaflet-directions-routes ul {
+.mapbox-directions-routes ul {
     list-style: none;
     margin: 0;
 }
 
-.leaflet-directions-routes ul,
-.leaflet-directions-routes li {
+.mapbox-directions-routes ul,
+.mapbox-directions-routes li {
     padding: 0;
 }
 
-.leaflet-directions-route {
+.mapbox-directions-route {
     cursor: pointer;
 }
 
-.leaflet-directions-route-active {
+.mapbox-directions-route-active {
     background: #f8f8f8;
 }
 
-.leaflet-directions-route-summary {
+.mapbox-directions-route-summary {
     float: left;
     width: 75%;
 }
 
-.leaflet-directions-route-details {
+.mapbox-directions-route-details {
     float: left;
     width: 25%;
     text-align: right;
@@ -107,37 +107,37 @@
 
 /* Instructions */
 
-.leaflet-directions-instructions {
+.mapbox-directions-instructions {
     padding: 20px;
 }
 
-.leaflet-directions-instructions ol {
+.mapbox-directions-instructions ol {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.leaflet-directions-instructions ol,
-.leaflet-directions-instructions li {
+.mapbox-directions-instructions ol,
+.mapbox-directions-instructions li {
 }
 
-.leaflet-directions-step {
+.mapbox-directions-step {
     position: relative;
     cursor: pointer;
     padding: 10px 0 10px 0;
     border-bottom: 1px solid #eee;
 }
 
-.leaflet-directions-step:hover {
+.mapbox-directions-step:hover {
     background: #f8f8f8;
 }
 
-.leaflet-directions-step-maneuver {
+.mapbox-directions-step-maneuver {
     float: left;
     width: 83.3333%;
 }
 
-.leaflet-directions-step-distance {
+.mapbox-directions-step-distance {
     position: absolute;
     right: 0;
     bottom: -10px;
@@ -151,11 +151,11 @@
 
 /* Clearfix */
 
-.leaflet-directions-origin-input:after,
-.leaflet-directions-destination-input:after,
-.leaflet-directions-reverse-input:after,
-.leaflet-directions-route:after,
-.leaflet-directions-step:after {
+.mapbox-directions-origin-input:after,
+.mapbox-directions-destination-input:after,
+.mapbox-directions-reverse-input:after,
+.mapbox-directions-route:after,
+.mapbox-directions-step:after {
     content: '.';
     display: block;
     height: 0;

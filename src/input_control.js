@@ -11,7 +11,7 @@ module.exports = function (container, directions) {
     };
 
     container = d3.select(L.DomUtil.get(container))
-        .classed('leaflet-directions-inputs', true);
+        .classed('mapbox-directions-inputs', true);
 
     var form = container.append('form')
         .on('submit', function() {
@@ -26,10 +26,10 @@ module.exports = function (container, directions) {
         });
 
     var origin = form.append('div')
-        .attr('class', 'leaflet-directions-origin-input');
+        .attr('class', 'mapbox-directions-origin-input');
 
     origin.append('button')
-        .attr('class', 'leaflet-directions-zoom-button')
+        .attr('class', 'mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getOrigin() instanceof L.LatLng) {
                 map.panTo(directions.getOrigin());
@@ -42,10 +42,10 @@ module.exports = function (container, directions) {
         .attr('tabindex', 1);
 
     var reverse = form.append('div')
-        .attr('class', 'leaflet-directions-reverse-input');
+        .attr('class', 'mapbox-directions-reverse-input');
 
     reverse.append('button')
-        .attr('class', 'leaflet-directions-reverse-button')
+        .attr('class', 'mapbox-directions-reverse-button')
         .on('click', function () {
             var o = originInput.value,
                 d = destinationInput.value;
@@ -57,10 +57,10 @@ module.exports = function (container, directions) {
         });
 
     var destination = form.append('div')
-        .attr('class', 'leaflet-directions-destination-input');
+        .attr('class', 'mapbox-directions-destination-input');
 
     destination.append('button')
-        .attr('class', 'leaflet-directions-zoom-button')
+        .attr('class', 'mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());

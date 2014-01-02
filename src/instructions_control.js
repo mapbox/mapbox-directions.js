@@ -18,26 +18,26 @@ module.exports = function (container, directions) {
 
         container
             .html('')
-            .classed('leaflet-directions-instructions', true);
+            .classed('mapbox-directions-instructions', true);
 
         var legs = container.append('ol')
             .selectAll('li')
             .data(route.legs)
             .enter().append('li')
-            .attr('class', 'leaflet-directions-leg');
+            .attr('class', 'mapbox-directions-leg');
 
         var steps = legs.append('ol')
             .selectAll('li')
             .data(function (leg) { return leg.steps; })
             .enter().append('li')
-            .attr('class', 'leaflet-directions-step');
+            .attr('class', 'mapbox-directions-step');
 
         steps.append('span')
-            .attr('class', 'leaflet-directions-step-maneuver')
+            .attr('class', 'mapbox-directions-step-maneuver')
             .html(function (step) { return step.maneuver.instruction; });
 
         steps.append('span')
-            .attr('class', 'leaflet-directions-step-distance')
+            .attr('class', 'mapbox-directions-step-distance')
             .text(function (step) { return step.distance ? format.imperial(step.distance) : ''; });
 
         steps.on('mouseover', function (step) {

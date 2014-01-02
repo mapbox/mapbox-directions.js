@@ -1,5 +1,5 @@
 {
-  "name": "leaflet-directions",
+  "name": "mapbox-directions.js",
   "version": "0.0.0",
   "description": "Leaflet plugin for the Mapbox Directions API",
   "main": "index.js",

@@ -16,20 +16,20 @@ module.exports = function (container, directions) {
     directions.on('load', function (e) {
         container
             .html('')
-            .classed('leaflet-directions-routes', true);
+            .classed('mapbox-directions-routes', true);
 
         var routes = container.append('ul')
             .selectAll('li')
             .data(e.routes)
             .enter().append('li')
-            .attr('class', 'leaflet-directions-route');
+            .attr('class', 'mapbox-directions-route');
 
         routes.append('span')
-            .attr('class', 'leaflet-directions-route-summary')
+            .attr('class', 'mapbox-directions-route-summary')
             .text(function (route) { return route.summary; });
 
         routes.append('span')
-            .attr('class', 'leaflet-directions-route-details')
+            .attr('class', 'mapbox-directions-route-details')
             .text(function (route) { return format.imperial(route.distance) + ', ' + format.duration(route.duration); });
 
         routes.on('mouseover', function (route) {
@@ -48,8 +48,8 @@ module.exports = function (container, directions) {
     });
 
     directions.on('selectRoute', function (e) {
-        container.selectAll('.leaflet-directions-route')
-            .classed('leaflet-directions-route-active', function (route) { return route === e.route; });
+        container.selectAll('.mapbox-directions-route')
+            .classed('mapbox-directions-route-active', function (route) { return route === e.route; });
     });
 
     return control;

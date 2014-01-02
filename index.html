@@ -8,8 +8,8 @@
     <script src='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.uncompressed.js'></script>
     <link href='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.css' rel='stylesheet' />
 
-    <script src='dist/Leaflet.directions.js'></script>
-    <link href='dist/Leaflet.directions.css' rel='stylesheet' />
+    <script src='dist/mapbox.directions.js'></script>
+    <link href='dist/mapbox.directions.css' rel='stylesheet' />
 
     <style>
         html, body {
@@ -105,20 +105,20 @@
     var map = L.mapbox.map('map', 'examples.map-9ijuk24y')
         .setView([52.515, 13.377], 13);
 
-    var directions = L.directions({
+    var directions = L.mapbox.directions({
         url: 'http://localhost:8889/alpha/jfire/directions/driving/{waypoints}.json?instructions=html'
     });
 
-    var directionsLayer = L.directions.layer(directions)
+    var directionsLayer = L.mapbox.directions.layer(directions)
         .addTo(map);
 
-    var directionsInputControl = L.directions.inputControl('inputs', directions)
+    var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
         .addTo(map);
 
-    var directionsRoutesControl = L.directions.routesControl('routes', directions)
+    var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
         .addTo(map);
 
-    var directionsInstructionsControl = L.directions.instructionsControl('instructions', directions)
+    var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions)
         .addTo(map);
 </script>
 
