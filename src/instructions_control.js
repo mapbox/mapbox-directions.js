@@ -16,7 +16,6 @@ module.exports = function (container, directions) {
     directions.on('load', function (e) {
         var route = e.routes[0];
 
-        console.log(route.legs[0].steps);
         container
             .html('')
             .classed('mapbox-directions-instructions', true);
