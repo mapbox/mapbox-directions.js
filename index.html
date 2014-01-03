@@ -86,6 +86,24 @@
             bottom: 0;
             overflow: auto;
         }
+/* Scrollbar */
+
+.route-container::-webkit-scrollbar {
+  width:8px;
+  height:8px;
+  border-left:0;
+  background: rgba(0,0,0,.1);
+  }
+.route-container::-webkit-scrollbar-track {
+  background:none;
+  }
+.route-container::-webkit-scrollbar-thumb {
+  background:rgba(0,0,0,.1);
+  border-radius: 0;
+  }
+.route-container::-webkit-scrollbar:hover {
+  background: rgba(0,0,0,.15);
+}
     </style>
 </head>
 <body>

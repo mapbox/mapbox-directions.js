@@ -31,7 +31,7 @@ module.exports = function (container, directions) {
     origin.append('label')
         .attr('class','mapbox-form-label')
         .attr('for','mapbox-origin-input')
-        .text('Start location');
+        .text('Start');
 
     var originContainer = origin.append('div');
 
@@ -71,7 +71,7 @@ module.exports = function (container, directions) {
     destination.append('label')
         .attr('class','mapbox-form-label')
         .attr('for','mapbox-destination-input')
-        .text('End location');
+        .text('End');
 
     var destinationContainer = destination.append('div');
 

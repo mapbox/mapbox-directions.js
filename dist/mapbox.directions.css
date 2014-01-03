@@ -8,16 +8,10 @@
 
 .mapbox-directions-inputs,
 .mapbox-directions-inputs *,
-.mapbox-directions-inputs *:after,
-.mapbox-directions-inputs *:before,
 .mapbox-directions-routes,
 .mapbox-directions-routes *,
-.mapbox-directions-routes *:after,
-.mapbox-directions-routes *:before,
 .mapbox-directions-instructions,
-.mapbox-directions-instructions *,
-.mapbox-directions-instructions *:after,
-.mapbox-directions-instructions *:before {
+.mapbox-directions-instructions * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -31,17 +25,21 @@
 
 .mapbox-form-label {
     float: left;
-    width: 30%;
-    padding: 10px 5px;
+    width:15%;
+    background-color: #e5e5e5;
+    color: rgba(0,0,0,.5);
+    text-align: center;
+    padding: 10px;
     line-height: 20px;
     font-size: 12px;
+    border-radius: 3px 0 0 3px;
 }
 
 .mapbox-directions-inputs input {
     font-size: 12px;
     width: 100%;
     background-color: #fff;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid #e5e5e5;
     height: 40px;
     margin: 0;
     color: rgba(0,0,0,.5);
@@ -86,10 +84,8 @@
 
 .mapbox-directions-reverse-input {
     position: absolute;
-    left: 10px;
-    top: 0;
-    bottom: 0;
-    margin: auto;
+    right: 15px;
+    top: 20px;
 }
 
 .mapbox-directions-origin-input > div,
@@ -129,10 +125,6 @@
     color: rgba(0,0,0,.75);
 }
 
-.mapbox-directions-route-active:after {
-    content: ""
-}
-
 .mapbox-directions-route-heading {
     position: absolute;
     left: 10px;
@@ -142,13 +134,12 @@
 }
 
 .mapbox-directions-route-active .mapbox-directions-route-heading {
-    background:#3a3a3a;
+    background:#3bb2d0;
     color: white;
 }
 
 .mapbox-directions-route-summary {
     font-weight: bold;
-    margin-bottom: 5px;
 }
 
 .mapbox-directions-route-details {
@@ -181,7 +172,7 @@
     top: 20px;
     bottom: 20px;
     width: 0;
-    border-left: 2px dotted rgba(0,0,0,.2);
+    border-left: 2px dotted #a0a0a0;
     left: 25px;
 }
 
@@ -257,7 +248,7 @@
     }
 }
 
-.marker-drag-icon {
+.mapbox-marker-drag-icon {
     display: block;
     background-color: #EC8D8D;
     border-radius: 50%;
@@ -271,4 +262,3 @@ path.leaflet-clickable {
     stroke-width: 4px;
     stroke-opacity:.75;
 }
-
