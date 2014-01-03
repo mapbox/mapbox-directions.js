@@ -33,27 +33,6 @@
     border-radius: 3px;
 }
 
-.mapbox-directions-inputs button:before {
-    background-image: url('https://www.mapbox.com/base/latest/icon-ffffff.png');
-    -webkit-background-size: 3260px 60px;
-    background-size: 3260px 60px;
-    opacity: 1;
-    margin: 0;
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    vertical-align: top;
-}
-
-.mapbox-directions-zoom-button:before {
-    background-position: -720px 0;
-}
-
-.mapbox-directions-reverse-button:before {
-    background-position: -2200px 0;
-}
-
 .mapbox-directions-origin-input > div,
 .mapbox-directions-destination-input > div {
     position: relative;
@@ -168,4 +147,43 @@
 .mapbox-directions-direction,
 .mapbox-directions-way-name {
     font-weight: bold;
+}
+
+/* icons */
+
+.mapbox-directions-inputs button:before,
+.mapbox-directions-instructions .icon:before {
+    background-image: url('directions.png');
+    -webkit-background-size: 260px 40px;
+    background-size: 260px 40px;
+    opacity: 1;
+    margin: 0;
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+}
+
+.mapbox-directions-instructions .icon.continue:before         { background-position: 0 0; }
+.mapbox-directions-instructions .icon.sharp-right:before      { background-position: -20px 0; }
+.mapbox-directions-instructions .icon.turn-right:before       { background-position: -40px 0; }
+.mapbox-directions-instructions .icon.bear-right:before       { background-position: -60px 0; }
+.mapbox-directions-instructions .icon.u-turn:before           { background-position: -80px 0; }
+.mapbox-directions-instructions .icon.sharp-left:before       { background-position: -100px 0; }
+.mapbox-directions-instructions .icon.turn-left:before        { background-position: -120px 0; }
+.mapbox-directions-instructions .icon.bear-left:before        { background-position: -140px 0; }
+.mapbox-directions-instructions .icon.depart:before           { background-position: -160px 0; }
+.mapbox-directions-instructions .icon.enter-roundabout:before { background-position: -180px 0; }
+.mapbox-directions-instructions .icon.arrive:before           { background-position: -200px 0; }
+.mapbox-directions-reverse-button:before                      { background-position: -220px 0; }
+.mapbox-directions-zoom-button:before                         { background-position: -240px 0; }
+
+@media
+  (-webkit-min-device-pixel-ratio:2),
+  (min-resolution:192dpi) {
+    .mapbox-directions-inputs button:before,
+    .mapbox-directions-instructions .icon:before {
+        background-image: url('directions@2x.png');
+    }
 }
