@@ -13,8 +13,8 @@ module.exports = function (container, directions) {
 
     container = d3.select(L.DomUtil.get(container));
 
-    directions.on('load', function (e) {
-        var route = e.routes[0];
+    directions.on('selectRoute', function (e) {
+        var route = e.route;
 
         container
             .html('')
