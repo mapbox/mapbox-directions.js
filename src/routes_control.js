@@ -24,7 +24,6 @@ module.exports = function (container, directions) {
             .enter().append('li')
             .attr('class', 'mapbox-directions-route');
 
-        console.log(e.routes);
         routes.append('div')
             .attr('class','mapbox-directions-route-heading')
             .text(function (route) { return 'Route ' + (e.routes.indexOf(route) + 1); });
