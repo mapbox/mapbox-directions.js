@@ -264,7 +264,7 @@ var Layer = L.LayerGroup.extend({
 
     _waypointIcon: function() {
         return L.divIcon({
-            className: 'marker-drag-icon',
+            className: 'mapbox-marker-drag-icon',
             iconSize: new L.Point(12, 12)
         });
     }
