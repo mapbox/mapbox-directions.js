@@ -34,7 +34,7 @@
     padding: 10px 10px 10px 25px;
 }
 
-.mapbox-directions-origin-input  input {
+.mapbox-directions-origin-input input {
     margin-bottom: 10px;
 }
 
@@ -46,7 +46,7 @@
     outline: thin dotted\8;
 }
 
-.mapbox-directions-inputs .button {
+.mapbox-directions-inputs .mapbox-button {
     height: 20px;
     width: 20px;
     line-height: 20px;
@@ -64,12 +64,12 @@
     position: relative;
 }
 
-.mapbox-directions-inputs .button {
+.mapbox-directions-inputs .mapbox-button {
     opacity: .5;
     z-index: 2;
 }
 
-.mapbox-directions-inputs .button:hover {
+.mapbox-directions-inputs .mapbox-button:hover {
     opacity: 1;
 }
 
@@ -85,8 +85,8 @@
     overflow: hidden;
 }
 
-.mapbox-directions-origin-input > .button,
-.mapbox-directions-destination-input > .button {
+.mapbox-directions-origin-input > .mapbox-button,
+.mapbox-directions-destination-input > .mapbox-button {
     position: absolute;
     left: 5px;
     top: 10px;
@@ -157,7 +157,20 @@
     color: rgba(0,0,0,.5);
     cursor: pointer;
     padding: 20px 10px 20px 50px;
-    border-bottom: 1px solid #e5e5e5;
+}
+
+.mapbox-directions-leg {
+    position: relative;
+}
+
+.mapbox-directions-leg:before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    width: 0;
+    border-left: 2px dotted rgba(0,0,0,.2);
+    left: 25px;
 }
 
 .mapbox-directions-step:last-child {
@@ -187,11 +200,10 @@
 
 /* icons */
 
-.mapbox-directions-inputs .button .icon,
-.mapbox-directions-instructions .icon {
+.mapbox-icon {
     background-image: url('directions.png');
-    -webkit-background-size: 260px 40px;
-    background-size: 260px 40px;
+    -webkit-background-size: 240px 20px;
+    background-size: 240px 20px;
     margin: 0;
     content: '';
     display: inline-block;
@@ -200,27 +212,29 @@
     height: 20px;
 }
 
-.mapbox-directions-instructions .icon {
+.mapbox-directions-instructions .mapbox-icon {
+    background-color: white;
     position: absolute;
     left: 15px;
-    top: 0;
+    height: 30px;
+    top: 0px;
+    border-top: 5px solid white;
     bottom: 0;
     margin: auto;
 }
 
-.mapbox-directions-instructions .icon.continue         { background-position: 0 0; }
-.mapbox-directions-instructions .icon.sharp-right      { background-position: -20px 0; }
-.mapbox-directions-instructions .icon.turn-right       { background-position: -40px 0; }
-.mapbox-directions-instructions .icon.bear-right       { background-position: -60px 0; }
-.mapbox-directions-instructions .icon.u-turn           { background-position: -80px 0; }
-.mapbox-directions-instructions .icon.sharp-left       { background-position: -100px 0; }
-.mapbox-directions-instructions .icon.turn-left        { background-position: -120px 0; }
-.mapbox-directions-instructions .icon.bear-left        { background-position: -140px 0; }
-.mapbox-directions-instructions .icon.depart           { background-position: -160px 0; }
-.mapbox-directions-instructions .icon.enter-roundabout { background-position: -180px 0; }
-.mapbox-directions-instructions .icon.arrive           { background-position: -200px 0; }
-.mapbox-directions-reverse-button .icon                { background-position: -220px 0; }
-.mapbox-directions-zoom-button .icon                   { background-position: -240px 0; }
+.mapbox-continue-icon         { background-position: 0 0; }
+.mapbox-sharp-right-icon      { background-position: -20px 0; }
+.mapbox-turn-right-icon       { background-position: -40px 0; }
+.mapbox-bear-right-icon       { background-position: -60px 0; }
+.mapbox-u-turn-icon           { background-position: -80px 0; }
+.mapbox-sharp-left-icon       { background-position: -100px 0; }
+.mapbox-turn-left-icon        { background-position: -120px 0; }
+.mapbox-bear-left-icon        { background-position: -140px 0; }
+.mapbox-depart-icon           { background-position: -160px 0; }
+.mapbox-enter-roundabout-icon { background-position: -180px 0; }
+.mapbox-arrive-icon           { background-position: -200px 0; }
+.mapbox-reverse-icon          { background-position: -220px 0; }
 
 @media
   (-webkit-min-device-pixel-ratio:2),

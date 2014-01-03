@@ -29,14 +29,14 @@ module.exports = function (container, directions) {
         .attr('class', 'mapbox-directions-origin-input');
 
     origin.append('div')
-        .attr('class', 'button mapbox-directions-zoom-button')
+        .attr('class', 'mapbox-button mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getOrigin() instanceof L.LatLng) {
                 map.panTo(directions.getOrigin());
             }
         })
         .append('span')
-        .attr('class', 'icon');
+        .attr('class', 'mapbox-depart-icon mapbox-icon');
 
     var originInput = origin.append('input')
         .attr('type', 'text')
@@ -47,7 +47,7 @@ module.exports = function (container, directions) {
         .attr('class', 'mapbox-directions-reverse-input');
 
     reverse.append('div')
-        .attr('class', 'button mapbox-directions-reverse-button')
+        .attr('class', 'mapbox-button mapbox-directions-reverse-button')
         .on('click', function () {
             var o = originInput.value,
                 d = destinationInput.value;
@@ -58,20 +58,20 @@ module.exports = function (container, directions) {
             directions.reverse().query();
         })
         .append('span')
-        .attr('class', 'icon');
+        .attr('class', 'mapbox-reverse-icon mapbox-icon');
 
     var destination = form.append('div')
         .attr('class', 'mapbox-directions-destination-input');
 
     destination.append('div')
-        .attr('class', 'button mapbox-directions-zoom-button')
+        .attr('class', 'mapbox-button mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());
             }
         })
         .append('span')
-        .attr('class', 'icon');
+        .attr('class', 'mapbox-arrive-icon mapbox-icon');
 
     var destinationInput = destination.append('input')
         .attr('type', 'text')
