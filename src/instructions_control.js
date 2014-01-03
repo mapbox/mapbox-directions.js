@@ -35,6 +35,7 @@ module.exports = function (container, directions) {
         steps.append('span')
             .attr('class', function (step) { return step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + ' icon mapbox-directions-step-maneuver';})
             .html(function (step) { return step.maneuver.instruction; });
+
         steps.append('span')
             .attr('class', 'mapbox-directions-step-distance')
             .text(function (step) { return step.distance ? format.imperial(step.distance) : ''; });
