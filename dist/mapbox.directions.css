@@ -156,12 +156,15 @@
     position: relative;
     color: rgba(0,0,0,.5);
     cursor: pointer;
-    padding: 10px 10px 10px 50px;
+    padding: 10px 10px 20px 50px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #e5e5e5;
 }
 
 .mapbox-directions-step:last-child {
     border-bottom-width: 0;
+    margin-bottom: 0;
+    padding-bottom: 10px;
 }
 
 .mapbox-directions-step:hover {
@@ -169,8 +172,12 @@
 }
 
 .mapbox-directions-step-distance {
+    position: absolute;
+    padding: 5px 10px;
+    background: white;
     font-size: 12px;
-    margin-top: 5px;
+    left: 40px;
+    bottom: -15px;
 }
 
 /* Mapbox */
