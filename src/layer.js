@@ -30,10 +30,7 @@ var Layer = L.LayerGroup.extend({
 
         this.dragMarker = L.marker([0, 0], {
             draggable: true,
-            icon: L.divIcon({
-                className: 'marker-drag-icon',
-                iconSize: new L.Point(12, 12)
-            })
+            icon: this._waypointIcon()
         });
 
         this.dragMarker
@@ -183,10 +180,7 @@ var Layer = L.LayerGroup.extend({
         for ( ; i < e.waypoints.length; i++) {
             var waypointMarker = L.marker(waypointLatLng(i), {
                 draggable: true,
-                icon: L.icon({
-                    iconUrl: 'dist/marker-drag.png',
-                    iconSize: new L.Point(18, 18)
-                })
+                icon: this._waypointIcon()
             });
 
             waypointMarker
@@ -266,6 +260,13 @@ var Layer = L.LayerGroup.extend({
         }
 
         return index;
+    },
+
+    _waypointIcon: function() {
+        return L.divIcon({
+            className: 'marker-drag-icon',
+            iconSize: new L.Point(12, 12)
+        });
     }
 });
 
