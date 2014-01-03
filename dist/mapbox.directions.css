@@ -173,18 +173,6 @@
     margin-top: 5px;
 }
 
-/* Clearfix */
-
-.mapbox-directions-origin-input:after,
-.mapbox-directions-destination-input:after,
-.mapbox-directions-reverse-input:after {
-    content: '.';
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
 /* Mapbox */
 
 .mapbox-directions-direction,

@@ -36,9 +36,9 @@ module.exports = function (container, directions) {
             }
         })
         .append('span')
-            .attr('class','icon');
+        .attr('class', 'icon');
 
-    var originInput = origin.append('div').append('input')
+    var originInput = origin.append('input')
         .attr('type', 'text')
         .attr('placeholder', 'Start')
         .attr('tabindex', 1);
@@ -58,7 +58,7 @@ module.exports = function (container, directions) {
             directions.reverse().query();
         })
         .append('span')
-            .attr('class','icon');
+        .attr('class', 'icon');
 
     var destination = form.append('div')
         .attr('class', 'mapbox-directions-destination-input');
@@ -71,9 +71,9 @@ module.exports = function (container, directions) {
             }
         })
         .append('span')
-            .attr('class','icon');
+        .attr('class', 'icon');
 
-    var destinationInput = destination.append('div').append('input')
+    var destinationInput = destination.append('input')
         .attr('type', 'text')
         .attr('placeholder', 'End')
         .attr('tabindex', 1);
