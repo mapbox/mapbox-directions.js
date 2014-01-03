@@ -8,8 +8,8 @@ node_modules/.install: package.json
 dist:
 	mkdir -p dist
 
-dist/mapbox.directions.js: node_modules/.install dist src/d3.js $(shell $(BROWSERIFY) -t hbsfy --list index.js)
-	$(BROWSERIFY) -t hbsfy --debug index.js > $@
+dist/mapbox.directions.js: node_modules/.install dist src/d3.js $(shell $(BROWSERIFY) --list index.js)
+	$(BROWSERIFY) --debug index.js > $@
 
 clean:
 	rm -rf dist/mapbox.directions.js
