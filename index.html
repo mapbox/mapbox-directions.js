@@ -18,7 +18,8 @@
             margin: 0;
             padding: 0;
             border: 0;
-            font: 15px/20px 'Open Sans', sans-serif;
+            font:15px/1.3333 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            color: rgba(0,0,0,.75);
         }
 
         #sidebar, #map {
@@ -26,39 +27,40 @@
         }
 
         #sidebar {
-            float: left;
-            width: 33.3333%;
-
-            display: -webkit-flex;
-            display:    -moz-flex;
-            display:     -ms-flex;
-            display:         flex;
-
-            -webkit-flex-direction: column;
-               -moz-flex-direction: column;
-                -ms-flex-direction: column;
-                    flex-direction: column;
+            position: absolute;
+            overflow: auto;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            width: 350px;
         }
 
         #map {
-            float: left;
-            width: 66.6666%;
+            position: absolute;
+            left: 350px;
+            top: 0;
+            bottom: 0;
+            right: 0;
         }
 
         #logo {
-            text-align: center;
+            position: absolute;
             padding: 10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
         }
 
         #logo span {
             -webkit-background-size: 225px 350px;
                     background-size: 225px 350px;
 
-            background: transparent url('https://www.mapbox.com/base/latest/base.png') no-repeat 0px -20px;
+            background: transparent url('https://www.mapbox.com/base/latest/base.png') no-repeat 0px -250px;
             display: inline-block;
             vertical-align: middle;
-            height: 60px;
-            width: 160px;
+            height: 40px;
+            width: 100px;
             text-indent: -999em;
             overflow: hidden;
             padding-top: 10px;
@@ -69,19 +71,20 @@
             -moz-box-sizing: border-box;
             box-sizing: border-box;
         }
-
-        #logo, #inputs, #routes {
-            -webkit-flex-shrink: 0;
-               -moz-flex-shrink: 0;
-                -ms-flex-shrink: 0;
-                    flex-shrink: 0;
+        #inputs {
+            border-top: 1px solid #e5e5e5;;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
         }
-
-        #instructions {
-            -webkit-flex-grow: 1;
-               -moz-flex-grow: 1;
-                -ms-flex-grow: 1;
-                    flex-grow: 1;
+        .route-container {
+            border-top: 1px solid #e5e5e5;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 170px;
+            bottom: 0;
             overflow: auto;
         }
     </style>
@@ -94,8 +97,10 @@
     </div>
 
     <div id='inputs'></div>
-    <div id='routes'></div>
-    <div id='instructions'></div>
+    <div class='route-container'>
+        <div id='routes'></div>
+        <div id='instructions'></div>
+    </div>
 </div>
 
 <div id='map'>

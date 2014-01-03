@@ -24,11 +24,16 @@ module.exports = function (container, directions) {
             .enter().append('li')
             .attr('class', 'mapbox-directions-route');
 
-        routes.append('span')
+        console.log(e.routes);
+        routes.append('div')
+            .attr('class','mapbox-directions-route-heading')
+            .text(function (route) { return 'Route ' + (e.routes.indexOf(route) + 1); });
+
+        routes.append('div')
             .attr('class', 'mapbox-directions-route-summary')
             .text(function (route) { return route.summary; });
 
-        routes.append('span')
+        routes.append('div')
             .attr('class', 'mapbox-directions-route-details')
             .text(function (route) { return format.imperial(route.distance) + ', ' + format.duration(route.duration); });
 

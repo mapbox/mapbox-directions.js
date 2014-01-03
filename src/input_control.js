@@ -28,13 +28,15 @@ module.exports = function (container, directions) {
     var origin = form.append('div')
         .attr('class', 'mapbox-directions-origin-input');
 
-    origin.append('button')
-        .attr('class', 'mapbox-directions-zoom-button')
+    origin.append('div')
+        .attr('class', 'button mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getOrigin() instanceof L.LatLng) {
                 map.panTo(directions.getOrigin());
             }
-        });
+        })
+        .append('span')
+            .attr('class','icon');
 
     var originInput = origin.append('div').append('input')
         .attr('type', 'text')
@@ -44,8 +46,8 @@ module.exports = function (container, directions) {
     var reverse = form.append('div')
         .attr('class', 'mapbox-directions-reverse-input');
 
-    reverse.append('button')
-        .attr('class', 'mapbox-directions-reverse-button')
+    reverse.append('div')
+        .attr('class', 'button mapbox-directions-reverse-button')
         .on('click', function () {
             var o = originInput.value,
                 d = destinationInput.value;
@@ -54,18 +56,22 @@ module.exports = function (container, directions) {
             destinationInput.property('value', o);
 
             directions.reverse().query();
-        });
+        })
+        .append('span')
+            .attr('class','icon');
 
     var destination = form.append('div')
         .attr('class', 'mapbox-directions-destination-input');
 
-    destination.append('button')
-        .attr('class', 'mapbox-directions-zoom-button')
+    destination.append('div')
+        .attr('class', 'button mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());
             }
-        });
+        })
+        .append('span')
+            .attr('class','icon');
 
     var destinationInput = destination.append('div').append('input')
         .attr('type', 'text')

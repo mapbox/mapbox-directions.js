@@ -33,10 +33,13 @@ module.exports = function (container, directions) {
             .attr('class', 'mapbox-directions-step');
 
         steps.append('span')
-            .attr('class', function (step) { return step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + ' icon mapbox-directions-step-maneuver';})
+            .attr('class', function (step) { return step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + ' icon';});
+
+        steps.append('div')
+            .attr('class', 'mapbox-directions-step-maneuver')
             .html(function (step) { return step.maneuver.instruction; });
 
-        steps.append('span')
+        steps.append('div')
             .attr('class', 'mapbox-directions-step-distance')
             .text(function (step) { return step.distance ? format.imperial(step.distance) : ''; });
 

@@ -8,23 +8,23 @@ var Layer = L.LayerGroup.extend({
         this.originMarker = L.marker([0, 0], {
             draggable: true,
             icon: L.mapbox.marker.icon({
-                'marker-size': 'small',
-                'marker-color': '#70BB4D'
+                'marker-size': 'medium',
+                'marker-color': '#3BB2D0'
             })
         }).on('drag', this._drag, this);
 
         this.destinationMarker = L.marker([0, 0], {
             draggable: true,
             icon: L.mapbox.marker.icon({
-                'marker-size': 'small',
-                'marker-color': '#F53837'
+                'marker-size': 'medium',
+                'marker-color': '#EC8D8D'
             })
         }).on('drag', this._drag, this);
 
         this.stepMarker = L.marker([0, 0], {
             icon: L.mapbox.marker.icon({
                 'marker-size': 'small',
-                'marker-color': '#3786BD'
+                'marker-color': '#EC8D8D'
             })
         });
 
