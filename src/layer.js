@@ -30,9 +30,9 @@ var Layer = L.LayerGroup.extend({
 
         this.dragMarker = L.marker([0, 0], {
             draggable: true,
-            icon: L.icon({
-                iconUrl: 'dist/marker-drag.png',
-                iconSize: new L.Point(18, 18)
+            icon: L.divIcon({
+                className: 'marker-drag-icon',
+                iconSize: new L.Point(12, 12)
             })
         });
 

@@ -226,7 +226,14 @@
     }
 }
 
-/* leaflet override */
+.marker-drag-icon {
+    display: block;
+    background-color: #EC8D8D;
+    border-radius: 50%;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+}
+
+/* leaflet overrides */
 
 path.leaflet-clickable {
     stroke: #EC8D8D;
