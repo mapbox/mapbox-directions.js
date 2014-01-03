@@ -1,6 +1,12 @@
 /* Basics */
 
 .mapbox-directions-inputs,
+.mapbox-directions-routes,
+.mapbox-directions-instructions {
+    font:15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.mapbox-directions-inputs,
 .mapbox-directions-inputs *,
 .mapbox-directions-inputs *:after,
 .mapbox-directions-inputs *:before,
@@ -21,6 +27,14 @@
 
 .mapbox-directions-inputs {
     padding: 10px;
+}
+
+.mapbox-form-label {
+    float: left;
+    width: 30%;
+    padding: 10px 5px;
+    line-height: 20px;
+    font-size: 12px;
 }
 
 .mapbox-directions-inputs input {
@@ -51,12 +65,9 @@
     width: 20px;
     line-height: 20px;
     padding: 0;
-    display: inline;
-    position: relative;
     background-color: transparent;
     border: none;
     cursor: pointer;
-    border-radius: 3px;
 }
 
 .mapbox-directions-origin-input,
@@ -75,8 +86,10 @@
 
 .mapbox-directions-reverse-input {
     position: absolute;
-    right: 15px;
-    top: 20px;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
 }
 
 .mapbox-directions-origin-input > div,
@@ -85,8 +98,7 @@
     overflow: hidden;
 }
 
-.mapbox-directions-origin-input > .mapbox-button,
-.mapbox-directions-destination-input > .mapbox-button {
+.mapbox-directions-zoom-button {
     position: absolute;
     left: 5px;
     top: 10px;

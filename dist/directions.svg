@@ -28,11 +28,11 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="230.23289"
-     inkscape:cy="6.6654093"
+     inkscape:cx="195.00486"
+     inkscape:cy="-2.4920215"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -173,6 +173,16 @@
        height="20"
        x="0"
        y="0"
+       transform="translate(3200,992.36218)" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.75;color:#000000;fill:none;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path4870"
+       sodipodi:cx="210"
+       sodipodi:cy="4"
+       sodipodi:rx="3"
+       sodipodi:ry="3"
+       d="m 213,4 a 3,3 0 1 1 -6,0 3,3 0 1 1 6,0 z"
        transform="translate(3200,992.36218)" />
   </g>
 </svg>
