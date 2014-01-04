@@ -204,7 +204,7 @@
 /* icons */
 
 .mapbox-icon {
-    background-image: url('directions.png');
+    background-image: url('mapbox.directions.png');
     -webkit-background-size: 240px 20px;
     background-size: 240px 20px;
     margin: 0;
@@ -244,7 +244,7 @@
   (min-resolution:192dpi) {
     .mapbox-directions-inputs button:before,
     .mapbox-directions-instructions .icon:before {
-        background-image: url('directions@2x.png');
+        background-image: url('mapbox.directions@2x.png');
     }
 }
 
