@@ -48,8 +48,7 @@ module.exports = function (container, directions) {
     var originInput = originContainer.append('input')
         .attr('type', 'text')
         .attr('id', 'mapbox-origin-input')
-        .attr('placeholder', 'Start')
-        .attr('tabindex', 1);
+        .attr('placeholder', 'Start');
 
     form.append('div')
         .attr('class', 'mapbox-button mapbox-directions-reverse-button mapbox-directions-reverse-input')
@@ -88,8 +87,7 @@ module.exports = function (container, directions) {
     var destinationInput = destinationContainer.append('input')
         .attr('type', 'text')
         .attr('id', 'mapbox-destination-input')
-        .attr('placeholder', 'End')
-        .attr('tabindex', 1);
+        .attr('placeholder', 'End');
 
     directions
         .on('origin', function (e) {
