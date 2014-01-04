@@ -14,15 +14,17 @@ module.exports = function (container, directions) {
         .classed('mapbox-directions-inputs', true);
 
     var form = container.append('form')
-        .on('submit', function () {
-            d3.event.preventDefault();
+        .on('keypress', function () {
+            if (d3.event.keyCode === 13) {
+                d3.event.preventDefault();
 
-            directions
-                .setOrigin(originInput.property('value'))
-                .setDestination(destinationInput.property('value'));
+                directions
+                    .setOrigin(originInput.property('value'))
+                    .setDestination(destinationInput.property('value'));
 
-            if (directions.queryable())
-                directions.query();
+                if (directions.queryable())
+                    directions.query();
+            }
         });
 
     var origin = form.append('div')
