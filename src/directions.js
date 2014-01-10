@@ -7,11 +7,12 @@ var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
     options: {
-        url: 'https://api.directions.mapbox.com/alpha/jfire/directions/driving/{waypoints}.json?instructions=html'
+        url: 'https://api.directions.mapbox.com/{mapid}/directions/driving/{waypoints}.json?instructions=html'
     },
 
-    initialize: function(options) {
+    initialize: function(mapid, options) {
         L.setOptions(this, options);
+        this.options.mapid = mapid;
         this._waypoints = [];
     },
 
@@ -79,6 +80,7 @@ var Directions = L.Class.extend({
     queryURL: function () {
         var points = [this.origin].concat(this._waypoints).concat([this.destination]);
         return L.Util.template(this.options.url, {
+            mapid: this.options.mapid,
             waypoints: points.map(function (point) {
                 if (point instanceof L.LatLng) {
                     return point.lng + ',' + point.lat;
@@ -121,6 +123,6 @@ var Directions = L.Class.extend({
     }
 });
 
-module.exports = function(options) {
-    return new Directions(options);
+module.exports = function(mapid, options) {
+    return new Directions(mapid, options);
 };
