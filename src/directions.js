@@ -7,7 +7,7 @@ var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
     options: {
-        url: 'https://api.directions.mapbox.com/{mapid}/directions/driving/{waypoints}.json?instructions=html'
+        url: 'https://api.tiles.mapbox.com/alpha/{mapid}/directions/driving/{waypoints}.json?instructions=html'
     },
 
     initialize: function(mapid, options) {

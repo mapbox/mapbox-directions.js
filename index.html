@@ -131,9 +131,7 @@
     var map = L.mapbox.map('map', 'examples.map-9ijuk24y')
         .setView([52.47, 13.36], 12);
 
-    var directions = L.mapbox.directions('jfire.gpg8dj6l', {
-        url: 'http://localhost:8889/alpha/{mapid}/directions/driving/{waypoints}.json?instructions=html'
-    });
+    var directions = L.mapbox.directions('willwhite.map-65rb3vvx');
 
     var directionsLayer = L.mapbox.directions.layer(directions)
         .addTo(map);
