@@ -1,9 +1,13 @@
 'use strict';
 
+var debounce = require('debounce');
+
 var Layer = L.LayerGroup.extend({
     initialize: function(directions) {
         this._directions = directions || new L.Directions();
         L.LayerGroup.prototype.initialize.apply(this);
+
+        this._drag = debounce(L.bind(this._drag, this), 100);
 
         this.originMarker = L.marker([0, 0], {
             draggable: true,

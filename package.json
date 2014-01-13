@@ -10,7 +10,8 @@
     "mapbox.js": "1.5.2",
     "corslite": "0.0.5",
     "json3": "3.2.6",
-    "d3": "3.3.13"
+    "d3": "3.3.13",
+    "debounce": "0.0.3"
   },
   "devDependencies": {
     "mocha": "1",
