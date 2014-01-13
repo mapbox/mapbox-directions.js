@@ -169,7 +169,7 @@
 .mapbox-directions-leg:before {
     content: "";
     position: absolute;
-    top: 20px;
+    top: 40px;
     bottom: 20px;
     width: 0;
     border-left: 2px dotted #a0a0a0;
