@@ -11,6 +11,8 @@
     <script src='dist/mapbox.directions.js'></script>
     <link href='dist/mapbox.directions.css' rel='stylesheet' />
 
+    <script src='vendor/leaflet-hash.js'></script>
+
     <style>
         html, body {
             height: 100%;
@@ -144,6 +146,25 @@
 
     var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions)
         .addTo(map);
+
+    new L.Hash(map);
+
+    var waypoints = decodeURIComponent(window.location.search.split('route=').pop()).split(';');
+    if (waypoints.length == 2) {
+        directions
+            .setOrigin(L.latLng(waypoints[0].split(',').reverse()))
+            .setDestination(L.latLng(waypoints[1].split(',').reverse()))
+            .query();
+    }
+
+    directions.on('load', function() {
+        var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2)),
+            o = directions.getOrigin(),
+            d = directions.getDestination();
+        history.replaceState({}, null, '?route=' + [o.lng.toFixed(precision), o.lat.toFixed(precision)]
+                                           + ';' + [d.lng.toFixed(precision), d.lat.toFixed(precision)]
+                                           + location.hash);
+    });
 </script>
 
 </body>
