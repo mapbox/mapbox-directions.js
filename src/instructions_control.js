@@ -33,7 +33,9 @@ module.exports = function (container, directions) {
             .attr('class', 'mapbox-directions-step');
 
         steps.append('span')
-            .attr('class', function (step) { return 'mapbox-icon mapbox-' + step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + '-icon'; });
+            .attr('class', function (step) {
+                return 'mapbox-directions-icon mapbox-' + step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + '-icon';
+            });
 
         steps.append('div')
             .attr('class', 'mapbox-directions-step-maneuver')

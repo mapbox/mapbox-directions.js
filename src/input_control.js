@@ -45,7 +45,7 @@ module.exports = function (container, directions) {
             }
         })
         .append('span')
-        .attr('class', 'mapbox-depart-icon mapbox-icon');
+        .attr('class', 'mapbox-depart-icon mapbox-directions-icon');
 
     var originInput = originContainer.append('input')
         .attr('type', 'text')
@@ -64,7 +64,7 @@ module.exports = function (container, directions) {
             directions.reverse().query();
         })
         .append('span')
-        .attr('class', 'mapbox-reverse-icon mapbox-icon');
+        .attr('class', 'mapbox-reverse-icon mapbox-directions-icon');
 
     var destination = form.append('div')
         .attr('class', 'mapbox-directions-destination-input');
@@ -84,7 +84,7 @@ module.exports = function (container, directions) {
             }
         })
         .append('span')
-        .attr('class', 'mapbox-arrive-icon mapbox-icon');
+        .attr('class', 'mapbox-arrive-icon mapbox-directions-icon');
 
     var destinationInput = destinationContainer.append('input')
         .attr('type', 'text')

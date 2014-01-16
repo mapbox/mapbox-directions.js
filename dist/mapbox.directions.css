@@ -203,10 +203,12 @@
 
 /* icons */
 
-.mapbox-icon {
+.mapbox-directions-icon {
+    opacity: .75;
     background-image: url('mapbox.directions.png');
     -webkit-background-size: 240px 20px;
     background-size: 240px 20px;
+    background-repeat: no-repeat;
     margin: 0;
     content: '';
     display: inline-block;
@@ -215,7 +217,7 @@
     height: 20px;
 }
 
-.mapbox-directions-instructions .mapbox-icon {
+.mapbox-directions-instructions .mapbox-directions-icon {
     background-color: white;
     position: absolute;
     left: 15px;
