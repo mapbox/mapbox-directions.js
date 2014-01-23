@@ -20,15 +20,9 @@ module.exports = function (container, directions) {
             .html('')
             .classed('mapbox-directions-instructions', true);
 
-        var legs = container.append('ol')
+        var steps = container.append('ol')
             .selectAll('li')
-            .data(route.legs)
-            .enter().append('li')
-            .attr('class', 'mapbox-directions-leg');
-
-        var steps = legs.append('ol')
-            .selectAll('li')
-            .data(function (leg) { return leg.steps; })
+            .data(route.steps)
             .enter().append('li')
             .attr('class', 'mapbox-directions-step');
 
