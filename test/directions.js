@@ -1,51 +1,51 @@
 describe("Directions", function () {
     describe("#setOrigin", function () {
         it("sets origin", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             directions.setOrigin(L.latLng(1, 2));
             expect(directions.getOrigin()).to.eql(L.latLng(1, 2));
         });
 
         it("fires event", function (done) {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             directions.on('origin', function (e) {
-                expect(e.latlng).to.eql(L.latLng(1, 2));
+                expect(e.origin).to.eql(L.latLng(1, 2));
                 done();
             });
             directions.setOrigin(L.latLng(1, 2));
         });
 
         it("returns this", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             expect(directions.setOrigin(L.latLng(1, 2))).to.equal(directions);
         });
     });
 
     describe("#setDestination", function () {
         it("sets destination", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             directions.setDestination(L.latLng(1, 2));
             expect(directions.getDestination()).to.eql(L.latLng(1, 2));
         });
 
         it("fires event", function (done) {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             directions.on('destination', function (e) {
-                expect(e.latlng).to.eql(L.latLng(1, 2));
+                expect(e.destination).to.eql(L.latLng(1, 2));
                 done();
             });
             directions.setDestination(L.latLng(1, 2));
         });
 
         it("returns this", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             expect(directions.setDestination(L.latLng(1, 2))).to.equal(directions);
         });
     });
 
     describe("reverse", function () {
         it("swaps origin and destination", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
             directions.reverse();
             expect(directions.getOrigin()).to.eql(L.latLng(3, 4));
@@ -53,15 +53,15 @@ describe("Directions", function () {
         });
 
         it("fires events", function (done) {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
 
             directions.on('origin', function (e) {
-                expect(e.latlng).to.eql(L.latLng(3, 4));
+                expect(e.origin).to.eql(L.latLng(3, 4));
             });
 
             directions.on('destination', function (e) {
-                expect(e.latlng).to.eql(L.latLng(1, 2));
+                expect(e.destination).to.eql(L.latLng(1, 2));
                 done();
             });
 
@@ -69,16 +69,16 @@ describe("Directions", function () {
         });
 
         it("returns this", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             expect(directions.reverse()).to.equal(directions);
         });
     });
 
     describe("queryURL", function () {
         it("constructs a URL with origin and destination", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
-            expect(directions.queryURL()).to.eql('https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json');
+            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/alpha/map.id/directions/driving/2,1;4,3.json?instructions=html');
         });
     });
 
@@ -94,12 +94,12 @@ describe("Directions", function () {
         });
 
         it("returns self", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
             expect(directions.query()).to.equal(directions);
         });
 
         it("fires error if response is an HTTP error", function (done) {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
 
             directions.on('error', function (e) {
                 expect(e.error).to.be.ok();
@@ -111,13 +111,13 @@ describe("Directions", function () {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json",
+            server.respondWith("GET", "https://api.tiles.mapbox.com/alpha/map.id/directions/driving/2,1;4,3.json?instructions=html",
                 [400, { "Content-Type": "application/json" }, JSON.stringify({error: 'error'})]);
             server.respond();
         });
 
         it("fires error if response is an API error", function (done) {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
 
             directions.on('error', function (e) {
                 expect(e.error).to.eql('error');
@@ -129,13 +129,13 @@ describe("Directions", function () {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json",
+            server.respondWith("GET", "https://api.tiles.mapbox.com/alpha/map.id/directions/driving/2,1;4,3.json?instructions=html",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({error: 'error'})]);
             server.respond();
         });
 
         it("fires load if response is successful", function (done) {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
 
             directions.on('load', function (e) {
                 expect(e.routes).to.eql([]);
@@ -147,13 +147,13 @@ describe("Directions", function () {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json",
+            server.respondWith("GET", "https://api.tiles.mapbox.com/alpha/map.id/directions/driving/2,1;4,3.json?instructions=html",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({routes: []})]);
             server.respond();
         });
 
         it("aborts currently pending request", function () {
-            var directions = L.directions();
+            var directions = L.mapbox.directions('map.id');
 
             directions
                 .setOrigin(L.latLng(1, 2))
