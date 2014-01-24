@@ -24,6 +24,7 @@ module.exports = function (container, directions) {
         container.html('');
 
         var steps = container.append('ol')
+            .attr('class', 'mapbox-directions-steps')
             .selectAll('li')
             .data(route.steps)
             .enter().append('li')
