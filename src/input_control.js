@@ -28,11 +28,11 @@ module.exports = function (container, directions) {
         });
 
     var origin = form.append('div')
-        .attr('class', 'mapbox-directions-origin-input');
+        .attr('class', 'mapbox-directions-origin');
 
     origin.append('label')
         .attr('class', 'mapbox-form-label')
-        .attr('for', 'mapbox-origin-input')
+        .attr('for', 'mapbox-directions-origin-input')
         .text('Start');
 
     var originContainer = origin.append('div');
@@ -49,7 +49,7 @@ module.exports = function (container, directions) {
 
     var originInput = originContainer.append('input')
         .attr('type', 'text')
-        .attr('id', 'mapbox-origin-input')
+        .attr('id', 'mapbox-directions-origin-input')
         .attr('placeholder', 'Start');
 
     form.append('div')
@@ -67,11 +67,11 @@ module.exports = function (container, directions) {
         .attr('class', 'mapbox-reverse-icon mapbox-directions-icon');
 
     var destination = form.append('div')
-        .attr('class', 'mapbox-directions-destination-input');
+        .attr('class', 'mapbox-directions-destination');
 
     destination.append('label')
         .attr('class', 'mapbox-form-label')
-        .attr('for', 'mapbox-destination-input')
+        .attr('for', 'mapbox-directions-destination-input')
         .text('End');
 
     var destinationContainer = destination.append('div');
@@ -88,15 +88,24 @@ module.exports = function (container, directions) {
 
     var destinationInput = destinationContainer.append('input')
         .attr('type', 'text')
-        .attr('id', 'mapbox-destination-input')
+        .attr('id', 'mapbox-directions-destination-input')
         .attr('placeholder', 'End');
+
+    function format(waypoint) {
+        if (waypoint instanceof L.LatLng) {
+            var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2));
+            waypoint = waypoint.wrap();
+            waypoint = waypoint.lng.toFixed(precision) + ', ' + waypoint.lat.toFixed(precision);
+        }
+        return waypoint;
+    }
 
     directions
         .on('origin', function (e) {
-            originInput.property('value', e.origin.toString());
+            originInput.property('value', format(e.origin));
         })
         .on('destination', function (e) {
-            destinationInput.property('value', e.destination.toString());
+            destinationInput.property('value', format(e.destination));
         })
         .on('load', function (e) {
             originInput.property('value', e.origin.properties.name);

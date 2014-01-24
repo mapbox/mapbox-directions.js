@@ -83,6 +83,7 @@ var Directions = L.Class.extend({
             mapid: this.options.mapid,
             waypoints: points.map(function (point) {
                 if (point instanceof L.LatLng) {
+                    point = point.wrap();
                     return point.lng + ',' + point.lat;
                 } else {
                     return point;

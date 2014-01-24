@@ -46,7 +46,7 @@
     padding: 10px 10px 10px 25px;
 }
 
-.mapbox-directions-origin-input input {
+#mapbox-directions-origin-input {
     margin-bottom: 10px;
 }
 
@@ -68,11 +68,6 @@
     cursor: pointer;
 }
 
-.mapbox-directions-origin-input,
-.mapbox-directions-destination-input {
-    position: relative;
-}
-
 .mapbox-directions-inputs .mapbox-button {
     opacity: .5;
     z-index: 2;
@@ -88,8 +83,8 @@
     top: 20px;
 }
 
-.mapbox-directions-origin-input > div,
-.mapbox-directions-destination-input > div {
+.mapbox-directions-origin > div,
+.mapbox-directions-destination > div {
     position: relative;
     overflow: hidden;
 }
