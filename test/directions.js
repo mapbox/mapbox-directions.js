@@ -78,13 +78,13 @@ describe("Directions", function () {
         it("constructs a URL with origin and destination", function () {
             var directions = L.mapbox.directions('map.id');
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
-            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/alpha/map.id/directions/driving/2,1;4,3.json?instructions=html&geometry=polyline');
+            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v3/map.id/directions/driving/2,1;4,3.json?instructions=html&geometry=polyline');
         });
 
         it("wraps coordinates", function () {
             var directions = L.mapbox.directions('map.id');
             directions.setOrigin(L.latLng(0, 190)).setDestination(L.latLng(0, -195));
-            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/alpha/map.id/directions/driving/-170,0;165,0.json?instructions=html&geometry=polyline');
+            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v3/map.id/directions/driving/-170,0;165,0.json?instructions=html&geometry=polyline');
         });
     });
 
