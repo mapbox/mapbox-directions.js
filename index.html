@@ -148,7 +148,42 @@
     var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions)
         .addTo(map);
 
-    new L.Hash(map);
+    var hash = new L.Hash(map);
+
+    // Use #z/lon/lat rather than #z/lat/lon
+
+    hash.parseHash = function(hash) {
+        if(hash.indexOf('#') === 0) {
+            hash = hash.substr(1);
+        }
+        var args = hash.split("/");
+        if (args.length == 3) {
+            var zoom = parseInt(args[0], 10),
+                lon = parseFloat(args[1]),
+                lat = parseFloat(args[2]);
+            if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
+                return false;
+            } else {
+                return {
+                    center: new L.LatLng(lat, lon),
+                    zoom: zoom
+                };
+            }
+        } else {
+            return false;
+        }
+    };
+
+    hash.formatHash = function(map) {
+        var center = map.getCenter(),
+            zoom = map.getZoom(),
+            precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2));
+
+        return "#" + [zoom,
+            center.lng.toFixed(precision),
+            center.lat.toFixed(precision)
+        ].join("/");
+    };
 
     var waypoints = decodeURIComponent(window.location.search.split('route=').pop()).split(';');
     if (waypoints.length == 2) {
