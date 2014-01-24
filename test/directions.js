@@ -186,7 +186,7 @@ describe("Directions", function () {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/alpha/map.id/directions/driving/2,1;4,3.json?instructions=html&geometry=polyline",
+            server.respondWith("GET", "https://api.tiles.mapbox.com/v3/map.id/directions/driving/2,1;4,3.json?instructions=html&geometry=polyline",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({routes: [{geometry: '_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI'}]})]);
             server.respond();
         });
