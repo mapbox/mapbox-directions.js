@@ -78,7 +78,7 @@ describe("Directions", function () {
         it("constructs a URL with origin and destination", function () {
             var directions = L.directions();
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
-            expect(directions.queryURL()).to.eql('https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json');
+            expect(directions.queryURL()).to.eql('https://api.directions.mapbox.com/v3/jfire/directions/driving/2,1;4,3.json');
         });
     });
 
@@ -111,7 +111,7 @@ describe("Directions", function () {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json",
+            server.respondWith("GET", "https://api.directions.mapbox.com/v3/jfire/directions/driving/2,1;4,3.json",
                 [400, { "Content-Type": "application/json" }, JSON.stringify({error: 'error'})]);
             server.respond();
         });
@@ -129,7 +129,7 @@ describe("Directions", function () {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json",
+            server.respondWith("GET", "https://api.directions.mapbox.com/v3/jfire/directions/driving/2,1;4,3.json",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({error: 'error'})]);
             server.respond();
         });
@@ -147,7 +147,7 @@ describe("Directions", function () {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.directions.mapbox.com/alpha/jfire/directions/driving/2,1;4,3.json",
+            server.respondWith("GET", "https://api.directions.mapbox.com/v3/jfire/directions/driving/2,1;4,3.json",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({routes: []})]);
             server.respond();
         });
