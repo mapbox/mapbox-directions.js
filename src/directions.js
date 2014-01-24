@@ -75,7 +75,7 @@ var Directions = L.Class.extend({
     },
 
     queryURL: function () {
-        var template = 'https://api.tiles.mapbox.com/alpha/{mapid}/directions/driving/{waypoints}.json?instructions=html&geometry=polyline',
+        var template = 'https://api.tiles.mapbox.com/v3/{mapid}/directions/driving/{waypoints}.json?instructions=html&geometry=polyline',
             points = [this.origin].concat(this._waypoints).concat([this.destination]);
         return L.Util.template(template, {
             mapid: this.options.mapid,
