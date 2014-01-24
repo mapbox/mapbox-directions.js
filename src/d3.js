@@ -1,5 +1,5 @@
-module.exports = (function(){
-  var d3 = {version: "3.3.13"}; // semver
+!function(){
+  var d3 = {version: "3.4.1"}; // semver
 var d3_arraySlice = [].slice,
     d3_array = function(list) { return d3_arraySlice.call(list); }; // conversion for NodeLists
 
@@ -450,24 +450,15 @@ d3.map = function(object) {
 function d3_Map() {}
 
 d3_class(d3_Map, {
-  has: function(key) {
-    return d3_map_prefix + key in this;
-  },
+  has: d3_map_has,
   get: function(key) {
     return this[d3_map_prefix + key];
   },
   set: function(key, value) {
     return this[d3_map_prefix + key] = value;
   },
-  remove: function(key) {
-    key = d3_map_prefix + key;
-    return key in this && delete this[key];
-  },
-  keys: function() {
-    var keys = [];
-    this.forEach(function(key) { keys.push(key); });
-    return keys;
-  },
+  remove: d3_map_remove,
+  keys: d3_map_keys,
   values: function() {
     var values = [];
     this.forEach(function(key, value) { values.push(value); });
@@ -478,17 +469,41 @@ d3_class(d3_Map, {
     this.forEach(function(key, value) { entries.push({key: key, value: value}); });
     return entries;
   },
+  size: d3_map_size,
+  empty: d3_map_empty,
   forEach: function(f) {
-    for (var key in this) {
-      if (key.charCodeAt(0) === d3_map_prefixCode) {
-        f.call(this, key.substring(1), this[key]);
-      }
-    }
+    for (var key in this) if (key.charCodeAt(0) === d3_map_prefixCode) f.call(this, key.substring(1), this[key]);
   }
 });
 
 var d3_map_prefix = "\0", // prevent collision with built-ins
     d3_map_prefixCode = d3_map_prefix.charCodeAt(0);
+
+function d3_map_has(key) {
+  return d3_map_prefix + key in this;
+}
+
+function d3_map_remove(key) {
+  key = d3_map_prefix + key;
+  return key in this && delete this[key];
+}
+
+function d3_map_keys() {
+  var keys = [];
+  this.forEach(function(key) { keys.push(key); });
+  return keys;
+}
+
+function d3_map_size() {
+  var size = 0;
+  for (var key in this) if (key.charCodeAt(0) === d3_map_prefixCode) ++size;
+  return size;
+}
+
+function d3_map_empty() {
+  for (var key in this) if (key.charCodeAt(0) === d3_map_prefixCode) return false;
+  return true;
+}
 
 d3_selectionPrototype.data = function(value, key) {
   var i = -1,
@@ -1027,5 +1042,11 @@ d3.selectAll = function(nodes) {
 };
 
 var d3_selectionRoot = d3.select(d3_documentElement);
-  return d3;
-})();
+  if (typeof define === "function" && define.amd) {
+    define(d3);
+  } else if (typeof module === "object" && module.exports) {
+    module.exports = d3;
+  } else {
+    this.d3 = d3;
+  }
+}();
