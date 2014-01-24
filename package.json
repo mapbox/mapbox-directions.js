@@ -4,17 +4,19 @@
   "description": "Leaflet plugin for the Mapbox Directions API",
   "main": "index.js",
   "scripts": {
-    "test": "jshint src && mocha"
+    "test": "jshint src && mocha-phantomjs test/index.html"
   },
   "dependencies": {
     "mapbox.js": "1.5.2",
     "corslite": "0.0.5",
     "json3": "3.2.6",
-    "d3": "3.3.13",
-    "debounce": "0.0.3"
+    "d3": "3.4.1",
+    "debounce": "0.0.3",
+    "polyline": "0.0.3"
   },
   "devDependencies": {
     "mocha": "1",
+    "mocha-phantomjs": "3",
     "expect.js": "0.2.0",
     "sinon": "1.7.3",
     "browserify": "2",

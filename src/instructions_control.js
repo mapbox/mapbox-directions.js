@@ -1,6 +1,6 @@
 'use strict';
 
-var d3 = require('./d3'),
+var d3 = require('../lib/d3'),
     format = require('./format');
 
 module.exports = function (container, directions) {
@@ -11,14 +11,17 @@ module.exports = function (container, directions) {
         return control;
     };
 
-    container = d3.select(L.DomUtil.get(container));
+    container = d3.select(L.DomUtil.get(container))
+        .classed('mapbox-directions-instructions', true);
+
+    directions.on('error', function () {
+        container.html('');
+    });
 
     directions.on('selectRoute', function (e) {
         var route = e.route;
 
-        container
-            .html('')
-            .classed('mapbox-directions-instructions', true);
+        container.html('');
 
         var legs = container.append('ol')
             .selectAll('li')

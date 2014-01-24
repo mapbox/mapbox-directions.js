@@ -1,6 +1,7 @@
 /* Basics */
 
 .mapbox-directions-inputs,
+.mapbox-directions-errors,
 .mapbox-directions-routes,
 .mapbox-directions-instructions {
     font:15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -8,6 +9,8 @@
 
 .mapbox-directions-inputs,
 .mapbox-directions-inputs *,
+.mapbox-directions-errors,
+.mapbox-directions-errors *,
 .mapbox-directions-routes,
 .mapbox-directions-routes *,
 .mapbox-directions-instructions,
@@ -94,6 +97,17 @@
     left: 5px;
     top: 10px;
     opacity: .5;
+}
+
+/* Errors */
+
+.mapbox-directions-errors {
+    background: #ee8a65;
+}
+
+.mapbox-directions-error {
+    margin: 0;
+    padding: 10px;
 }
 
 /* Routes */

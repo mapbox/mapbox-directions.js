@@ -169,7 +169,7 @@ var Layer = L.LayerGroup.extend({
         this.addLayer(this.destinationMarker);
 
         function waypointLatLng(i) {
-            return L.GeoJSON.coordsToLatLng(e.waypoints[i].geometry.coordinates)
+            return L.GeoJSON.coordsToLatLng(e.waypoints[i].geometry.coordinates);
         }
 
         var l = Math.min(this.waypointMarkers.length, e.waypoints.length),

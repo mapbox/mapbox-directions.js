@@ -121,6 +121,7 @@
 
     <div id='inputs'></div>
     <div id='directions'>
+        <div id='errors'></div>
         <div id='routes'></div>
         <div id='instructions'></div>
     </div>
@@ -141,6 +142,9 @@
         .addTo(map);
 
     var directionsInputControl = L.mapbox.directions.inputControl('inputs', directions)
+        .addTo(map);
+
+    var directionsErrorsControl = L.mapbox.directions.errorsControl('errors', directions)
         .addTo(map);
 
     var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)

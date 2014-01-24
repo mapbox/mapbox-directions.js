@@ -1,14 +1,11 @@
 'use strict';
 
 var corslite = require('corslite'),
-    JSON3 = require('JSON3');
+    JSON3 = require('JSON3'),
+    polyline = require('polyline');
 
 var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
-
-    options: {
-        url: 'https://api.tiles.mapbox.com/v3/{mapid}/directions/driving/{waypoints}.json?instructions=html'
-    },
 
     initialize: function(mapid, options) {
         L.setOptions(this, options);
@@ -78,8 +75,9 @@ var Directions = L.Class.extend({
     },
 
     queryURL: function () {
-        var points = [this.origin].concat(this._waypoints).concat([this.destination]);
-        return L.Util.template(this.options.url, {
+        var template = 'https://api.tiles.mapbox.com/alpha/{mapid}/directions/driving/{waypoints}.json?instructions=html&geometry=polyline',
+            points = [this.origin].concat(this._waypoints).concat([this.destination]);
+        return L.Util.template(template, {
             mapid: this.options.mapid,
             waypoints: points.map(function (point) {
                 if (point instanceof L.LatLng) {
@@ -106,17 +104,32 @@ var Directions = L.Class.extend({
         this._query = corslite(this.queryURL(), L.bind(function (err, resp) {
             this._query = null;
 
-            if (err) {
-                return this.fire('error', {error: err});
+            if (err && err.type === 'abort') {
+                return;
             }
 
-            resp = JSON3.parse(resp.responseText);
+            resp = resp || err;
 
-            if (resp.error) {
-                return this.fire('error', {error: resp.error});
+            if (resp && resp.responseText) {
+                try {
+                    resp = JSON3.parse(resp.responseText);
+                } catch (e) {
+                    resp = {error: resp.responseText};
+                }
+            }
+
+            if (err || resp.error) {
+                return this.fire('error', resp);
             }
 
             this.directions = resp;
+            this.directions.routes.forEach(function (route) {
+                route.geometry = {
+                    type: "LineString",
+                    coordinates: polyline.decode(route.geometry, 6).map(function (c) { return c.reverse(); })
+                };
+            });
+
             this.fire('load', this.directions);
         }, this));
 
