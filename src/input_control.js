@@ -91,12 +91,21 @@ module.exports = function (container, directions) {
         .attr('id', 'mapbox-directions-destination-input')
         .attr('placeholder', 'End');
 
+    function format(waypoint) {
+        if (waypoint instanceof L.LatLng) {
+            var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2));
+            waypoint = waypoint.wrap();
+            waypoint = waypoint.lng.toFixed(precision) + ', ' + waypoint.lat.toFixed(precision);
+        }
+        return waypoint;
+    }
+
     directions
         .on('origin', function (e) {
-            originInput.property('value', e.origin.toString());
+            originInput.property('value', format(e.origin));
         })
         .on('destination', function (e) {
-            destinationInput.property('value', e.destination.toString());
+            destinationInput.property('value', format(e.destination));
         })
         .on('load', function (e) {
             originInput.property('value', e.origin.properties.name);
