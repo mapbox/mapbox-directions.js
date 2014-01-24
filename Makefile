@@ -8,7 +8,7 @@ node_modules/.install: package.json
 dist:
 	mkdir -p dist
 
-dist/mapbox.directions.js: node_modules/.install dist src/d3.js $(shell $(BROWSERIFY) --list index.js)
+dist/mapbox.directions.js: node_modules/.install dist $(shell $(BROWSERIFY) --list index.js)
 	$(BROWSERIFY) --debug index.js > $@
 
 clean:
@@ -19,5 +19,5 @@ D3_FILES = \
 	node_modules/d3/src/selection/index.js \
 	node_modules/d3/src/end.js
 
-src/d3.js: $(D3_FILES)
+lib/d3.js: $(D3_FILES)
 	node_modules/.bin/smash $(D3_FILES) > $@
