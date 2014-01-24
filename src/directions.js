@@ -106,14 +106,22 @@ var Directions = L.Class.extend({
         this._query = corslite(this.queryURL(), L.bind(function (err, resp) {
             this._query = null;
 
-            if (err) {
-                return this.fire('error', {error: err});
+            if (err && err.type === 'abort') {
+                return;
             }
 
-            resp = JSON3.parse(resp.responseText);
+            resp = resp || err;
 
-            if (resp.error) {
-                return this.fire('error', {error: resp.error});
+            if (resp && resp.responseText) {
+                try {
+                    resp = JSON3.parse(resp.responseText);
+                } catch (e) {
+                    resp = {error: resp.responseText};
+                }
+            }
+
+            if (err || resp.error) {
+                return this.fire('error', resp);
             }
 
             this.directions = resp;

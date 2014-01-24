@@ -11,12 +11,15 @@ module.exports = function (container, directions) {
         return control;
     };
 
-    container = d3.select(L.DomUtil.get(container));
+    container = d3.select(L.DomUtil.get(container))
+        .classed('mapbox-directions-routes', true);
+
+    directions.on('error', function () {
+        container.html('');
+    });
 
     directions.on('load', function (e) {
-        container
-            .html('')
-            .classed('mapbox-directions-routes', true);
+        container.html('');
 
         var routes = container.append('ul')
             .selectAll('li')
