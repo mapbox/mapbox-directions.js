@@ -1,13 +1,14 @@
 'use strict';
 
 var corslite = require('corslite'),
-    JSON3 = require('JSON3');
+    JSON3 = require('JSON3'),
+    polyline = require('polyline');
 
 var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
     options: {
-        url: 'https://api.tiles.mapbox.com/alpha/{mapid}/directions/driving/{waypoints}.json?instructions=html'
+        url: 'https://api.tiles.mapbox.com/alpha/{mapid}/directions/driving/{waypoints}.json?instructions=html&geometry=polyline'
     },
 
     initialize: function(mapid, options) {
@@ -125,6 +126,13 @@ var Directions = L.Class.extend({
             }
 
             this.directions = resp;
+            this.directions.routes.forEach(function (route) {
+                route.geometry = {
+                    type: "LineString",
+                    coordinates: polyline.decode(route.geometry, 6).map(function (c) { return c.reverse(); })
+                };
+            });
+
             this.fire('load', this.directions);
         }, this));
 

@@ -11,7 +11,8 @@
     "corslite": "0.0.5",
     "json3": "3.2.6",
     "d3": "3.4.1",
-    "debounce": "0.0.3"
+    "debounce": "0.0.3",
+    "polyline": "0.0.3"
   },
   "devDependencies": {
     "mocha": "1",
