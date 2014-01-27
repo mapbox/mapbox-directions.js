@@ -162,6 +162,7 @@ var Layer = L.LayerGroup.extend({
     },
 
     _load: function(e) {
+
         this.originMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.origin.geometry.coordinates));
         this.addLayer(this.originMarker);
 

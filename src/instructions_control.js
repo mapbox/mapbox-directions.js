@@ -16,12 +16,15 @@ module.exports = function (container, directions) {
 
     directions.on('error', function () {
         container.html('');
+        d3.select('body').classed('active',false);
     });
 
     directions.on('selectRoute', function (e) {
         var route = e.route;
 
         container.html('');
+
+        d3.select('body').classed('active',true);
 
         var steps = container.append('ol')
             .attr('class', 'mapbox-directions-steps')

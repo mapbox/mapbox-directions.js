@@ -22,35 +22,31 @@
 
 /* Inputs */
 
-.mapbox-directions-inputs {
-    padding: 10px;
-}
-
 .mapbox-form-label {
+    cursor: pointer;
     float: left;
     width:15%;
-    background-color: #e5e5e5;
-    color: rgba(0,0,0,.5);
+    background-color: rgba(0,0,0,.8);
+    color: rgba(255,255,255,.5);
     text-align: center;
     padding: 10px;
     line-height: 20px;
     font-size: 12px;
-    border-radius: 3px 0 0 3px;
+}
+
+.mapbox-form-label:hover {
+    color: white;
 }
 
 .mapbox-directions-inputs input {
     font-size: 12px;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
+    width: 85%;
+    background-color: rgba(255,255,255,.9);
+    border: 0;
     height: 40px;
     margin: 0;
     color: rgba(0,0,0,.5);
-    padding: 10px 10px 10px 25px;
-}
-
-#mapbox-directions-origin-input {
-    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .mapbox-directions-inputs input:focus {
@@ -165,19 +161,9 @@
     padding: 0;
 }
 
-.mapbox-directions-steps:before {
-    content: "";
-    position: absolute;
-    top: 40px;
-    bottom: 20px;
-    width: 0;
-    border-left: 2px dotted #a0a0a0;
-    left: 25px;
-}
-
 .mapbox-directions-step {
     position: relative;
-    color: rgba(0,0,0,.5);
+    color: rgba(255,255,255,.5);
     cursor: pointer;
     padding: 20px 10px 20px 50px;
 }
@@ -188,13 +174,12 @@
 }
 
 .mapbox-directions-step:hover {
-    color: rgba(0,0,0,.75);
+    color: white;
 }
 
 .mapbox-directions-step-distance {
     position: absolute;
     padding: 5px 10px;
-    background: white;
     font-size: 12px;
     left: 40px;
     bottom: -15px;
@@ -224,12 +209,10 @@
 }
 
 .mapbox-directions-instructions .mapbox-directions-icon {
-    background-color: white;
     position: absolute;
     left: 15px;
     height: 30px;
     top: 0px;
-    border-top: 5px solid white;
     bottom: 0;
     margin: auto;
 }

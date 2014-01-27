@@ -23,108 +23,86 @@
             color: rgba(0,0,0,.75);
         }
 
-        #sidebar, #map {
-            height: 100%;
-        }
-
-        #sidebar {
-            position: absolute;
-            overflow: auto;
-            left: 0;
-            bottom: 0;
-            top: 0;
-            width: 350px;
-        }
-
         #map {
+            height: 100%;
             position: absolute;
-            left: 350px;
+            left: 0;
             top: 0;
             bottom: 0;
             right: 0;
         }
-
-        #logo {
-            position: absolute;
-            padding: 10px;
-            top: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-        }
-
-        #logo span {
-            -webkit-background-size: 225px 350px;
-                    background-size: 225px 350px;
-
-            background: transparent url('https://www.mapbox.com/base/latest/base.png') no-repeat 0px -250px;
-            display: inline-block;
-            vertical-align: middle;
-            height: 40px;
-            width: 100px;
-            text-indent: -999em;
-            overflow: hidden;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            position: relative;
+        #inputs,
+        #routes,
+        #instructions {
+            position: fixed;
             z-index: 10;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
+            left: 10px;
+            width: 33.3333%;
+            max-width: 300px;
+            min-width: 250px;
+            -webkit-transition: -webkit-transform 200ms;
+               -moz-transition:    -moz-transform 200ms;
+                 -o-transition:      -o-transform 200ms;
+                    transition:         transform 200ms;
         }
-
-        #inputs {
-            border-top: 1px solid #e5e5e5;
-            position: absolute;
-            top: 60px;
+        #inputs {top: 10px;}
+        #routes { top: 90px; }
+        #instructions {
+            z-index: 10;
+            background: rgba(0,0,0,.8);
+            top: 0px;
             left: 0;
-            right: 0;
-        }
-
-        #directions {
-            border-top: 1px solid #e5e5e5;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 170px;
-            bottom: 0;
+            height: 100%;
+            bottom: 0px;
             overflow: auto;
+            -webkit-transform:translateX(-100%);
+               -moz-transform:translateX(-100%);
+                 -o-transform:translateX(-100%);
+                    transform:translateX(-100%);
+        }
+        .active #routes,
+        .active #inputs {
+            -webkit-transform:translateX(100%);
+               -moz-transform:translateX(100%);
+                 -o-transform:translateX(100%);
+                    transform:translateX(100%);
+        }
+        .active #instructions {
+            -webkit-transform:translateX(0%);
+               -moz-transform:translateX(0%);
+                 -o-transform:translateX(0%);
+                    transform:translateX(0%);
         }
 
-        #directions::-webkit-scrollbar {
+        #instructions::-webkit-scrollbar {
             width: 8px;
             height: 8px;
             border-left: 0;
-            background: rgba(0, 0, 0, .1);
+            background: rgba(255, 255, 255, .1);
         }
 
-        #directions::-webkit-scrollbar-track {
+        #instructions::-webkit-scrollbar-track {
             background: none;
         }
 
-        #directions::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, .1);
+        #instructions::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .1);
             border-radius: 0;
         }
 
-        #directions::-webkit-scrollbar:hover {
-            background: rgba(0, 0, 0, .15);
+        #instructions::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, .2);
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<div id='sidebar'>
-    <div id='logo'>
-        <span></span>
-    </div>
-
-    <div id='inputs'></div>
-    <div id='directions'>
-        <div id='errors'></div>
-        <div id='routes'></div>
-        <div id='instructions'></div>
-    </div>
+<div id='inputs'></div>
+<div id='directions'>
+    <div id='errors'></div>
+    <div id='routes'></div>
+    <div id='instructions'></div>
 </div>
 
 <div id='map'>
@@ -132,9 +110,10 @@
 
 <script>
     var map = L.mapbox.map('map', 'examples.map-9ijuk24y', {
-        worldCopyJump: true,
-        infoControl: { editLink: true }
+        worldCopyJump: true
     }).setView([37.77, -122.44], 13);
+
+    map.zoomControl.setPosition('topright');
 
     var directions = L.mapbox.directions('willwhite.map-65rb3vvx');
 

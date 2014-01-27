@@ -32,22 +32,14 @@ module.exports = function (container, directions) {
 
     origin.append('label')
         .attr('class', 'mapbox-form-label')
-        .attr('for', 'mapbox-directions-origin-input')
-        .text('Start');
-
-    var originContainer = origin.append('div');
-
-    originContainer.append('div')
-        .attr('class', 'mapbox-button mapbox-directions-zoom-button')
+        .text('Start')
         .on('click', function () {
             if (directions.getOrigin() instanceof L.LatLng) {
                 map.panTo(directions.getOrigin());
             }
-        })
-        .append('span')
-        .attr('class', 'mapbox-depart-icon mapbox-directions-icon');
+        });
 
-    var originInput = originContainer.append('input')
+    var originInput = origin.append('input')
         .attr('type', 'text')
         .attr('id', 'mapbox-directions-origin-input')
         .attr('placeholder', 'Start');
@@ -71,22 +63,14 @@ module.exports = function (container, directions) {
 
     destination.append('label')
         .attr('class', 'mapbox-form-label')
-        .attr('for', 'mapbox-directions-destination-input')
-        .text('End');
-
-    var destinationContainer = destination.append('div');
-
-    destinationContainer.append('div')
-        .attr('class', 'mapbox-button mapbox-directions-zoom-button')
+        .text('End')
         .on('click', function () {
             if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());
             }
-        })
-        .append('span')
-        .attr('class', 'mapbox-arrive-icon mapbox-directions-icon');
+        });
 
-    var destinationInput = destinationContainer.append('input')
+    var destinationInput = destination.append('input')
         .attr('type', 'text')
         .attr('id', 'mapbox-directions-destination-input')
         .attr('placeholder', 'End');
