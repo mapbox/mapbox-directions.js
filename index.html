@@ -221,10 +221,11 @@
         document.querySelector('#directions').className = 'active';
 
         var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2)),
-            o = directions.getOrigin(),
-            d = directions.getDestination();
-        history.replaceState({}, null, '?route=' + [o.lng.toFixed(precision), o.lat.toFixed(precision)]
-                                           + ';' + [d.lng.toFixed(precision), d.lat.toFixed(precision)]
+            o = directions.getOrigin().geometry.coordinates,
+            d = directions.getDestination().geometry.coordinates;
+
+        history.replaceState({}, null, '?route=' + [o[0].toFixed(precision), o[1].toFixed(precision)]
+                                           + ';' + [d[0].toFixed(precision), d[1].toFixed(precision)]
                                            + location.hash);
 
     }).on('unload', function() {

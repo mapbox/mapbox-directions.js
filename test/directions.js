@@ -1,15 +1,15 @@
 describe("Directions", function () {
     describe("#setOrigin", function () {
-        it("sets origin", function () {
+        it("normalizes latLng", function () {
             var directions = L.mapbox.directions('map.id');
             directions.setOrigin(L.latLng(1, 2));
-            expect(directions.getOrigin()).to.eql(L.latLng(1, 2));
+            expect(directions.getOrigin().geometry.coordinates).to.eql([2, 1]);
         });
 
         it("fires event", function (done) {
             var directions = L.mapbox.directions('map.id');
             directions.on('origin', function (e) {
-                expect(e.origin).to.eql(L.latLng(1, 2));
+                expect(e.origin.geometry.coordinates).to.eql([2, 1]);
                 done();
             });
             directions.setOrigin(L.latLng(1, 2));
@@ -29,16 +29,16 @@ describe("Directions", function () {
     });
 
     describe("#setDestination", function () {
-        it("sets destination", function () {
+        it("normalizes latLng", function () {
             var directions = L.mapbox.directions('map.id');
             directions.setDestination(L.latLng(1, 2));
-            expect(directions.getDestination()).to.eql(L.latLng(1, 2));
+            expect(directions.getDestination().geometry.coordinates).to.eql([2, 1]);
         });
 
         it("fires event", function (done) {
             var directions = L.mapbox.directions('map.id');
             directions.on('destination', function (e) {
-                expect(e.destination).to.eql(L.latLng(1, 2));
+                expect(e.destination.geometry.coordinates).to.eql([2, 1]);
                 done();
             });
             directions.setDestination(L.latLng(1, 2));
@@ -58,24 +58,42 @@ describe("Directions", function () {
     });
 
     describe("reverse", function () {
+        var a = {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [1, 2]
+            },
+            properties: {}
+        }, b = {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [3, 4]
+            },
+            properties: {}
+        };
+
         it("swaps origin and destination", function () {
             var directions = L.mapbox.directions('map.id');
-            directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
+            directions.setOrigin(a);
+            directions.setDestination(b);
             directions.reverse();
-            expect(directions.getOrigin()).to.eql(L.latLng(3, 4));
-            expect(directions.getDestination()).to.eql(L.latLng(1, 2));
+            expect(directions.getOrigin()).to.equal(b);
+            expect(directions.getDestination()).to.equal(a);
         });
 
         it("fires events", function (done) {
             var directions = L.mapbox.directions('map.id');
-            directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
+            directions.setOrigin(a);
+            directions.setDestination(b);
 
             directions.on('origin', function (e) {
-                expect(e.origin).to.eql(L.latLng(3, 4));
+                expect(e.origin).to.equal(b);
             });
 
             directions.on('destination', function (e) {
-                expect(e.destination).to.eql(L.latLng(1, 2));
+                expect(e.destination).to.equal(a);
                 done();
             });
 
