@@ -151,7 +151,8 @@
     var map = L.mapbox.map('map', 'examples.map-h4cgmpoi', {
         worldCopyJump: true,
         zoomControl: false,
-        detectRetina: true
+        detectRetina: true,
+        infoControl: { editLink: true }
     }).setView([37.77, -122.44], 13);
 
     var directions = L.mapbox.directions('willwhite.map-65rb3vvx');
