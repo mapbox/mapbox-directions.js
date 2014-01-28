@@ -22,6 +22,12 @@
 
 /* Inputs */
 
+.mapbox-directions-origin,
+.mapbox-directions-destination {
+    background-color: white;
+    position: relative;
+}
+
 .mapbox-form-label {
     cursor: pointer;
     position: absolute;
@@ -57,11 +63,6 @@
     outline: thin dotted\8;
 }
 
-.mapbox-directions-origin,
-.mapbox-directions-destination {
-    background-color: rgba(255,255,255,.9);
-}
-
 .mapbox-directions-destination {
     border-top: 1px solid rgba(0,0,0,.1);
 }
@@ -69,19 +70,10 @@
 .mapbox-directions-reverse-input {
     position: absolute;
     z-index: 10;
-    opacity: .75;
-    right: -15px;
-    top: 10px;
-}
-
-.mapbox-directions-reverse-input:hover {
-    opacity: 1;
+    background: white;
+    left: 15px;
+    top: 30px;
     cursor: pointer;
-}
-
-.mapbox-directions-destination,
-.mapbox-directions-origin {
-    position: relative;
 }
 
 .mapbox-directions-inputs .mapbox-close-icon {
@@ -103,13 +95,10 @@
 
 /* Errors */
 
-.mapbox-directions-errors {
-    background: #ee8a65;
-}
-
 .mapbox-directions-error {
-    margin: 0;
-    padding: 10px;
+    color: white;
+    display: inline-block;
+    padding: 0 5px;
 }
 
 /* Routes */
@@ -204,8 +193,8 @@
 
 .mapbox-directions-icon {
     background-image: url('mapbox.directions.png');
-    -webkit-background-size: 260px 20px;
-    background-size: 260px 20px;
+    -webkit-background-size: 280px 20px;
+    background-size: 280px 20px;
     background-repeat: no-repeat;
     margin: 0;
     content: '';
@@ -233,8 +222,9 @@
 .mapbox-depart-icon           { background-position: -160px 0; }
 .mapbox-enter-roundabout-icon { background-position: -180px 0; }
 .mapbox-arrive-icon           { background-position: -200px 0; }
-.mapbox-reverse-icon          { background-position: -220px 0; }
-.mapbox-close-icon            { background-position: -240px 0; }
+.mapbox-close-icon            { background-position: -220px 0; }
+.mapbox-reverse-icon          { background-position: -240px 0; }
+.mapbox-error-icon            { background-position: -260px 0; }
 
 .mapbox-marker-drag-icon {
     display: block;

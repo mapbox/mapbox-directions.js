@@ -14,13 +14,12 @@
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js'></script>
 
     <style>
-        html, body {
+        html, body, p {
             height: 100%;
             width: 100%;
             margin: 0;
             padding: 0;
             border: 0;
-            color: rgba(0,0,0,.75);
         }
 
         #map {
@@ -32,17 +31,17 @@
             right: 0;
         }
         #inputs,
+        #errors,
         #directions {
             position: fixed;
-            z-index: 10;
             width: 33.3333%;
             max-width: 300px;
             min-width: 200px;
         }
         #inputs {
+            z-index: 10;
             top: 10px;
-            left: 0;
-            padding: 0 10px;
+            left: 10px;
         }
         #directions {
             z-index: 9;
@@ -60,7 +59,7 @@
                  -o-transform:translateX(100%);
                     transform:translateX(100%);
         }
-        .active #directions {
+        .mapbox-sidebar-active #directions {
             -webkit-transform:translateX(0%);
                -moz-transform:translateX(0%);
                  -o-transform:translateX(0%);
@@ -72,6 +71,32 @@
             height: 5px;
             border-left: 0;
             background: none;
+        }
+
+        #errors {
+            z-index: 8;
+            opacity: 0;
+            padding: 10px;
+            border-radius: 0 0 3px 3px;
+            background: rgba(0,0,0,.75);
+            top: 90px;
+            left: 10px;
+            -webkit-transform:translateY(-20px);
+               -moz-transform:translateY(-20px);
+                 -o-transform:translateY(-20px);
+                    transform:translateY(-20px);
+            -webkit-transition: all .15s;
+               -moz-transition: all .15s;
+                 -o-transition: all .15s;
+                    transition: all .15s;
+        }
+
+        #errors.mapbox-error-active {
+            opacity: 1;
+            -webkit-transform:translateY(0);
+               -moz-transform:translateY(0);
+                 -o-transform:translateY(0);
+                    transform:translateY(0);
         }
 
         #directions::-webkit-scrollbar-track {
@@ -108,8 +133,8 @@
 <body>
 
 <div id='inputs'></div>
+<div id='errors'></div>
 <div id='directions'>
-    <div id='errors'></div>
     <div id='routes'></div>
     <div id='instructions'></div>
 </div>
@@ -121,8 +146,9 @@
 <script>
     var map = L.mapbox.map('map', 'examples.map-h4cgmpoi', {
         worldCopyJump: true,
-        zoomControl: false
-    }).setView([37.77, -122.44], 13);
+        zoomControl: false,
+        detectRetina: true
+    }).setView([38.9035, -77.0254], 13);
 
     var directions = L.mapbox.directions('willwhite.map-65rb3vvx');
 

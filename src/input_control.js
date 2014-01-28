@@ -45,7 +45,7 @@ module.exports = function (container, directions) {
         .on('click', function () {
             // TODO: implement close button properly
             directions.setOrigin('');
-            d3.select('body').classed('active',false);
+            d3.select('body').classed('mapbox-sidebar-active',false);
         });
 
     var originInput = origin.append('input')
@@ -53,14 +53,12 @@ module.exports = function (container, directions) {
         .attr('id', 'mapbox-directions-origin-input')
         .attr('placeholder', 'Start');
 
-    form.append('div')
-        .attr('class', 'mapbox-button mapbox-directions-reverse-button mapbox-directions-reverse-input')
+    form.append('span')
+        .attr('class', 'mapbox-directions-icon mapbox-reverse-icon mapbox-directions-reverse-input')
         .attr('title','Reverse origin & destination')
         .on('click', function () {
             directions.reverse().query();
-        })
-        .append('span')
-        .attr('class', 'mapbox-reverse-icon mapbox-directions-icon');
+        });
 
     var destination = form.append('div')
         .attr('class', 'mapbox-directions-destination');
@@ -80,7 +78,7 @@ module.exports = function (container, directions) {
         .on('click', function () {
             // TODO: implement close button properly
             directions.setDestination('');
-            d3.select('body').classed('active',false);
+            d3.select('body').classed('mapbox-sidebar-active',false);
         });
 
     var destinationInput = destination.append('input')

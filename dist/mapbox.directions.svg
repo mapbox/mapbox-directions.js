@@ -9,7 +9,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="260"
+   width="280"
    height="20"
    id="svg5327"
    version="1.1"
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="211.02922"
-     inkscape:cy="-11.347643"
+     inkscape:zoom="2"
+     inkscape:cx="176.3447"
+     inkscape:cy="-13.468004"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -37,12 +37,12 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1365"
-     inkscape:window-height="961"
-     inkscape:window-x="91"
-     inkscape:window-y="27"
+     inkscape:window-width="1280"
+     inkscape:window-height="756"
+     inkscape:window-x="56"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
-     showguides="false">
+     showguides="true">
     <inkscape:grid
        type="xygrid"
        id="grid5368"
@@ -132,8 +132,7 @@
        style="fill:#ffffff" />
     <path
        style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="m 230,3.5 -4.5,4.5 3.5,0 0,4 -3.5,0 4.5,4.5 4.5,-4.5 -3.5,0 0,-4 3.5,0 -4.5,-4.5 z"
-       transform="translate(3200,992.36218)"
+       d="m 3450,995.86218 -4.5,4.50002 3.5,0 0,4 -3.5,0 4.5,4.5 4.5,-4.5 -3.5,0 0,-4 3.5,0 -4.5,-4.50002 z"
        id="path6002-6-5-5-0"
        inkscape:connector-curvature="0" />
     <path
@@ -150,14 +149,20 @@
        sodipodi:nodetypes="scsss" />
     <path
        style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="M 245 5 L 245 6.5 L 248.5 10 L 245 13.5 L 245 15 L 246.5 15 L 250 11.5 L 253.5 15 L 255 15 L 255 13.5 L 251.5 10 L 255 6.5 L 255 5 L 253.5 5 L 250 8.5 L 246.5 5 L 245 5 z "
-       transform="translate(3200,992.36218)"
-       id="path3073" />
+       d="m 3425,997.36218 0,1.5 3.5,3.50002 -3.5,3.5 0,1.5 1.5,0 3.5,-3.5 3.5,3.5 1.5,0 0,-1.5 -3.5,-3.5 3.5,-3.50002 0,-1.5 -1.5,0 -3.5,3.50002 -3.5,-3.50002 -1.5,0 z"
+       id="path3073"
+       inkscape:connector-curvature="0" />
     <path
        style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        d="m 3410,995.36218 2,5.00002 5,0 -4,3.5 2,5.5 -5,-3.5 -5,3.5 2,-5.5 -4,-3.5 5,0 z"
        id="path4383-1"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccc" />
+    <path
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 3470,996.36216 c -0.6052,0 -1.2104,0.26615 -1.5,0.78125 l -4.3125,9.21879 c -0.4646,0.8263 0.011,2 1.125,2 l 4.6875,0 4.6875,0 c 1.1141,0 1.5896,-1.1737 1.125,-2 l -4.3125,-9.21879 c -0.2896,-0.5151 -0.8948,-0.78125 -1.5,-0.78125 z m 0,3 1,1.00004 0,3 -2,0 0,-3 z m -1,5.00004 2,0 0,2 -2,0 z"
+       id="path12850"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sccscsccsccccccccccc" />
   </g>
 </svg>

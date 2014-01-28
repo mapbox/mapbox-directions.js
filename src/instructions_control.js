@@ -16,7 +16,7 @@ module.exports = function (container, directions) {
 
     directions.on('error', function () {
         container.html('');
-        d3.select('body').classed('active',false);
+        d3.select('body').classed('mapbox-sidebar-active',false);
     });
 
     directions.on('selectRoute', function (e) {
@@ -24,7 +24,7 @@ module.exports = function (container, directions) {
 
         container.html('');
 
-        d3.select('body').classed('active',true);
+        d3.select('body').classed('mapbox-sidebar-active',true);
 
         var steps = container.append('ol')
             .attr('class', 'mapbox-directions-steps')
