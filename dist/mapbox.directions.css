@@ -78,7 +78,6 @@
 }
 
 .mapbox-directions-inputs .mapbox-close-icon {
-    display: none;
     opacity: .5;
     z-index: 2;
     position: absolute;
@@ -87,9 +86,13 @@
     cursor: pointer;
 }
 
-.active .mapbox-close-icon { display: block;}
+input:not(:valid) + .mapbox-close-icon {
+    display: none;
+}
 
-.mapbox-close-icon:hover { opacity: .75;}
+.mapbox-close-icon:hover {
+    opacity: .75;
+}
 
 /* Errors */
 
