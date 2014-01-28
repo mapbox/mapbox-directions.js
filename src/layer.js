@@ -14,7 +14,7 @@ var Layer = L.LayerGroup.extend({
             icon: L.mapbox.marker.icon({
                 'marker-size': 'medium',
                 'marker-color': '#3BB2D0',
-                'marker-symbol': 'car'
+                'marker-symbol': 'a'
             })
         }).on('drag', this._drag, this);
 
@@ -23,7 +23,7 @@ var Layer = L.LayerGroup.extend({
             icon: L.mapbox.marker.icon({
                 'marker-size': 'medium',
                 'marker-color': '#444',
-                'marker-symbol': 'star'
+                'marker-symbol': 'b'
             })
         }).on('drag', this._drag, this);
 

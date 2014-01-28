@@ -32,12 +32,13 @@ module.exports = function (container, directions) {
 
     origin.append('label')
         .attr('class', 'mapbox-form-label')
-        .text('Start')
         .on('click', function () {
             if (directions.getOrigin() instanceof L.LatLng) {
                 map.panTo(directions.getOrigin());
             }
-        });
+        })
+        .append('span')
+            .attr('class','mapbox-directions-icon mapbox-depart-icon');
 
     origin.append('div')
         .attr('class', 'mapbox-directions-icon mapbox-close-icon')
@@ -65,12 +66,13 @@ module.exports = function (container, directions) {
 
     destination.append('label')
         .attr('class', 'mapbox-form-label')
-        .text('End')
         .on('click', function () {
             if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());
             }
-        });
+        })
+        .append('span')
+            .attr('class','mapbox-directions-icon mapbox-arrive-icon');
 
     destination.append('div')
         .attr('class', 'mapbox-directions-icon mapbox-close-icon')
