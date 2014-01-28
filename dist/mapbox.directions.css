@@ -78,7 +78,7 @@
 }
 
 .mapbox-directions-inputs .mapbox-close-icon {
-/*    display: none;*/
+    display: none;
     opacity: .5;
     z-index: 2;
     position: absolute;
@@ -87,10 +87,7 @@
     cursor: pointer;
 }
 
-.mapbox-directions-inputs.active .mapbox-close-icon {
-    /* TODO: need to class input based on existance of value */
-    display: block;
-}
+.active .mapbox-close-icon { display: block;}
 
 .mapbox-close-icon:hover { opacity: .75;}
 
