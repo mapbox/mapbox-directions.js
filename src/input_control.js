@@ -32,61 +32,58 @@ module.exports = function (container, directions) {
 
     origin.append('label')
         .attr('class', 'mapbox-form-label')
-        .attr('for', 'mapbox-directions-origin-input')
-        .text('Start');
-
-    var originContainer = origin.append('div');
-
-    originContainer.append('div')
-        .attr('class', 'mapbox-button mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getOrigin() instanceof L.LatLng) {
                 map.panTo(directions.getOrigin());
             }
         })
         .append('span')
-        .attr('class', 'mapbox-depart-icon mapbox-directions-icon');
+            .attr('class','mapbox-directions-icon mapbox-depart-icon');
 
-    var originInput = originContainer.append('input')
+    origin.append('div')
+        .attr('class', 'mapbox-directions-icon mapbox-close-icon')
+        .attr('title','Clear value')
+        .on('click', function () {
+            // TODO: implement close button properly
+            directions.setOrigin('');
+            d3.select('body').classed('mapbox-sidebar-active',false);
+        });
+
+    var originInput = origin.append('input')
         .attr('type', 'text')
         .attr('id', 'mapbox-directions-origin-input')
         .attr('placeholder', 'Start');
 
-    form.append('div')
-        .attr('class', 'mapbox-button mapbox-directions-reverse-button mapbox-directions-reverse-input')
+    form.append('span')
+        .attr('class', 'mapbox-directions-icon mapbox-reverse-icon mapbox-directions-reverse-input')
+        .attr('title','Reverse origin & destination')
         .on('click', function () {
-            var o = originInput.value,
-                d = destinationInput.value;
-
-            originInput.property('value', d);
-            destinationInput.property('value', o);
-
             directions.reverse().query();
-        })
-        .append('span')
-        .attr('class', 'mapbox-reverse-icon mapbox-directions-icon');
+        });
 
     var destination = form.append('div')
         .attr('class', 'mapbox-directions-destination');
 
     destination.append('label')
         .attr('class', 'mapbox-form-label')
-        .attr('for', 'mapbox-directions-destination-input')
-        .text('End');
-
-    var destinationContainer = destination.append('div');
-
-    destinationContainer.append('div')
-        .attr('class', 'mapbox-button mapbox-directions-zoom-button')
         .on('click', function () {
             if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());
             }
         })
         .append('span')
-        .attr('class', 'mapbox-arrive-icon mapbox-directions-icon');
+            .attr('class','mapbox-directions-icon mapbox-arrive-icon');
 
-    var destinationInput = destinationContainer.append('input')
+    destination.append('div')
+        .attr('class', 'mapbox-directions-icon mapbox-close-icon')
+        .attr('title','Clear value')
+        .on('click', function () {
+            // TODO: implement close button properly
+            directions.setDestination('');
+            d3.select('body').classed('mapbox-sidebar-active',false);
+        });
+
+    var destinationInput = destination.append('input')
         .attr('type', 'text')
         .attr('id', 'mapbox-directions-destination-input')
         .attr('placeholder', 'End');

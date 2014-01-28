@@ -14,88 +14,89 @@
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js'></script>
 
     <style>
-        html, body {
+        html, body, p {
             height: 100%;
             width: 100%;
             margin: 0;
             padding: 0;
             border: 0;
-            color: rgba(0,0,0,.75);
-        }
-
-        #sidebar, #map {
-            height: 100%;
-        }
-
-        #sidebar {
-            position: absolute;
-            overflow: auto;
-            left: 0;
-            bottom: 0;
-            top: 0;
-            width: 350px;
         }
 
         #map {
+            height: 100%;
             position: absolute;
-            left: 350px;
+            left: 0;
             top: 0;
             bottom: 0;
             right: 0;
         }
-
-        #logo {
-            position: absolute;
-            padding: 10px;
-            top: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-        }
-
-        #logo span {
-            -webkit-background-size: 225px 350px;
-                    background-size: 225px 350px;
-
-            background: transparent url('https://www.mapbox.com/base/latest/base.png') no-repeat 0px -250px;
-            display: inline-block;
-            vertical-align: middle;
-            height: 40px;
-            width: 100px;
-            text-indent: -999em;
-            overflow: hidden;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            position: relative;
-            z-index: 10;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        #inputs {
-            border-top: 1px solid #e5e5e5;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            right: 0;
-        }
-
+        #inputs,
+        #errors,
         #directions {
-            border-top: 1px solid #e5e5e5;
-            position: absolute;
-            left: 0;
+            position: fixed;
+            width: 33.3333%;
+            max-width: 300px;
+            min-width: 200px;
+        }
+        #inputs {
+            z-index: 10;
+            top: 10px;
+            left: 10px;
+        }
+        #directions {
+            z-index: 9;
+            background: rgba(0,0,0,.8);
+            top: 0;
             right: 0;
-            top: 170px;
             bottom: 0;
             overflow: auto;
+            -webkit-transition: -webkit-transform .15s;
+               -moz-transition:    -moz-transform .15s;
+                 -o-transition:      -o-transform .15s;
+                    transition:         transform .15s;
+            -webkit-transform:translateX(100%);
+               -moz-transform:translateX(100%);
+                 -o-transform:translateX(100%);
+                    transform:translateX(100%);
+        }
+        .mapbox-sidebar-active #directions {
+            -webkit-transform:translateX(0%);
+               -moz-transform:translateX(0%);
+                 -o-transform:translateX(0%);
+                    transform:translateX(0%);
         }
 
         #directions::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 5px;
+            height: 5px;
             border-left: 0;
-            background: rgba(0, 0, 0, .1);
+            background: none;
+        }
+
+        #errors {
+            z-index: 8;
+            opacity: 0;
+            padding: 10px;
+            border-radius: 0 0 3px 3px;
+            background: rgba(0,0,0,.25);
+            top: 90px;
+            left: 10px;
+            -webkit-transform:translateY(-20px);
+               -moz-transform:translateY(-20px);
+                 -o-transform:translateY(-20px);
+                    transform:translateY(-20px);
+            -webkit-transition: all .15s;
+               -moz-transition: all .15s;
+                 -o-transition: all .15s;
+                    transition: all .15s;
+        }
+
+        #errors.mapbox-error-active {
+            opacity: 1;
+            -webkit-transform:translateY(0);
+               -moz-transform:translateY(0);
+                 -o-transform:translateY(0);
+                    transform:translateY(0);
         }
 
         #directions::-webkit-scrollbar-track {
@@ -103,37 +104,50 @@
         }
 
         #directions::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, .1);
+            background: rgba(255, 255, 255, .1);
             border-radius: 0;
         }
 
-        #directions::-webkit-scrollbar:hover {
-            background: rgba(0, 0, 0, .15);
+        #instructions::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, .2);
+            cursor: pointer;
         }
+
+        .mapbox-maplogo {
+            position:absolute;
+            display:block;
+            height: 20px;
+            width: 65px;
+            left:10px;
+            bottom:10px;
+            text-indent: -9999px;
+            z-index:99999;
+            overflow:hidden;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAoCAMAAAAFWtJHAAAAwFBMVEUAAAAAAAAAAABtbW0AAAAAAAAAAAAAAAAAAAAAAAClpaUAAADp6ekAAAD5+fna2toAAAAMDAzv7+/Nzc0AAAA2Njb8/Pz9/f3T09MAAAAAAAD7+/sAAAArKyuxsbH39/fs7OwbGxuIiIjz8/N8fHyenp7u7u74+PgAAAC8vLxWVlbx8fF1dXXl5eVcXFyUlJTQ0NDFxcVCQkLAwMC4uLj19fXo6OjW1tarq6ve3t77+/vi4uL6+vrKysrNzc3///8w7gSSAAAAP3RSTlMAOQNdPSYBPywKexLLGPCxNEHXnzFL+v2nGwf1IEiE6dBFad9jd9PuLo1V2mDDV3Cjl06SiuXIq4C3973ym6BQMVUPAAAEXElEQVR4Ae2WCVP6OBiH05L0l1IqrVbkKHJ54I0oHn+PfP9vtUle0z/YdhbH2XVnd58ZnRJIeHiPJOx//mH4vQSAN+8FjAhFxgHIaPvJeZ99hxwEElon5iAQbj85Y98g8ODwjEOMAvGFyeE3FEKgodTBqj0BJGN9DhyNd5Ta3ean9QEopfaA+LsKhnEKRExqg4FSP6Og7oEkAjBWnxSCgBX4xF+kcLoPcOBQrSv0e5kH7s1j37jECQieCTPiFGxL5VHw2zQWCeeJiPt6kjRQw0XSkIdVChf67xGa4alSnZlT6HEQ8CK9ANbhvXUF9xlDkBfTuHDWScgC9+z5FQpPI12TlwC6+sV7ixR8CUMKiwjm2GQeOQWHMGuHGdbnObJAwCEqFJpNU5H6uaPUaEIKiQfg+PHk1+u4OwW9PlWW2ctbA4BHCtp+cNK+H8Jos4gDmC5ar4Nx9waaG/2B13NgDqS7+vm2RgEtEws82P+kwIHhs/pgkQKcFIhfd7CogtGNjYMHTLpurD0ERbYFw4JaD3GlQuNAL/JEsSAF4HqlCnaHACk4WhOn4OgCkMD5hSpYNYDJTD8Y46n+jsE1kPhVCuR6QBXhFK7MUOu9O6b1SWF3b+/9ZVWMGOlu93E8UDaAhgc7bfH+0DHqKXCkHzoNDFfU+zxiVQrUC9QXTuHYtKpN59OA3IxCG4b7jh6ZFuVockaNTW09mkJzOaPU49a6mE9cAchZpQJNpUWcwgV9r6FJswsFKrITp2B5pMBMdnS0z2HZNy2+BNKxSZxZfglkrFYBJxQnpzA5sN/HheR2aFQoZBLAi149dQoyAYYjW0hHlHguBAdMcR0DuDZ5omevX6+AI8qcU7ikKT3GBHCnXwydgmCC0tRwCnGQ2Wp6Be71yNIWfQSkOl9vAI1SBCNWrwC01RROgX7BuT2HI4r7tFAw086p/NwZEdOEa7R1uAFuNmQPuKAEAjYNQ0CyeoUEWHYBnpQVQgpvc0Ph+gsKlAnKg1+vEHsw5LKciLKCAJobiWBzYFGbCKpHqkZZrxBFHEASyFI59vJPCskcwNVGOWZAOqsrR+pKbaNeAMT1CixMEtlnsqopNxUMzVJT3tY35aXZm6a6Y9QhwMN6BUJWbE1lhbMO1WehkO7poO0sK7em9MJGxp1XSbC1gtugzzSLQmGsX7VntJGSwsPZ2d2z3bIPKzdoOp3Wzqt8G4XyMVUoFIxLx1S7+piaHtCvR3FeRVsq0GFdp9C5TbGpcNqsPqyHKxcfd14h21KhuLKUFU4f3osrC7F6uV3WXFnadL7wyAPeKDXw2RoJCO5GY4DouYvb/gepVXheLoewzPseQG9N/vzilrMIjoStE3++zvle4eSurw7XEe76ynI4aq+v7lEyt1x5awiFlFLQbHKIpabnM3eJLym4Szzzc/du7SU+zOXv9UNpECH7IoH/gecURPlN9vdQpeD47yhIFNX0U0QgvID9nENm+yxk/xb+AGAjNfRZuk9qAAAAAElFTkSuQmCC);
+            background-repeat:no-repeat;
+            background-position: 0 0 ;
+            background-size: 65px 20px;
+    }
     </style>
 </head>
 <body>
 
-<div id='sidebar'>
-    <div id='logo'>
-        <span></span>
-    </div>
-
-    <div id='inputs'></div>
-    <div id='directions'>
-        <div id='errors'></div>
-        <div id='routes'></div>
-        <div id='instructions'></div>
-    </div>
+<div id='inputs'></div>
+<div id='errors'></div>
+<div id='directions'>
+    <div id='routes'></div>
+    <div id='instructions'></div>
 </div>
 
 <div id='map'>
 </div>
+<a href="http://mapbox.com/" class='mapbox-maplogo' target="_blank">MapBox</a>
 
 <script>
-    var map = L.mapbox.map('map', 'examples.map-9ijuk24y', {
+    var map = L.mapbox.map('map', 'examples.map-h4cgmpoi', {
         worldCopyJump: true,
-        infoControl: { editLink: true }
+        zoomControl: false,
+        detectRetina: true
     }).setView([37.77, -122.44], 13);
 
     var directions = L.mapbox.directions('willwhite.map-65rb3vvx');
