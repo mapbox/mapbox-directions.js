@@ -48,18 +48,17 @@
             z-index: 9;
             background: rgba(0,0,0,.8);
             top: 0;
-            padding-top: 90px;
-            left: 0;
+            right: 0;
             bottom: 0;
             overflow: auto;
             -webkit-transition: -webkit-transform .15s;
                -moz-transition:    -moz-transform .15s;
                  -o-transition:      -o-transform .15s;
                     transition:         transform .15s;
-            -webkit-transform:translateX(-100%);
-               -moz-transform:translateX(-100%);
-                 -o-transform:translateX(-100%);
-                    transform:translateX(-100%);
+            -webkit-transform:translateX(100%);
+               -moz-transform:translateX(100%);
+                 -o-transform:translateX(100%);
+                    transform:translateX(100%);
         }
         .active #directions {
             -webkit-transform:translateX(0%);
@@ -94,8 +93,8 @@
             display:block;
             height: 20px;
             width: 65px;
-            right:10px;
-            top:10px;
+            left:10px;
+            bottom:10px;
             text-indent: -9999px;
             z-index:99999;
             overflow:hidden;

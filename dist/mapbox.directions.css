@@ -24,16 +24,15 @@
 
 .mapbox-form-label {
     cursor: pointer;
-    float: left;
-    width:20%;
-    background-color: rgba(255,255,255,.9);
+    position: absolute;
+    left: 0;
+    top: 0;
     color: rgba(0,0,0,.75);
     font-weight: bold;
     text-align: center;
     padding: 10px;
     line-height: 20px;
     font-size: 12px;
-    border-right: 1px solid rgba(0,0,0,.1);
 }
 
 .mapbox-form-label:hover {
@@ -42,24 +41,28 @@
 
 .mapbox-directions-inputs input {
     font-size: 12px;
-    width: 80%;
-    background-color: rgba(255,255,255,.9);
+    width: 100%;
     border: 0;
+    background-color: transparent;
     height: 40px;
     margin: 0;
     color: rgba(0,0,0,.5);
-    padding: 10px;
+    padding: 10px 10px 10px 50px;
 }
 
 .mapbox-directions-inputs input:focus {
     color: rgba(0,0,0,.75);
     outline:0;
-    -webkit-box-shadow: none;
-        box-shadow: none;
+    box-shadow: none;
     outline: thin dotted\8;
 }
 
-#mapbox-directions-destination-input {
+.mapbox-directions-origin,
+.mapbox-directions-destination {
+    background-color: rgba(255,255,255,.9);
+}
+
+.mapbox-directions-destination {
     border-top: 1px solid rgba(0,0,0,.1);
 }
 
@@ -67,8 +70,8 @@
     position: absolute;
     z-index: 10;
     opacity: .75;
-    left: 30px;
-    top: 30px;
+    right: -15px;
+    top: 10px;
 }
 
 .mapbox-directions-reverse-input:hover {
@@ -79,10 +82,6 @@
 .mapbox-directions-destination,
 .mapbox-directions-origin {
     position: relative;
-}
-
-.mapbox-directions-origin {
-    margin-bottom: 0;
 }
 
 .mapbox-directions-inputs .mapbox-close-icon {
@@ -118,7 +117,8 @@
 .mapbox-directions-routes ul {
     list-style: none;
     margin: 0;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
+    border-bottom: 1px solid rgba(255,255,255,.25);
 }
 
 .mapbox-directions-routes li {
@@ -134,7 +134,6 @@
 .mapbox-directions-routes li:hover,
 .mapbox-directions-routes .mapbox-directions-route-active {
     color: white;
-    background-color: rgba(0,0,0,.2);
 }
 
 .mapbox-directions-route-heading {
@@ -167,9 +166,11 @@
 
 .mapbox-directions-step {
     position: relative;
-    color: white;
+    color: rgba(255,255,255,.75);
     cursor: pointer;
     padding: 20px 20px 20px 40px;
+    font-size: 20px;
+    line-height: 25px;
 }
 
 .mapbox-directions-step-distance {
@@ -181,7 +182,7 @@
     bottom: -15px;
 }
 
-.mapbox-directions-step:hover .mapbox-directions-step-distance {
+.mapbox-directions-step:hover {
     color: white;
 }
 
