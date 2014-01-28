@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16"
-     inkscape:cx="206.69159"
-     inkscape:cy="6.8400924"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="211.02922"
+     inkscape:cy="-11.347643"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -131,7 +131,7 @@
        id="g6038"
        style="fill:#ffffff" />
     <path
-       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        d="m 230,3.5 -4.5,4.5 3.5,0 0,4 -3.5,0 4.5,4.5 4.5,-4.5 -3.5,0 0,-4 3.5,0 -4.5,-4.5 z"
        transform="translate(3200,992.36218)"
        id="path6002-6-5-5-0"
@@ -140,7 +140,7 @@
        sodipodi:nodetypes="cccccccc"
        inkscape:connector-curvature="0"
        id="rect4421-6"
-       d="m 3406.75,946.36218 -2,6.00002 7.25,0 -2,6 2,0 4,-12.00002 -1.25,0 z"
+       d="m 3407,947.36218 -2,6.00002 7.25,0 -2,6 2,0 4,-12.00002 -1.25,0 z"
        style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <path
        style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
