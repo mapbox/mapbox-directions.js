@@ -192,7 +192,7 @@
     content: "";
     position: absolute;
     top: 50px;
-    bottom: -10px;
+    bottom: -20px;
     border-left: 2px dotted rgba(255,255,255,.2);
     left: 25px;
 }
