@@ -29,7 +29,7 @@ var Layer = L.LayerGroup.extend({
 
         this.stepMarker = L.marker([0,0], {
             icon: L.divIcon({
-                className: 'mapbox-marker-drag-icon',
+                className: 'mapbox-marker-drag-icon mapbox-marker-drag-icon-step',
                 iconSize: new L.Point(12, 12)
             })
         });
