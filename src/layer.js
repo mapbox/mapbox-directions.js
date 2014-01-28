@@ -123,19 +123,19 @@ var Layer = L.LayerGroup.extend({
     },
 
     _origin: function(e) {
-        if (e.origin instanceof L.LatLng) {
-            this.originMarker.setLatLng(e.origin);
+        if (e.origin && e.origin.geometry.coordinates) {
+            this.originMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.origin.geometry.coordinates));
             this.addLayer(this.originMarker);
-        } else if (!e.origin) {
+        } else {
             this.removeLayer(this.originMarker);
         }
     },
 
     _destination: function(e) {
-        if (e.destination instanceof L.LatLng) {
-            this.destinationMarker.setLatLng(e.destination);
+        if (e.destination && e.destination.geometry.coordinates) {
+            this.destinationMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.destination.geometry.coordinates));
             this.addLayer(this.destinationMarker);
-        } else if (!e.destination) {
+        } else {
             this.removeLayer(this.destinationMarker);
         }
     },
@@ -174,11 +174,8 @@ var Layer = L.LayerGroup.extend({
     },
 
     _load: function(e) {
-        this.originMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.origin.geometry.coordinates));
-        this.addLayer(this.originMarker);
-
-        this.destinationMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.destination.geometry.coordinates));
-        this.addLayer(this.destinationMarker);
+        this._origin(e);
+        this._destination(e);
 
         function waypointLatLng(i) {
             return L.GeoJSON.coordsToLatLng(e.waypoints[i].geometry.coordinates);

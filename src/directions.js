@@ -22,6 +22,8 @@ var Directions = L.Class.extend({
     },
 
     setOrigin: function (origin) {
+        origin = this._normalizeWaypoint(origin);
+
         this.origin = origin;
         this.fire('origin', {origin: origin});
 
@@ -33,6 +35,8 @@ var Directions = L.Class.extend({
     },
 
     setDestination: function (destination) {
+        destination = this._normalizeWaypoint(destination);
+
         this.destination = destination;
         this.fire('destination', {destination: destination});
 
@@ -43,8 +47,8 @@ var Directions = L.Class.extend({
         return this;
     },
 
-    addWaypoint: function (index, latLng) {
-        this._waypoints.splice(index, 0, latLng);
+    addWaypoint: function (index, waypoint) {
+        this._waypoints.splice(index, 0, this._normalizeWaypoint(waypoint));
         return this;
     },
 
@@ -53,8 +57,8 @@ var Directions = L.Class.extend({
         return this;
     },
 
-    setWaypoint: function (index, latLng) {
-        this._waypoints[index] = latLng;
+    setWaypoint: function (index, waypoint) {
+        this._waypoints[index] = this._normalizeWaypoint(waypoint);
         return this;
     },
 
@@ -90,12 +94,7 @@ var Directions = L.Class.extend({
         return L.Util.template(template, {
             mapid: this.options.mapid,
             waypoints: points.map(function (point) {
-                if (point instanceof L.LatLng) {
-                    point = point.wrap();
-                    return point.lng + ',' + point.lat;
-                } else {
-                    return point;
-                }
+                return point.properties.query || point.geometry.coordinates;
             }).join(';')
         });
     },
@@ -140,6 +139,9 @@ var Directions = L.Class.extend({
                 };
             });
 
+            this.origin = this.directions.origin;
+            this.destination = this.directions.destination;
+
             this.fire('load', this.directions);
         }, this));
 
@@ -150,6 +152,31 @@ var Directions = L.Class.extend({
         this._waypoints = [];
         delete this.directions;
         this.fire('unload');
+    },
+
+    _normalizeWaypoint: function (waypoint) {
+        if (!waypoint || waypoint.type === 'Feature') {
+            return waypoint;
+        }
+
+        var coordinates,
+            properties = {};
+
+        if (waypoint instanceof L.LatLng) {
+            waypoint = waypoint.wrap();
+            coordinates = properties.query = [waypoint.lng, waypoint.lat];
+        } else if (waypoint instanceof String) {
+            properties.query = waypoint;
+        }
+
+        return {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: coordinates
+            },
+            properties: properties
+        };
     }
 });
 

@@ -85,12 +85,15 @@ module.exports = function (container, directions) {
         .attr('placeholder', 'End');
 
     function format(waypoint) {
-        if (waypoint instanceof L.LatLng) {
+        if (!waypoint) {
+            return '';
+        } else if (waypoint.properties.name) {
+            return waypoint.properties.name;
+        } else {
             var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2));
-            waypoint = waypoint.wrap();
-            waypoint = waypoint.lng.toFixed(precision) + ', ' + waypoint.lat.toFixed(precision);
+            return waypoint.geometry.coordinates[0].toFixed(precision) + ', ' +
+                   waypoint.geometry.coordinates[1].toFixed(precision);
         }
-        return waypoint || '';
     }
 
     directions
@@ -101,7 +104,8 @@ module.exports = function (container, directions) {
                 } else {
                     return false;
                 }
-            })
+            });
+
             originInput.property('value', format(e.origin));
         })
         .on('destination', function (e) {
@@ -111,12 +115,13 @@ module.exports = function (container, directions) {
                 } else {
                     return false;
                 }
-            })
+            });
+
             destinationInput.property('value', format(e.destination));
         })
         .on('load', function (e) {
-            originInput.property('value', e.origin.properties.name);
-            destinationInput.property('value', e.destination.properties.name);
+            originInput.property('value', format(e.origin));
+            destinationInput.property('value', format(e.destination));
         });
 
     return control;
