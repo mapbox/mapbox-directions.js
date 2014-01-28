@@ -39,6 +39,15 @@ module.exports = function (container, directions) {
             }
         });
 
+    origin.append('div')
+        .attr('class', 'mapbox-directions-icon mapbox-close-icon')
+        .attr('title','Clear value')
+        .on('click', function () {
+            // TODO: implement close button properly
+            directions.setOrigin('');
+            d3.select('body').classed('active',false);
+        });
+
     var originInput = origin.append('input')
         .attr('type', 'text')
         .attr('id', 'mapbox-directions-origin-input')
@@ -46,13 +55,8 @@ module.exports = function (container, directions) {
 
     form.append('div')
         .attr('class', 'mapbox-button mapbox-directions-reverse-button mapbox-directions-reverse-input')
+        .attr('title','Reverse origin & destination')
         .on('click', function () {
-            var o = originInput.value,
-                d = destinationInput.value;
-
-            originInput.property('value', d);
-            destinationInput.property('value', o);
-
             directions.reverse().query();
         })
         .append('span')
@@ -68,6 +72,15 @@ module.exports = function (container, directions) {
             if (directions.getDestination() instanceof L.LatLng) {
                 map.panTo(directions.getDestination());
             }
+        });
+
+    destination.append('div')
+        .attr('class', 'mapbox-directions-icon mapbox-close-icon')
+        .attr('title','Clear value')
+        .on('click', function () {
+            // TODO: implement close button properly
+            directions.setDestination('');
+            d3.select('body').classed('active',false);
         });
 
     var destinationInput = destination.append('input')

@@ -27,7 +27,7 @@
     float: left;
     width:15%;
     background-color: rgba(0,0,0,.8);
-    color: rgba(255,255,255,.5);
+    color: rgba(255,255,255,.75);
     text-align: center;
     padding: 10px;
     line-height: 20px;
@@ -50,7 +50,7 @@
 }
 
 .mapbox-directions-inputs input:focus {
-    border-color: #bfbfbf;
+    color: rgba(0,0,0,.75);
     outline:0;
     -webkit-box-shadow: none;
         box-shadow: none;
@@ -62,14 +62,8 @@
     width: 20px;
     line-height: 20px;
     padding: 0;
-    background-color: transparent;
     border: none;
     cursor: pointer;
-}
-
-.mapbox-directions-inputs .mapbox-button {
-    opacity: .5;
-    z-index: 2;
 }
 
 .mapbox-directions-inputs .mapbox-button:hover {
@@ -78,22 +72,37 @@
 
 .mapbox-directions-reverse-input {
     position: absolute;
-    right: 15px;
-    top: 20px;
-}
-
-.mapbox-directions-origin > div,
-.mapbox-directions-destination > div {
-    position: relative;
-    overflow: hidden;
-}
-
-.mapbox-directions-zoom-button {
-    position: absolute;
-    left: 5px;
-    top: 10px;
+    z-index: 10;
     opacity: .5;
+    left: 20px;
+    top: 30px;
 }
+
+.mapbox-directions-origin input {
+    border-bottom: 1px solid rgba(0,0,0,.2);
+}
+
+.mapbox-directions-destination,
+.mapbox-directions-origin {
+    position: relative;
+}
+
+.mapbox-directions-inputs .mapbox-close-icon {
+/*    display: none;*/
+    opacity: .5;
+    z-index: 2;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.mapbox-directions-inputs.active .mapbox-close-icon {
+    /* TODO: need to class input based on existance of value */
+    display: block;
+}
+
+.mapbox-close-icon:hover { opacity: .75;}
 
 /* Errors */
 
@@ -109,10 +118,9 @@
 /* Routes */
 
 .mapbox-directions-routes ul {
-    background: #f8f8f8;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 10px;
 }
 
 .mapbox-directions-routes li {
@@ -121,35 +129,32 @@
     display: block;
     position: relative;
     cursor: pointer;
-    color: rgba(0,0,0,.5);
-    border-bottom: 1px solid #e5e5e5;
+    color: rgba(255,255,255,.5);
+    min-height: 50px;
 }
 
 .mapbox-directions-routes li:hover,
 .mapbox-directions-routes .mapbox-directions-route-active {
-    color: rgba(0,0,0,.75);
+    color: white;
 }
 
 .mapbox-directions-route-heading {
     position: absolute;
     left: 10px;
     top: 10px;
-    padding: 5px;
-    border-radius: 3px;
-}
-
-.mapbox-directions-route-active .mapbox-directions-route-heading {
-    background:#3bb2d0;
-    color: white;
 }
 
 .mapbox-directions-route-summary {
-    font-weight: bold;
+    display: none;
+}
+
+.mapbox-directions-route-active .mapbox-directions-route-summary {
+    display: block;
 }
 
 .mapbox-directions-route-details {
     font-size: 12px;
-    color: rgba(0,0,0,.5);
+    color: rgba(255,255,255,.5);
 }
 
 /* Instructions */
@@ -163,21 +168,19 @@
 
 .mapbox-directions-step {
     position: relative;
-    color: rgba(255,255,255,.5);
+    color: white;
     cursor: pointer;
     padding: 20px 10px 20px 50px;
-}
-
-.mapbox-directions-step:last-child {
-    border-bottom-width: 0;
-    padding-bottom: 10px;
+    font-size: 20px;
+    line-height: 25px;
 }
 
 .mapbox-directions-step:hover {
-    color: white;
+    background: rgba(0,0,0,.1);
 }
 
 .mapbox-directions-step-distance {
+    color: rgba(255,255,255,.5);
     position: absolute;
     padding: 5px 10px;
     font-size: 12px;
@@ -185,20 +188,26 @@
     bottom: -15px;
 }
 
-/* Mapbox */
+.mapbox-directions-step:after {
+    content: "";
+    position: absolute;
+    top: 50px;
+    bottom: -10px;
+    border-left: 2px dotted rgba(255,255,255,.2);
+    left: 25px;
+}
 
-.mapbox-directions-direction,
-.mapbox-directions-way-name {
-    font-weight: bold;
+.mapbox-directions-step:last-child:after,
+.mapbox-directions-step:last-child .mapbox-directions-step-distance {
+    display: none;
 }
 
 /* icons */
 
 .mapbox-directions-icon {
-    opacity: .75;
     background-image: url('mapbox.directions.png');
-    -webkit-background-size: 240px 20px;
-    background-size: 240px 20px;
+    -webkit-background-size: 260px 20px;
+    background-size: 260px 20px;
     background-repeat: no-repeat;
     margin: 0;
     content: '';
@@ -211,9 +220,7 @@
 .mapbox-directions-instructions .mapbox-directions-icon {
     position: absolute;
     left: 15px;
-    height: 30px;
-    top: 0px;
-    bottom: 0;
+    top: 25px;
     margin: auto;
 }
 
@@ -229,15 +236,7 @@
 .mapbox-enter-roundabout-icon { background-position: -180px 0; }
 .mapbox-arrive-icon           { background-position: -200px 0; }
 .mapbox-reverse-icon          { background-position: -220px 0; }
-
-@media
-  (-webkit-min-device-pixel-ratio:2),
-  (min-resolution:192dpi) {
-    .mapbox-directions-inputs button:before,
-    .mapbox-directions-instructions .icon:before {
-        background-image: url('mapbox.directions@2x.png');
-    }
-}
+.mapbox-close-icon            { background-position: -240px 0; }
 
 .mapbox-marker-drag-icon {
     display: block;

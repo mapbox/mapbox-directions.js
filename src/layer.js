@@ -21,7 +21,8 @@ var Layer = L.LayerGroup.extend({
             draggable: true,
             icon: L.mapbox.marker.icon({
                 'marker-size': 'medium',
-                'marker-color': '#EC8D8D'
+                'marker-color': '#EC8D8D',
+                'marker-symbol': 'star'
             })
         }).on('drag', this._drag, this);
 
