@@ -30,6 +30,7 @@
             bottom: 0;
             right: 0;
         }
+
         #inputs,
         #errors,
         #directions {
@@ -38,11 +39,13 @@
             max-width: 300px;
             min-width: 200px;
         }
+
         #inputs {
             z-index: 10;
             top: 10px;
             left: 10px;
         }
+
         #directions {
             z-index: 9;
             background: rgba(0,0,0,.8);
@@ -59,7 +62,8 @@
                  -o-transform:translateX(100%);
                     transform:translateX(100%);
         }
-        .mapbox-sidebar-active #directions {
+
+        #directions.active {
             -webkit-transform:translateX(0%);
                -moz-transform:translateX(0%);
                  -o-transform:translateX(0%);
@@ -213,12 +217,19 @@
     }
 
     directions.on('load', function() {
+        document.querySelector('#directions').className = 'active';
+
         var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2)),
             o = directions.getOrigin(),
             d = directions.getDestination();
         history.replaceState({}, null, '?route=' + [o.lng.toFixed(precision), o.lat.toFixed(precision)]
                                            + ';' + [d.lng.toFixed(precision), d.lat.toFixed(precision)]
                                            + location.hash);
+
+    }).on('unload', function() {
+        document.querySelector('#directions').className = '';
+
+        history.replaceState({}, null, location.pathname + location.hash);
     });
 </script>
 

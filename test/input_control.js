@@ -26,6 +26,13 @@ describe("Directions.InputControl", function () {
             directions.setOrigin(L.latLng(0.12345678, 0.12345678));
             expect(container.querySelector('#mapbox-directions-origin-input').value).to.eql('0.12, 0.12');
         });
+
+        it("clears origin value", function () {
+            L.mapbox.directions.inputControl(container, directions).addTo(map);
+            directions.setOrigin(L.latLng(1, 2));
+            directions.setOrigin(undefined);
+            expect(container.querySelector('#mapbox-directions-origin-input').value).to.eql('');
+        });
     });
 
     describe("on directions destination", function () {
@@ -46,6 +53,13 @@ describe("Directions.InputControl", function () {
             map.setZoom(3);
             directions.setDestination(L.latLng(0.12345678, 0.12345678));
             expect(container.querySelector('#mapbox-directions-destination-input').value).to.eql('0.12, 0.12');
+        });
+
+        it("clears origin value", function () {
+            L.mapbox.directions.inputControl(container, directions).addTo(map);
+            directions.setDestination(L.latLng(1, 2));
+            directions.setDestination(undefined);
+            expect(container.querySelector('#mapbox-directions-destination-input').value).to.eql('');
         });
     });
 });

@@ -61,6 +61,7 @@ var Layer = L.LayerGroup.extend({
             .on('origin', this._origin, this)
             .on('destination', this._destination, this)
             .on('load', this._load, this)
+            .on('unload', this._unload, this)
             .on('selectRoute', this._selectRoute, this)
             .on('highlightRoute', this._highlightRoute, this)
             .on('highlightStep', this._highlightStep, this);
@@ -71,6 +72,7 @@ var Layer = L.LayerGroup.extend({
             .off('origin', this._origin, this)
             .off('destination', this._destination, this)
             .off('load', this._load, this)
+            .off('unload', this._unload, this)
             .off('selectRoute', this._selectRoute, this)
             .off('highlightRoute', this._highlightRoute, this)
             .off('highlightStep', this._highlightStep, this);
@@ -86,7 +88,11 @@ var Layer = L.LayerGroup.extend({
         if (!this._directions.getOrigin()) {
             this._directions.setOrigin(e.latlng);
         } else if (!this._directions.getDestination()) {
-            this._directions.setDestination(e.latlng).query();
+            this._directions.setDestination(e.latlng);
+        }
+
+        if (this._directions.queryable()) {
+            this._directions.query();
         }
     },
 
@@ -120,6 +126,8 @@ var Layer = L.LayerGroup.extend({
         if (e.origin instanceof L.LatLng) {
             this.originMarker.setLatLng(e.origin);
             this.addLayer(this.originMarker);
+        } else if (!e.origin) {
+            this.removeLayer(this.originMarker);
         }
     },
 
@@ -127,6 +135,8 @@ var Layer = L.LayerGroup.extend({
         if (e.destination instanceof L.LatLng) {
             this.destinationMarker.setLatLng(e.destination);
             this.addLayer(this.destinationMarker);
+        } else if (!e.destination) {
+            this.removeLayer(this.destinationMarker);
         }
     },
 
@@ -164,7 +174,6 @@ var Layer = L.LayerGroup.extend({
     },
 
     _load: function(e) {
-
         this.originMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.origin.geometry.coordinates));
         this.addLayer(this.originMarker);
 
@@ -206,6 +215,13 @@ var Layer = L.LayerGroup.extend({
         }
 
         this.waypointMarkers.length = e.waypoints.length;
+    },
+
+    _unload: function() {
+        this.removeLayer(this.routeLayer);
+        for (var i = 0; i < this.waypointMarkers.length; i++) {
+            this.removeLayer(this.waypointMarkers[i]);
+        }
     },
 
     _selectRoute: function(e) {

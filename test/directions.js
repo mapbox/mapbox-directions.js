@@ -15,6 +15,13 @@ describe("Directions", function () {
             directions.setOrigin(L.latLng(1, 2));
         });
 
+        it("fires unload on falsy inputs", function (done) {
+            var directions = L.mapbox.directions('map.id');
+            directions.on('unload', function() { done(); });
+            directions.setOrigin(L.latLng(1, 2));
+            directions.setOrigin(undefined);
+        });
+
         it("returns this", function () {
             var directions = L.mapbox.directions('map.id');
             expect(directions.setOrigin(L.latLng(1, 2))).to.equal(directions);
@@ -35,6 +42,13 @@ describe("Directions", function () {
                 done();
             });
             directions.setDestination(L.latLng(1, 2));
+        });
+
+        it("fires unload on falsy inputs", function (done) {
+            var directions = L.mapbox.directions('map.id');
+            directions.on('unload', function() { done(); });
+            directions.setDestination(L.latLng(1, 2));
+            directions.setDestination(undefined);
         });
 
         it("returns this", function () {

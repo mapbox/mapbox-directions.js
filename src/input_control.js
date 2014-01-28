@@ -38,15 +38,13 @@ module.exports = function (container, directions) {
             }
         })
         .append('span')
-            .attr('class','mapbox-directions-icon mapbox-depart-icon');
+        .attr('class', 'mapbox-directions-icon mapbox-depart-icon');
 
     origin.append('div')
         .attr('class', 'mapbox-directions-icon mapbox-close-icon')
-        .attr('title','Clear value')
+        .attr('title', 'Clear value')
         .on('click', function () {
-            // TODO: implement close button properly
-            directions.setOrigin('');
-            d3.select('body').classed('mapbox-sidebar-active',false);
+            directions.setOrigin(undefined);
         });
 
     var originInput = origin.append('input')
@@ -56,7 +54,7 @@ module.exports = function (container, directions) {
 
     form.append('span')
         .attr('class', 'mapbox-directions-icon mapbox-reverse-icon mapbox-directions-reverse-input')
-        .attr('title','Reverse origin & destination')
+        .attr('title', 'Reverse origin & destination')
         .on('click', function () {
             directions.reverse().query();
         });
@@ -72,15 +70,13 @@ module.exports = function (container, directions) {
             }
         })
         .append('span')
-            .attr('class','mapbox-directions-icon mapbox-arrive-icon');
+        .attr('class', 'mapbox-directions-icon mapbox-arrive-icon');
 
     destination.append('div')
         .attr('class', 'mapbox-directions-icon mapbox-close-icon')
-        .attr('title','Clear value')
+        .attr('title', 'Clear value')
         .on('click', function () {
-            // TODO: implement close button properly
-            directions.setDestination('');
-            d3.select('body').classed('mapbox-sidebar-active',false);
+            directions.setDestination(undefined);
         });
 
     var destinationInput = destination.append('input')
@@ -94,7 +90,7 @@ module.exports = function (container, directions) {
             waypoint = waypoint.wrap();
             waypoint = waypoint.lng.toFixed(precision) + ', ' + waypoint.lat.toFixed(precision);
         }
-        return waypoint;
+        return waypoint || '';
     }
 
     directions

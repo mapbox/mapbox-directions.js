@@ -24,12 +24,22 @@ var Directions = L.Class.extend({
     setOrigin: function (origin) {
         this.origin = origin;
         this.fire('origin', {origin: origin});
+
+        if (!origin) {
+            this._unload();
+        }
+
         return this;
     },
 
     setDestination: function (destination) {
         this.destination = destination;
         this.fire('destination', {destination: destination});
+
+        if (!destination) {
+            this._unload();
+        }
+
         return this;
     },
 
@@ -134,6 +144,12 @@ var Directions = L.Class.extend({
         }, this));
 
         return this;
+    },
+
+    _unload: function () {
+        this._waypoints = [];
+        delete this.directions;
+        this.fire('unload');
     }
 });
 
