@@ -6,6 +6,18 @@ describe("Directions", function () {
             expect(directions.getOrigin().geometry.coordinates).to.eql([2, 1]);
         });
 
+        it("wraps latLng", function () {
+            var directions = L.mapbox.directions('map.id');
+            directions.setOrigin(L.latLng(0, 190));
+            expect(directions.getOrigin().geometry.coordinates).to.eql([-170, 0]);
+        });
+
+        it("normalizes query string", function () {
+            var directions = L.mapbox.directions('map.id');
+            directions.setOrigin('San Francisco');
+            expect(directions.getOrigin().properties.query).to.eql('San Francisco');
+        });
+
         it("fires event", function (done) {
             var directions = L.mapbox.directions('map.id');
             directions.on('origin', function (e) {
@@ -33,6 +45,18 @@ describe("Directions", function () {
             var directions = L.mapbox.directions('map.id');
             directions.setDestination(L.latLng(1, 2));
             expect(directions.getDestination().geometry.coordinates).to.eql([2, 1]);
+        });
+
+        it("wraps latLng", function () {
+            var directions = L.mapbox.directions('map.id');
+            directions.setDestination(L.latLng(0, 190));
+            expect(directions.getDestination().geometry.coordinates).to.eql([-170, 0]);
+        });
+
+        it("normalizes query string", function () {
+            var directions = L.mapbox.directions('map.id');
+            directions.setDestination('San Francisco');
+            expect(directions.getDestination().properties.query).to.eql('San Francisco');
         });
 
         it("fires event", function (done) {

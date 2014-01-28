@@ -165,7 +165,7 @@ var Directions = L.Class.extend({
         if (waypoint instanceof L.LatLng) {
             waypoint = waypoint.wrap();
             coordinates = properties.query = [waypoint.lng, waypoint.lat];
-        } else if (waypoint instanceof String) {
+        } else if (typeof waypoint === 'string') {
             properties.query = waypoint;
         }
 

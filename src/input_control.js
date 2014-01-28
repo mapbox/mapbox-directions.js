@@ -91,10 +91,12 @@ module.exports = function (container, directions) {
             return '';
         } else if (waypoint.properties.name) {
             return waypoint.properties.name;
-        } else {
+        } else if (waypoint.geometry.coordinates) {
             var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2));
             return waypoint.geometry.coordinates[0].toFixed(precision) + ', ' +
                    waypoint.geometry.coordinates[1].toFixed(precision);
+        } else {
+            return waypoint.properties.query || '';
         }
     }
 

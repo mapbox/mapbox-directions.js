@@ -8,16 +8,16 @@ describe("Directions.InputControl", function () {
     });
 
     describe("on directions origin", function () {
-        it("sets origin value", function () {
+        it("sets origin value (query)", function () {
+            L.mapbox.directions.inputControl(container, directions).addTo(map);
+            directions.setOrigin('San Francisco');
+            expect(container.querySelector('#mapbox-directions-origin-input').value).to.eql('San Francisco');
+        });
+
+        it("sets origin value (coordinates)", function () {
             L.mapbox.directions.inputControl(container, directions).addTo(map);
             directions.setOrigin(L.latLng(1, 2));
             expect(container.querySelector('#mapbox-directions-origin-input').value).to.eql('2, 1');
-        });
-
-        it("wraps value", function () {
-            L.mapbox.directions.inputControl(container, directions).addTo(map);
-            directions.setOrigin(L.latLng(0, 190));
-            expect(container.querySelector('#mapbox-directions-origin-input').value).to.eql('-170, 0');
         });
 
         it("rounds to a zoom-appropriate precision", function () {
@@ -36,16 +36,16 @@ describe("Directions.InputControl", function () {
     });
 
     describe("on directions destination", function () {
-        it("sets destination value", function () {
+        it("sets destination value (query)", function () {
+            L.mapbox.directions.inputControl(container, directions).addTo(map);
+            directions.setDestination('San Francisco');
+            expect(container.querySelector('#mapbox-directions-destination-input').value).to.eql('San Francisco');
+        });
+
+        it("sets destination value (coordinates)", function () {
             L.mapbox.directions.inputControl(container, directions).addTo(map);
             directions.setDestination(L.latLng(1, 2));
             expect(container.querySelector('#mapbox-directions-destination-input').value).to.eql('2, 1');
-        });
-
-        it("wraps value", function () {
-            L.mapbox.directions.inputControl(container, directions).addTo(map);
-            directions.setDestination(L.latLng(0, 190));
-            expect(container.querySelector('#mapbox-directions-destination-input').value).to.eql('-170, 0');
         });
 
         it("rounds to a zoom-appropriate precision", function () {
