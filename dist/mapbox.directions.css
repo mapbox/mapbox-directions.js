@@ -35,8 +35,8 @@
     font-size: 12px;
 }
 
-.mapbox-form-label:hover {
-    color: black;
+.mapbox-directions-origin .mapbox-form-label {
+    color: #3bb2d0;
 }
 
 .mapbox-directions-inputs input {
