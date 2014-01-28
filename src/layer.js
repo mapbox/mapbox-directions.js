@@ -13,7 +13,8 @@ var Layer = L.LayerGroup.extend({
             draggable: true,
             icon: L.mapbox.marker.icon({
                 'marker-size': 'medium',
-                'marker-color': '#3BB2D0'
+                'marker-color': '#3BB2D0',
+                'marker-symbol': 'car'
             })
         }).on('drag', this._drag, this);
 
@@ -21,15 +22,15 @@ var Layer = L.LayerGroup.extend({
             draggable: true,
             icon: L.mapbox.marker.icon({
                 'marker-size': 'medium',
-                'marker-color': '#EC8D8D',
+                'marker-color': '#444',
                 'marker-symbol': 'star'
             })
         }).on('drag', this._drag, this);
 
-        this.stepMarker = L.marker([0, 0], {
-            icon: L.mapbox.marker.icon({
-                'marker-size': 'small',
-                'marker-color': '#EC8D8D'
+        this.stepMarker = L.marker([0,0], {
+            icon: L.divIcon({
+                className: 'mapbox-marker-drag-icon',
+                iconSize: new L.Point(12, 12)
             })
         });
 

@@ -63,15 +63,6 @@
     border-top: 1px solid rgba(0,0,0,.1);
 }
 
-.mapbox-directions-inputs .mapbox-button {
-    height: 20px;
-    width: 20px;
-    line-height: 20px;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-}
-
 .mapbox-directions-reverse-input {
     position: absolute;
     z-index: 10;
@@ -82,6 +73,7 @@
 
 .mapbox-directions-reverse-input:hover {
     opacity: 1;
+    cursor: pointer;
 }
 
 .mapbox-directions-destination,
@@ -136,12 +128,13 @@
     position: relative;
     cursor: pointer;
     color: rgba(255,255,255,.5);
-    min-height: 50px;
+    min-height: 60px;
 }
 
 .mapbox-directions-routes li:hover,
 .mapbox-directions-routes .mapbox-directions-route-active {
     color: white;
+    background-color: rgba(0,0,0,.2);
 }
 
 .mapbox-directions-route-heading {
@@ -176,13 +169,7 @@
     position: relative;
     color: white;
     cursor: pointer;
-    padding: 20px 10px 20px 50px;
-    font-size: 20px;
-    line-height: 25px;
-}
-
-.mapbox-directions-step:hover {
-    background: rgba(0,0,0,.1);
+    padding: 20px 20px 20px 40px;
 }
 
 .mapbox-directions-step-distance {
@@ -190,8 +177,12 @@
     position: absolute;
     padding: 5px 10px;
     font-size: 12px;
-    left: 40px;
+    left: 30px;
     bottom: -15px;
+}
+
+.mapbox-directions-step:hover .mapbox-directions-step-distance {
+    color: white;
 }
 
 .mapbox-directions-step:after {
@@ -200,7 +191,7 @@
     top: 50px;
     bottom: -20px;
     border-left: 2px dotted rgba(255,255,255,.2);
-    left: 25px;
+    left: 20px;
 }
 
 .mapbox-directions-step:last-child:after,
@@ -225,7 +216,7 @@
 
 .mapbox-directions-instructions .mapbox-directions-icon {
     position: absolute;
-    left: 15px;
+    left: 10px;
     top: 25px;
     margin: auto;
 }
@@ -246,7 +237,7 @@
 
 .mapbox-marker-drag-icon {
     display: block;
-    background-color: #EC8D8D;
+    background-color: #3BB2D0;
     border-radius: 50%;
     box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
 }
@@ -254,7 +245,7 @@
 /* leaflet overrides */
 
 path.leaflet-clickable {
-    stroke: #EC8D8D;
+    stroke: #3BB2D0;
     stroke-width: 4px;
     stroke-opacity:.75;
 }
