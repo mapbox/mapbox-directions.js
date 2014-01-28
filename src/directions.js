@@ -139,6 +139,9 @@ var Directions = L.Class.extend({
                 };
             });
 
+            this.origin = this.directions.origin;
+            this.destination = this.directions.destination;
+
             this.fire('load', this.directions);
         }, this));
 

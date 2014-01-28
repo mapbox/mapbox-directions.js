@@ -222,5 +222,29 @@ describe("Directions", function () {
                 [200, { "Content-Type": "application/json" }, JSON.stringify({routes: [{geometry: '_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI'}]})]);
             server.respond();
         });
+
+        it("replaces origin and destination with the response values", function (done) {
+            var directions = L.mapbox.directions('map.id'),
+                response = {
+                    origin: {properties: {name: 'origin'}},
+                    destination: {properties: {name: 'destination'}},
+                    routes: []
+                };
+
+            directions.on('load', function () {
+                expect(directions.getOrigin()).to.eql(response.origin);
+                expect(directions.getDestination()).to.eql(response.destination);
+                done();
+            });
+
+            directions
+                .setOrigin(L.latLng(1, 2))
+                .setDestination(L.latLng(3, 4))
+                .query();
+
+            server.respondWith("GET", "https://api.tiles.mapbox.com/v3/map.id/directions/driving/2,1;4,3.json?instructions=html&geometry=polyline",
+                [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
+            server.respond();
+        });
     });
 });
