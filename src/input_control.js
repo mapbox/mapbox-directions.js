@@ -95,9 +95,23 @@ module.exports = function (container, directions) {
 
     directions
         .on('origin', function (e) {
+            origin.classed('active', function() {
+                if (e.origin) {
+                    return true;
+                } else {
+                    return false;
+                }
+            })
             originInput.property('value', format(e.origin));
         })
         .on('destination', function (e) {
+            destination.classed('active', function() {
+                if (e.destination) {
+                    return true;
+                } else {
+                    return false;
+                }
+            })
             destinationInput.property('value', format(e.destination));
         })
         .on('load', function (e) {
