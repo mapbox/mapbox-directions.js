@@ -191,7 +191,6 @@ input:not(:valid) + .mapbox-close-icon {
 }
 
 /* icons */
-
 .mapbox-directions-icon {
     background-image: url('mapbox.directions.png');
     -webkit-background-size: 280px 20px;
@@ -203,6 +202,14 @@ input:not(:valid) + .mapbox-close-icon {
     vertical-align: top;
     width: 20px;
     height: 20px;
+}
+
+.big.mapbox-directions-icon {
+    background-image: url('mapbox.directions@2x.png');
+    -webkit-background-size: 560px 40px;
+    background-size: 560px 40px;
+    width: 40px;
+    height: 40px;
 }
 
 .mapbox-directions-instructions .mapbox-directions-icon {
@@ -226,6 +233,21 @@ input:not(:valid) + .mapbox-close-icon {
 .mapbox-close-icon            { background-position: -220px 0; }
 .mapbox-reverse-icon          { background-position: -240px 0; }
 .mapbox-error-icon            { background-position: -260px 0; }
+
+.big.mapbox-continue-icon         { background-position: 0 0; }
+.big.mapbox-sharp-right-icon      { background-position: -40px 0; }
+.big.mapbox-turn-right-icon       { background-position: -80px 0; }
+.big.mapbox-bear-right-icon       { background-position: -120px 0; }
+.big.mapbox-u-turn-icon           { background-position: -160px 0; }
+.big.mapbox-sharp-left-icon       { background-position: -200px 0; }
+.big.mapbox-turn-left-icon        { background-position: -240px 0; }
+.big.mapbox-bear-left-icon        { background-position: -280px 0; }
+.big.mapbox-depart-icon           { background-position: -320px 0; }
+.big.mapbox-enter-roundabout-icon { background-position: -360px 0; }
+.big.mapbox-arrive-icon           { background-position: -400px 0; }
+.big.mapbox-close-icon            { background-position: -440px 0; }
+.big.mapbox-reverse-icon          { background-position: -480px 0; }
+.big.mapbox-error-icon            { background-position: -520px 0; }
 
 .mapbox-marker-drag-icon {
     display: block;
