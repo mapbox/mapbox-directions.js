@@ -3,7 +3,7 @@
 var d3 = require('../lib/d3'),
     format = require('./format');
 
-module.exports = function (container, directions) {
+module.exports = function (container, directions, options) {
     var control = {}, map;
 
     control.addTo = function (_) {
@@ -32,7 +32,11 @@ module.exports = function (container, directions) {
 
         steps.append('span')
             .attr('class', function (step) {
-                return 'mapbox-directions-icon mapbox-' + step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + '-icon';
+                if(options.largeTurnIcons){
+                    return 'big mapbox-directions-icon mapbox-' + step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + '-icon';
+                } else {
+                    return 'mapbox-directions-icon mapbox-' + step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + '-icon';
+                }
             });
 
         steps.append('div')

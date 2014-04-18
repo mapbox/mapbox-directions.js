@@ -169,7 +169,9 @@
     var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
         .addTo(map);
 
-    var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions)
+    var directionsInstructionsControl = L.mapbox.directions.instructionsControl('instructions', directions, {
+        largeTurnIcons: false
+    })
         .addTo(map);
 
     var hash = new L.Hash(map);
