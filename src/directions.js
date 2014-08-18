@@ -1,7 +1,6 @@
 'use strict';
 
 var corslite = require('corslite'),
-    JSON3 = require('JSON3'),
     polyline = require('polyline');
 
 var Directions = L.Class.extend({
@@ -121,7 +120,7 @@ var Directions = L.Class.extend({
 
             if (resp && resp.responseText) {
                 try {
-                    resp = JSON3.parse(resp.responseText);
+                    resp = JSON.parse(resp.responseText);
                 } catch (e) {
                     resp = {error: resp.responseText};
                 }
