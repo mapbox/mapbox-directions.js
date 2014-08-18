@@ -27,7 +27,7 @@ var Layer = L.LayerGroup.extend({
             })
         }).on('drag', this._drag, this);
 
-        this.stepMarker = L.marker([0,0], {
+        this.stepMarker = L.marker([0, 0], {
             icon: L.divIcon({
                 className: 'mapbox-marker-drag-icon mapbox-marker-drag-icon-step',
                 iconSize: new L.Point(12, 12)
@@ -97,25 +97,29 @@ var Layer = L.LayerGroup.extend({
     },
 
     _mousemove: function(e) {
-        if (!this.routeLayer || !this.hasLayer(this.routeLayer) || this._currentWaypoint !== undefined)
+        if (!this.routeLayer || !this.hasLayer(this.routeLayer) || this._currentWaypoint !== undefined) {
             return;
+        }
 
         var p = this._routePolyline().closestLayerPoint(e.layerPoint);
 
-        if (!p || p.distance > 15)
+        if (!p || p.distance > 15) {
             return this.removeLayer(this.dragMarker);
+        }
 
         var m = this._map.project(e.latlng),
             o = this._map.project(this.originMarker.getLatLng()),
             d = this._map.project(this.destinationMarker.getLatLng());
 
-        if (o.distanceTo(m) < 15 || d.distanceTo(m) < 15)
+        if (o.distanceTo(m) < 15 || d.distanceTo(m) < 15) {
             return this.removeLayer(this.dragMarker);
+        }
 
         for (var i = 0; i < this.waypointMarkers.length; i++) {
             var w = this._map.project(this.waypointMarkers[i].getLatLng());
-            if (i !== this._currentWaypoint && w.distanceTo(m) < 15)
+            if (i !== this._currentWaypoint && w.distanceTo(m) < 15) {
                 return this.removeLayer(this.dragMarker);
+            }
         }
 
         this.dragMarker.setLatLng(this._map.layerPointToLatLng(p));
@@ -185,12 +189,12 @@ var Layer = L.LayerGroup.extend({
             i = 0;
 
         // Update existing
-        for ( ; i < l; i++) {
+        for (; i < l; i++) {
             this.waypointMarkers[i].setLatLng(waypointLatLng(i));
         }
 
         // Add new
-        for ( ; i < e.waypoints.length; i++) {
+        for (; i < e.waypoints.length; i++) {
             var waypointMarker = L.marker(waypointLatLng(i), {
                 draggable: true,
                 icon: this._waypointIcon()
@@ -207,7 +211,7 @@ var Layer = L.LayerGroup.extend({
         }
 
         // Remove old
-        for ( ; i < this.waypointMarkers.length; i++) {
+        for (; i < this.waypointMarkers.length; i++) {
             this.removeLayer(this.waypointMarkers[i]);
         }
 
@@ -252,7 +256,7 @@ var Layer = L.LayerGroup.extend({
         return this.routeLayer.getLayers()[0];
     },
 
-    _findWaypointIndex: function (latLng) {
+    _findWaypointIndex: function(latLng) {
         var segment = this._findNearestRouteSegment(latLng);
 
         for (var i = 0; i < this.waypointMarkers.length; i++) {
@@ -265,14 +269,14 @@ var Layer = L.LayerGroup.extend({
         return this.waypointMarkers.length;
     },
 
-    _findNearestRouteSegment: function (latLng) {
+    _findNearestRouteSegment: function(latLng) {
         var min = Infinity,
             index,
             p = this._map.latLngToLayerPoint(latLng),
             positions = this._routePolyline()._originalPoints;
 
         for (var i = 1; i < positions.length; i++) {
-            var d = L.LineUtil._sqClosestPointOnSegment(p, positions[i-1], positions[i], true);
+            var d = L.LineUtil._sqClosestPointOnSegment(p, positions[i - 1], positions[i], true);
             if (d < min) {
                 min = d;
                 index = i;
@@ -290,6 +294,6 @@ var Layer = L.LayerGroup.extend({
     }
 });
 
-module.exports = function (directions) {
+module.exports = function(directions) {
     return new Layer(directions);
 };
