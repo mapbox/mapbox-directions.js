@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mapbox/mapbox-directions.js.png)](https://travis-ci.org/mapbox/mapbox-directions.js)
 
-This is a Leaflet plugin for the Mapbox Directions API. Its main features include:
+This is a Mapbox.js plugin for the Mapbox Directions API. Its main features include:
 
 * Input controls for origin and destination
 * Draggable origin and destination markers
