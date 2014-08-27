@@ -5,8 +5,8 @@
     <title>Mapbox Directions</title>
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-    <script src='//api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.uncompressed.js'></script>
-    <link href='//api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+    <script src='//api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.uncompressed.js'></script>
+    <link href='//api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
 
     <script src='dist/mapbox.directions.js'></script>
     <link href='dist/mapbox.directions.css' rel='stylesheet' />
@@ -148,6 +148,12 @@
 <a href="http://mapbox.com/" class='mapbox-maplogo' target="_blank">Mapbox</a>
 
 <script>
+    L.mapbox.accessToken = localStorage.accessToken;
+
+    if (!L.mapbox.accessToken) {
+        L.mapbox.accessToken = localStorage.accessToken = prompt('access token');
+    }
+
     var map = L.mapbox.map('map', 'examples.map-h4cgmpoi', {
         worldCopyJump: true,
         zoomControl: false,
@@ -155,9 +161,7 @@
         infoControl: { editLink: true }
     }).setView([37.77, -122.44], 13);
 
-    var directions = L.mapbox.directions({
-        accessToken: prompt('access token')
-    });
+    var directions = L.mapbox.directions();
 
     var directionsLayer = L.mapbox.directions.layer(directions)
         .addTo(map);
