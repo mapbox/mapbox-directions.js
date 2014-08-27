@@ -1,13 +1,12 @@
 # Directions
 
-## L.mapbox.directions(mapid, options)
+## L.mapbox.directions(options)
 
 <span class='leaflet icon'>_Extends_: `L.Class`</span>
 
 | Options | Value | Description |
 | ---- | ---- | ---- |
-| mapid | __string__ | a Mapbox map id |
-| options | object |  |
+| options | object | `accessToken` is a required property unless `L.mapbox.accessToken` is set globally. |
 
 ### directions.getOrigin()
 

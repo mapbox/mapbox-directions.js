@@ -6,9 +6,12 @@ var corslite = require('corslite'),
 var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
-    initialize: function(mapid, options) {
+    statics: {
+        URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}'
+    },
+
+    initialize: function(options) {
         L.setOptions(this, options);
-        this.options.mapid = mapid;
         this._waypoints = [];
     },
 
@@ -88,10 +91,11 @@ var Directions = L.Class.extend({
     },
 
     queryURL: function () {
-        var template = 'https://api.tiles.mapbox.com/v3/{mapid}/directions/driving/{waypoints}.json?instructions=html&geometry=polyline',
+        var template = Directions.URL_TEMPLATE,
+            token = this.options.accessToken || L.mapbox.accessToken,
             points = [this.origin].concat(this._waypoints).concat([this.destination]);
         return L.Util.template(template, {
-            mapid: this.options.mapid,
+            token: token,
             waypoints: points.map(function (point) {
                 return point.properties.query || point.geometry.coordinates;
             }).join(';')
@@ -179,6 +183,6 @@ var Directions = L.Class.extend({
     }
 });
 
-module.exports = function(mapid, options) {
-    return new Directions(mapid, options);
+module.exports = function(options) {
+    return new Directions(options);
 };
