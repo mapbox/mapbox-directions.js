@@ -14,8 +14,6 @@ This is a Mapbox.js plugin for the Mapbox Directions API. Its main features incl
 
 Managed as Markdown in `API.md`, following the standards in `DOCUMENTING.md`
 
-## [Example](http://directions.mapbox.com/)
-
 ## Building
 
 Requires [node.js](http://nodejs.org/) installed on your system.
