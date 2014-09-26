@@ -6,7 +6,7 @@
 
 | Options | Value | Description |
 | ---- | ---- | ---- |
-| options | object | `accessToken` is a required property unless `L.mapbox.accessToken` is set globally. |
+| options | object | `accessToken` is a required property unless `L.mapbox.accessToken` is set globally. `profile` is optional and defaults to `mapbox.driving`. |
 
 ### directions.getOrigin()
 

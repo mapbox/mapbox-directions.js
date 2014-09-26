@@ -7,7 +7,7 @@ var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
     statics: {
-        URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}'
+        URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/{profile}/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}'
     },
 
     initialize: function(options) {
@@ -93,9 +93,11 @@ var Directions = L.Class.extend({
     queryURL: function () {
         var template = Directions.URL_TEMPLATE,
             token = this.options.accessToken || L.mapbox.accessToken,
+            profile = this.options.profile || 'mapbox.driving',
             points = [this.origin].concat(this._waypoints).concat([this.destination]);
         return L.Util.template(template, {
             token: token,
+            profile: profile,
             waypoints: points.map(function (point) {
                 return point.properties.query || point.geometry.coordinates;
             }).join(';')
