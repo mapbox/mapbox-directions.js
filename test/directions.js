@@ -142,6 +142,12 @@ describe("Directions", function () {
             directions.setOrigin(L.latLng(0, 190)).setDestination(L.latLng(0, -195));
             expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v4/directions/mapbox.driving/-170,0;165,0.json?instructions=html&geometry=polyline&access_token=key');
         });
+
+        it("sets profile", function () {
+            var directions = L.mapbox.directions({accessToken: 'key', profile: 'mapbox.walking'});
+            directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
+            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v4/directions/mapbox.walking/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+        });
     });
 
     describe("query", function () {
