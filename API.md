@@ -32,6 +32,24 @@ Sets the destination of the current route.
 
 _Returns_: `this`
 
+### directions.addWaypoint(index, waypoint)
+
+Add a waypoint to the route at the given index. `waypoint` can be a GeoJSON Point Feature or a `L.LatLng`.
+
+_Returns_: `this`
+
+### directions.removeWaypoint(index)
+
+Remove the waypoint at the given index from the route.
+
+_Returns_: `this`
+
+### directions.setWaypoint(index, waypoint)
+
+Change the waypoint at the given index. `waypoint` can be a GeoJSON Point Feature or a `L.LatLng`.
+
+_Returns_: `this`
+
 ### directions.reverse()
 
 Swap the origin and destination.
