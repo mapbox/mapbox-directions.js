@@ -81,14 +81,10 @@
             z-index: 8;
             opacity: 0;
             padding: 10px;
-            border-radius: 0 0 3px 3px;
+            border-radius: 3px;
             background: rgba(0,0,0,.25);
-            top: 90px;
+            top: 130px;
             left: 10px;
-            -webkit-transform:translateY(-20px);
-               -moz-transform:translateY(-20px);
-                 -o-transform:translateY(-20px);
-                    transform:translateY(-20px);
             -webkit-transition: all .15s;
                -moz-transition: all .15s;
                  -o-transition: all .15s;
@@ -97,10 +93,6 @@
 
         #errors.mapbox-error-active {
             opacity: 1;
-            -webkit-transform:translateY(0);
-               -moz-transform:translateY(0);
-                 -o-transform:translateY(0);
-                    transform:translateY(0);
         }
 
         #directions::-webkit-scrollbar-track {
@@ -154,12 +146,15 @@
         L.mapbox.accessToken = localStorage.accessToken = prompt('access token');
     }
 
-    var map = L.mapbox.map('map', 'examples.map-h4cgmpoi', {
+    var map = L.mapbox.map('map', 'peterqliu.9d05be4d', {
         worldCopyJump: true,
         zoomControl: false,
         detectRetina: true,
         infoControl: { editLink: true }
     }).setView([37.77, -122.44], 13);
+
+    var drivingLayer = L.mapbox.tileLayer('peterqliu.9d05be4d');
+    var walkingLayer = L.mapbox.tileLayer('matt.f714d988');
 
     var directions = L.mapbox.directions();
 
@@ -215,15 +210,13 @@
         ].join("/");
     };
 
-    var waypoints = decodeURIComponent(window.location.search.split('route=').pop()).split(';');
-    if (waypoints.length == 2) {
-        directions
-            .setOrigin(L.latLng(waypoints[0].split(',').reverse()))
-            .setDestination(L.latLng(waypoints[1].split(',').reverse()))
-            .query();
-    }
-
-    directions.on('load', function() {
+    directions.on('profile', function(e) {
+        if (e.profile === 'mapbox.driving') {
+            map.addLayer(drivingLayer).removeLayer(walkingLayer);
+        } else {
+            map.addLayer(walkingLayer).removeLayer(drivingLayer);
+        }
+    }).on('load', function() {
         document.querySelector('#directions').className = 'active';
 
         var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2)),
@@ -232,6 +225,7 @@
 
         history.replaceState({}, null, '?route=' + [o[0].toFixed(precision), o[1].toFixed(precision)]
                                            + ';' + [d[0].toFixed(precision), d[1].toFixed(precision)]
+                                           + '&profile=' + directions.getProfile()
                                            + location.hash);
 
     }).on('unload', function() {
@@ -239,6 +233,21 @@
 
         history.replaceState({}, null, location.pathname + location.hash);
     });
+
+    var search = window.location.search.substring(1).split('&');
+
+    var profile = (search[1] || '').split('profile=').pop();
+    if (profile) {
+        directions.setProfile(profile);
+    }
+
+    var waypoints = decodeURIComponent(search[0].split('route=').pop()).split(';');
+    if (waypoints.length == 2) {
+        directions
+                .setOrigin(L.latLng(waypoints[0].split(',').reverse()))
+                .setDestination(L.latLng(waypoints[1].split(',').reverse()))
+                .query();
+    }
 </script>
 
 </body>

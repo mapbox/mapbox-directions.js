@@ -81,6 +81,22 @@ describe("Directions", function () {
         });
     });
 
+    describe("#setProfile", function () {
+        it("fires event", function (done) {
+            var directions = L.mapbox.directions({accessToken: 'key'});
+            directions.on('profile', function (e) {
+                expect(e.profile).to.eql('mapbox.walking');
+                done();
+            });
+            directions.setProfile('mapbox.walking');
+        });
+
+        it("returns this", function () {
+            var directions = L.mapbox.directions({accessToken: 'key'});
+            expect(directions.setProfile('mapbox.walking')).to.equal(directions);
+        });
+    });
+
     describe("reverse", function () {
         var a = {
             type: 'Feature',

@@ -86,6 +86,27 @@ module.exports = function (container, directions) {
             directions.setDestination(undefined);
         });
 
+    var profile = form.append('div')
+        .attr('class', 'mapbox-directions-profile');
+
+    var profiles = profile.selectAll('span')
+        .data([['mapbox.driving', 'driving', 'Driving'], ['mapbox.walking', 'walking', 'Walking']])
+        .enter()
+        .append('span');
+
+    profiles.append('input')
+        .attr('type', 'radio')
+        .attr('name', 'profile')
+        .attr('id', function (d) { return 'mapbox-directions-profile-' + d[1]; })
+        .property('checked', function (d, i) { return i === 0; })
+        .on('change', function (d) {
+            directions.setProfile(d[0]).query();
+        });
+
+    profiles.append('label')
+        .attr('for', function (d) { return 'mapbox-directions-profile-' + d[1]; })
+        .text(function (d) { return d[2] });
+
     function format(waypoint) {
         if (!waypoint) {
             return '';
@@ -106,6 +127,10 @@ module.exports = function (container, directions) {
         })
         .on('destination', function (e) {
             destinationInput.property('value', format(e.destination));
+        })
+        .on('profile', function (e) {
+            profiles.selectAll('input')
+                .property('checked', function (d) { return d[0] === e.profile; });
         })
         .on('load', function (e) {
             originInput.property('value', format(e.origin));

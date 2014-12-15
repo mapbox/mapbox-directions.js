@@ -62,4 +62,13 @@ describe("Directions.InputControl", function () {
             expect(container.querySelector('#mapbox-directions-destination-input').value).to.eql('');
         });
     });
+
+    describe("on directions profile", function () {
+        it("checks the appropriate input", function () {
+            L.mapbox.directions.inputControl(container, directions).addTo(map);
+            directions.setProfile('mapbox.walking');
+            expect(container.querySelector('#mapbox-directions-profile-driving').checked).to.eql(false);
+            expect(container.querySelector('#mapbox-directions-profile-walking').checked).to.eql(true);
+        });
+    });
 });

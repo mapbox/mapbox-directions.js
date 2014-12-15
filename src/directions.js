@@ -49,6 +49,16 @@ var Directions = L.Class.extend({
         return this;
     },
 
+    getProfile: function() {
+        return this.profile || this.options.profile || 'mapbox.driving';
+    },
+
+    setProfile: function (profile) {
+        this.profile = profile;
+        this.fire('profile', {profile: profile});
+        return this;
+    },
+
     addWaypoint: function (index, waypoint) {
         this._waypoints.splice(index, 0, this._normalizeWaypoint(waypoint));
         return this;
@@ -93,7 +103,7 @@ var Directions = L.Class.extend({
     queryURL: function () {
         var template = Directions.URL_TEMPLATE,
             token = this.options.accessToken || L.mapbox.accessToken,
-            profile = this.options.profile || 'mapbox.driving',
+            profile = this.getProfile(),
             points = [this.origin].concat(this._waypoints).concat([this.destination]);
         return L.Util.template(template, {
             token: token,
