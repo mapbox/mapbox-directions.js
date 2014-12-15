@@ -105,7 +105,7 @@ module.exports = function (container, directions) {
 
     profiles.append('label')
         .attr('for', function (d) { return 'mapbox-directions-profile-' + d[1]; })
-        .text(function (d) { return d[2] });
+        .text(function (d) { return d[2]; });
 
     function format(waypoint) {
         if (!waypoint) {
