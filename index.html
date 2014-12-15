@@ -140,11 +140,7 @@
 <a href="http://mapbox.com/" class='mapbox-maplogo' target="_blank">Mapbox</a>
 
 <script>
-    L.mapbox.accessToken = localStorage.accessToken;
-
-    if (!L.mapbox.accessToken) {
-        L.mapbox.accessToken = localStorage.accessToken = prompt('access token');
-    }
+    L.mapbox.accessToken = 'pk.eyJ1IjoiZXhhbXBsZXMiLCJhIjoiZkhzMGlzTSJ9.CFlR0dFRRnXdppGZ5F2CrQ';
 
     var map = L.mapbox.map('map', 'peterqliu.9d05be4d', {
         worldCopyJump: true,
