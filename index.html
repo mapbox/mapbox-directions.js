@@ -220,13 +220,18 @@
         document.querySelector('#directions').className = 'active';
 
         var precision = Math.max(0, Math.ceil(Math.log(map.getZoom()) / Math.LN2)),
-            o = directions.getOrigin().geometry.coordinates,
-            d = directions.getDestination().geometry.coordinates;
+            points = [directions.getOrigin()]
+                    .concat(directions.getWaypoints())
+                    .concat([directions.getDestination()])
+                    .map(function (f) {
+                        var c = f.geometry.coordinates;
+                        return [c[0].toFixed(precision), c[1].toFixed(precision)];
+                    });
 
-        history.replaceState({}, null, '?route=' + [o[0].toFixed(precision), o[1].toFixed(precision)]
-                                           + ';' + [d[0].toFixed(precision), d[1].toFixed(precision)]
-                                           + '&profile=' + directions.getProfile()
-                                           + location.hash);
+        history.replaceState({}, null,
+                '?route=' + points.join(';')
+                + '&profile=' + directions.getProfile()
+                + location.hash);
 
     }).on('unload', function() {
         document.querySelector('#directions').className = '';
@@ -242,10 +247,15 @@
     }
 
     var waypoints = decodeURIComponent(search[0].split('route=').pop()).split(';');
-    if (waypoints.length == 2) {
+    if (waypoints.length >= 2) {
+        function toLatLng(waypoint) {
+            return L.latLng(waypoint.split(',').reverse());
+        }
+
         directions
-                .setOrigin(L.latLng(waypoints[0].split(',').reverse()))
-                .setDestination(L.latLng(waypoints[1].split(',').reverse()))
+                .setOrigin(toLatLng(waypoints[0]))
+                .setDestination(toLatLng(waypoints[waypoints.length - 1]))
+                .setWaypoints(waypoints.slice(1, waypoints.length - 1).map(toLatLng))
                 .query();
     }
 </script>

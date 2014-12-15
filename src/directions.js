@@ -59,12 +59,21 @@ var Directions = L.Class.extend({
         return this;
     },
 
+    getWaypoints: function() {
+        return this._waypoints;
+    },
+
+    setWaypoints: function (waypoints) {
+        this._waypoints = waypoints.map(this._normalizeWaypoint);
+        return this;
+    },
+
     addWaypoint: function (index, waypoint) {
         this._waypoints.splice(index, 0, this._normalizeWaypoint(waypoint));
         return this;
     },
 
-    removeWaypoint: function(index) {
+    removeWaypoint: function (index) {
         this._waypoints.splice(index, 1);
         return this;
     },
