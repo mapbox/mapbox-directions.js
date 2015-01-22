@@ -10,7 +10,7 @@ This is a Mapbox.js plugin for the Mapbox Directions API. Its main features incl
 * Display of turn-by-turn instructions
 * Selection of alternate routes
 
-## [API](http://mapbox.com/mapbox.js/directions/api/)
+## [API](https://github.com/mapbox/mapbox-directions.js/blob/mb-pages/API.md)
 
 Managed as Markdown in `API.md`, following the standards in `DOCUMENTING.md`
 
