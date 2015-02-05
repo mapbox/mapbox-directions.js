@@ -113,13 +113,18 @@ var Directions = L.Class.extend({
         var template = Directions.URL_TEMPLATE,
             token = this.options.accessToken || L.mapbox.accessToken,
             profile = this.getProfile(),
-            points = [this.origin].concat(this._waypoints).concat([this.destination]);
+            points = [this.origin].concat(this._waypoints).concat([this.destination]).map(function (point) {
+                return point.properties.query || point.geometry.coordinates;
+            }).join(';');
+
+        if (L.mapbox.feedback) {
+            L.mapbox.feedback.record({directions: profile + ';' + points});
+        }
+
         return L.Util.template(template, {
             token: token,
             profile: profile,
-            waypoints: points.map(function (point) {
-                return point.properties.query || point.geometry.coordinates;
-            }).join(';')
+            waypoints: points
         });
     },
 
