@@ -2,9 +2,21 @@
 
 var d3 = require('../lib/d3');
 
+/**
+ * Inputs for a route profile, origin, and destination.
+ * @alias L.mapbox.directions.inputControl
+ * @param container
+ * @param {Directions} directions
+ */
 module.exports = function (container, directions) {
     var control = {}, map;
 
+    /**
+     * Add this control to a given map object.
+     * @alias addTo
+     * @param {L.Map}
+     * @returns {InputControl} `this`
+     */
     control.addTo = function (_) {
         map = _;
         return control;

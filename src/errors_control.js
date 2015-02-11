@@ -3,9 +3,21 @@
 var d3 = require('../lib/d3'),
     format = require('./format');
 
+/**
+ * UI for displaying errors returned by the Directions API.
+ * @alias L.mapbox.directions.errorsControl
+ * @param container
+ * @param {Directions} directions
+ */
 module.exports = function (container, directions) {
     var control = {}, map;
 
+    /**
+     * Add this control to a given map object.
+     * @alias addTo
+     * @param {L.Map}
+     * @returns {ErrorsControl} `this`
+     */
     control.addTo = function (_) {
         map = _;
         return control;

@@ -3,9 +3,21 @@
 var d3 = require('../lib/d3'),
     format = require('./format');
 
+/**
+ * UI for choosing between alternate routes returned by the Directions API.
+ * @alias L.mapbox.directions.routesControl
+ * @param container
+ * @param {Directions} directions
+ */
 module.exports = function (container, directions) {
     var control = {}, map, selection = 0;
 
+    /**
+     * Add this control to a given map object.
+     * @alias addTo
+     * @param {L.Map}
+     * @returns {RoutesControl} `this`
+     */
     control.addTo = function (_) {
         map = _;
         return control;

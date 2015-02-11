@@ -4,7 +4,8 @@
   "description": "Leaflet plugin for the Mapbox Directions API",
   "main": "index.js",
   "scripts": {
-    "test": "jshint src && mocha-phantomjs test/index.html"
+    "test": "jshint src && mocha-phantomjs test/index.html",
+    "doc": "cat src/*.js | dox --raw --skipSingleStar | doxme"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,14 @@
     "polyline": "0.0.3"
   },
   "devDependencies": {
+    "browserify": "2",
+    "dox": "git+https://github.com/jfirebaugh/dox#150",
+    "doxme": "^1.4.3",
+    "expect.js": "0.2.0",
+    "jshint": "2",
     "mocha": "1",
     "mocha-phantomjs": "3",
-    "expect.js": "0.2.0",
     "sinon": "1.7.3",
-    "browserify": "2",
-    "jshint": "2",
     "smash": "0.0"
   },
   "license": "BSD-2-Clause"

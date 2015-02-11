@@ -3,6 +3,12 @@
 var d3 = require('../lib/d3'),
     format = require('./format');
 
+/**
+ * UI for turn-by-turn route instructions.
+ * @alias L.mapbox.directions.instructionsControl
+ * @param container
+ * @param {Directions} directions
+ */
 module.exports = function (container, directions) {
     var control = {}, map;
 

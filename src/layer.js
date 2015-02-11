@@ -2,6 +2,16 @@
 
 var debounce = require('debounce');
 
+/**
+ * Create a directions layer, the visual representation of a route on the map.
+ * @alias L.mapbox.directions.layer
+ * @param {Directions} directions
+ * @extends L.LayerGroup
+ */
+module.exports = function(directions) {
+    return new Layer(directions);
+};
+
 var Layer = L.LayerGroup.extend({
     initialize: function(directions) {
         this._directions = directions || new L.Directions();
@@ -293,7 +303,3 @@ var Layer = L.LayerGroup.extend({
         });
     }
 });
-
-module.exports = function(directions) {
-    return new Layer(directions);
-};
