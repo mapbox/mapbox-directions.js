@@ -3,10 +3,16 @@
 var corslite = require('corslite'),
     polyline = require('polyline');
 
-var Directions = L.Class.extend({
+/**
+ * An object that coordinates the state and logic of a Directions API request.
+ * @class L.mapbox.Directions
+ */
+var Directions = L.Class.extend(/** @lends L.mapbox.Directions.prototype */{
+    /** @mixes L.Mixin.Events */
     includes: [L.Mixin.Events],
 
     statics: {
+        /** @memberOf L.mapbox.Directions */
         URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/{profile}/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}'
     },
 
@@ -15,14 +21,25 @@ var Directions = L.Class.extend({
         this._waypoints = [];
     },
 
+    /**
+     * @returns {Feature} the starting point of the current route
+     */
     getOrigin: function () {
         return this.origin;
     },
 
+    /**
+     * @returns {Feature} the ending point of the current route
+     */
     getDestination: function () {
         return this.destination;
     },
 
+    /**
+     * @param {Feature} origin the starting point of the route
+     * @fires origin
+     * @returns {L.mapbox.Directions} `this`
+     */
     setOrigin: function (origin) {
         origin = this._normalizeWaypoint(origin);
 
@@ -36,6 +53,11 @@ var Directions = L.Class.extend({
         return this;
     },
 
+    /**
+     * @param {Feature} destination the ending point of the route
+     * @fires destination
+     * @returns {L.mapbox.Directions} `this`
+     */
     setDestination: function (destination) {
         destination = this._normalizeWaypoint(destination);
 
@@ -68,21 +90,44 @@ var Directions = L.Class.extend({
         return this;
     },
 
+    /**
+     * Add `waypoint` to the route at the given `index`.
+     * @param {number} index
+     * @param {(Feature | L.LatLng)} waypoint
+     * @returns {L.mapbox.Directions} `this`
+     */
     addWaypoint: function (index, waypoint) {
         this._waypoints.splice(index, 0, this._normalizeWaypoint(waypoint));
         return this;
     },
 
+    /**
+     * Remove the waypoint at the given `index` from the route.
+     * @param {number} index
+     * @returns {L.mapbox.Directions} `this`
+     */
     removeWaypoint: function (index) {
         this._waypoints.splice(index, 1);
         return this;
     },
 
+    /**
+     * Replace the `waypoint` at the given `index`.
+     * @param {number} index
+     * @param {(Feature | L.LatLng)} waypoint
+     * @returns {L.mapbox.Directions} `this`
+     */
     setWaypoint: function (index, waypoint) {
         this._waypoints[index] = this._normalizeWaypoint(waypoint);
         return this;
     },
 
+    /**
+     * Swap the origin and destination of the route.
+     * @fires origin
+     * @fires destination
+     * @returns {L.mapbox.Directions} `this`
+     */
     reverse: function () {
         var o = this.origin,
             d = this.destination;
@@ -209,6 +254,13 @@ var Directions = L.Class.extend({
     }
 });
 
+/**
+ * Create a `L.mapbox.Directions` instance.
+ * @alias L.mapbox.directions
+ * @option accessToken required unless `L.mapbox.accessToken` is set globally
+ * @option profile optional, defaults to `'mapbox.driving'`
+ * @returns {L.mapbox.Directions}
+ */
 module.exports = function(options) {
     return new Directions(options);
 };
