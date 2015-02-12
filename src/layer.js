@@ -3,14 +3,19 @@
 var debounce = require('debounce');
 
 var Layer = L.LayerGroup.extend({
-    initialize: function(directions) {
+    options: {
+        readonly: false
+    },
+
+    initialize: function(directions, options) {
+        L.setOptions(this, options);
         this._directions = directions || new L.Directions();
         L.LayerGroup.prototype.initialize.apply(this);
 
         this._drag = debounce(L.bind(this._drag, this), 100);
 
         this.originMarker = L.marker([0, 0], {
-            draggable: true,
+            draggable: !this.options.readonly,
             icon: L.mapbox.marker.icon({
                 'marker-size': 'medium',
                 'marker-color': '#3BB2D0',
@@ -19,7 +24,7 @@ var Layer = L.LayerGroup.extend({
         }).on('drag', this._drag, this);
 
         this.destinationMarker = L.marker([0, 0], {
-            draggable: true,
+            draggable: !this.options.readonly,
             icon: L.mapbox.marker.icon({
                 'marker-size': 'medium',
                 'marker-color': '#444',
@@ -53,9 +58,11 @@ var Layer = L.LayerGroup.extend({
     onAdd: function() {
         L.LayerGroup.prototype.onAdd.apply(this, arguments);
 
-        this._map
-            .on('click', this._click, this)
-            .on('mousemove', this._mousemove, this);
+        if (!this.options.readonly) {
+          this._map
+              .on('click', this._click, this)
+              .on('mousemove', this._mousemove, this);
+        }
 
         this._directions
             .on('origin', this._origin, this)
@@ -294,6 +301,6 @@ var Layer = L.LayerGroup.extend({
     }
 });
 
-module.exports = function(directions) {
-    return new Layer(directions);
+module.exports = function(directions, options) {
+    return new Layer(directions, options);
 };
