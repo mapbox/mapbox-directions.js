@@ -56,12 +56,16 @@ Swap the origin and destination.
 
 _Returns_: `this`
 
-## L.mapbox.directions.layer(directions)
+## L.mapbox.directions.layer(directions, options)
 
 <span class='leaflet icon'>_Extends_: `L.LayerGroup`</span>
 
 Create a new layer that displays a given set of directions
 on a map.
+
+| Options | Value | Description |
+| ---- | ---- | ---- |
+| options | object | `readonly` (optional). If set to `true` marker and linestring interaction is disabled. |
 
 ## L.mapbox.directions.inputControl
 

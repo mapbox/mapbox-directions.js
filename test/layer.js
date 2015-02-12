@@ -83,4 +83,13 @@ describe("Directions.Layer", function () {
             expect(layer.routeLayer).to.be.ok();
         });
     });
+
+    describe("options param", function () {
+        it("map clicking disabled in readonly mode", function () {
+            L.mapbox.directions.layer(directions, {readonly:true}).addTo(map);
+            map.fire('click', {latlng: L.latLng(1, 2)});
+            expect(directions.getOrigin()).to.eql(undefined);
+        });
+    });
+
 });
