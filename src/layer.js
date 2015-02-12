@@ -40,7 +40,7 @@ var Layer = L.LayerGroup.extend({
         });
 
         this.dragMarker = L.marker([0, 0], {
-            draggable: true,
+            draggable: !this.options.readonly,
             icon: this._waypointIcon()
         });
 
@@ -203,7 +203,7 @@ var Layer = L.LayerGroup.extend({
         // Add new
         for (; i < e.waypoints.length; i++) {
             var waypointMarker = L.marker(waypointLatLng(i), {
-                draggable: true,
+                draggable: !this.options.readonly,
                 icon: this._waypointIcon()
             });
 
