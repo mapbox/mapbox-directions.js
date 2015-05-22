@@ -269,7 +269,7 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("replaces origin and destination with the response values", function (done) {
+        it("replaces origin and destination with the response values if not set by geocoding", function (done) {
             var directions = L.mapbox.directions({accessToken: 'key'}),
                 response = {
                     origin: {properties: {name: 'origin'}},
@@ -289,6 +289,70 @@ describe("Directions", function () {
                 .query();
 
             server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+                [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
+            server.respond();
+        });
+
+        it("does not replaces origin and destination with the response values if set by geocoding", function (done) {
+            var directions = L.mapbox.directions({accessToken: 'key'}),
+                origin = directions._normalizeWaypoint('somewhere'),
+                response = {
+                    origin: {properties: {name: 'origin'}},
+                    destination: {properties: {name: 'destination'}},
+                    routes: []
+                };
+
+            // stub geocode
+            origin.properties.name = 'Far far away';
+            origin.geometry.coordinates = [2,1];
+
+            directions.on('load', function () {
+                expect(directions.getOrigin()).to.eql(origin);
+                expect(directions.getDestination()).to.eql(response.destination);
+                done();
+            });
+
+            directions
+                .setOrigin(origin)
+                .setDestination(L.latLng(3, 4))
+                .query();
+
+            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+                [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
+            server.respond();
+        });
+    });
+
+    describe("geocode", function () {
+        var server;
+
+        beforeEach(function() {
+            server = sinon.fakeServer.create();
+        });
+
+        afterEach(function() {
+            server.restore();
+        });
+
+        it("returns geocoded response", function (done) {
+            var directions = L.mapbox.directions({accessToken: 'key'}),
+                response = {
+                    features:[{
+                        center:[3,3],
+                        place_name: 'San Francisco'
+                        }]
+                    };
+
+            var wp = directions._normalizeWaypoint('San Francisco');
+            expect(wp.geometry.coordinates).to.eql(undefined);
+
+            directions.geocode(wp, {lat: 2, lng: 2}, function(err) {
+                expect(err).to.eql(null);
+                expect(wp.geometry.coordinates).to.eql([3,3]);
+                done();
+            });
+
+            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/San Francisco.json?proximity=2,2&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
             server.respond();
         });

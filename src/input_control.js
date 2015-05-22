@@ -4,6 +4,8 @@ var d3 = require('../lib/d3');
 
 module.exports = function (container, directions) {
     var control = {}, map;
+    var origChange = false,
+        destChange = false;
 
     control.addTo = function (_) {
         map = _;
@@ -18,12 +20,16 @@ module.exports = function (container, directions) {
             if (d3.event.keyCode === 13) {
                 d3.event.preventDefault();
 
-                directions
-                    .setOrigin(originInput.property('value'))
-                    .setDestination(destinationInput.property('value'));
+                if (origChange)
+                    directions.setOrigin(originInput.property('value'));
+                if (destChange)
+                    directions.setDestination(destinationInput.property('value'));
 
                 if (directions.queryable())
-                    directions.query();
+                    directions.query({ proximity: map.getCenter() });
+
+                origChange = false;
+                destChange = false;
             }
         });
 
@@ -44,7 +50,10 @@ module.exports = function (container, directions) {
         .attr('type', 'text')
         .attr('required', 'required')
         .attr('id', 'mapbox-directions-origin-input')
-        .attr('placeholder', 'Start');
+        .attr('placeholder', 'Start')
+        .on('input', function() {
+            if (!origChange) origChange = true;
+        });
 
     origin.append('div')
         .attr('class', 'mapbox-directions-icon mapbox-close-icon')
@@ -77,7 +86,10 @@ module.exports = function (container, directions) {
         .attr('type', 'text')
         .attr('required', 'required')
         .attr('id', 'mapbox-directions-destination-input')
-        .attr('placeholder', 'End');
+        .attr('placeholder', 'End')
+        .on('input', function() {
+            if (!destChange) destChange = true;
+        });
 
     destination.append('div')
         .attr('class', 'mapbox-directions-icon mapbox-close-icon')

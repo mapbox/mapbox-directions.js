@@ -56,6 +56,12 @@ Swap the origin and destination.
 
 _Returns_: `this`
 
+### directions.query(opts)
+
+Send a directions query request. `opts` can contain a `proximity` LatLng object for geocoding origin/destination/waypoint strings.
+
+_Returns_: `this`
+
 ## L.mapbox.directions.layer(directions, options)
 
 <span class='leaflet icon'>_Extends_: `L.LayerGroup`</span>

@@ -4,7 +4,7 @@ describe("Directions.InputControl", function () {
     beforeEach(function () {
         container = document.createElement('div');
         map = L.map(container).setView([0, 0], 0);
-        directions = L.mapbox.directions();
+        directions = L.mapbox.directions({accessToken: 'key'});
     });
 
     describe("on directions origin", function () {

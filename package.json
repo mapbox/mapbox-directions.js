@@ -12,11 +12,12 @@
     "url": "git://github.com/mapbox/mapbox-directions.js.git"
   },
   "dependencies": {
-    "mapbox.js": "1.5.2",
     "corslite": "0.0.5",
     "d3": "3.4.1",
     "debounce": "0.0.3",
-    "polyline": "0.0.3"
+    "mapbox.js": "1.5.2",
+    "polyline": "0.0.3",
+    "queue-async": "^1.0.7"
   },
   "devDependencies": {
     "mocha": "1",

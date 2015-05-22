@@ -1,18 +1,50 @@
 'use strict';
 
 var corslite = require('corslite'),
-    polyline = require('polyline');
+    polyline = require('polyline'),
+    queue = require('queue-async');
 
 var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
     statics: {
-        URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/{profile}/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}'
+        URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/{profile}/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}',
+        GEOCODER_TEMPLATE: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places/{query}.json?proximity={proximity}&access_token={token}'
     },
 
     initialize: function(options) {
         L.setOptions(this, options);
         this._waypoints = [];
+    },
+
+    geocode: function(waypoint, proximity, cb) {
+        this._geocode = corslite(L.Util.template(Directions.GEOCODER_TEMPLATE, {
+            query: waypoint.properties.query,
+            token: this.options.accessToken || L.mapbox.accessToken,
+            proximity: proximity && [proximity.lng, proximity.lat].join(',')
+        }), L.bind(function (err, resp) {
+            this._geocode = null;
+
+            if (err && err.type === 'abort') {
+                return cb(err);
+            }
+
+            resp = resp || err;
+
+            if (resp && resp.responseText) {
+                try {
+                    resp = JSON.parse(resp.responseText);
+                } catch (e) {
+                    return cb(e);
+                }
+            }
+
+            if (resp && resp.features && resp.features.length > 0) {
+                waypoint.geometry.coordinates = resp.features[0].center;
+                waypoint.properties.name = resp.features[0].place_name;
+                return cb(null);
+            }
+        }, this));
     },
 
     getOrigin: function () {
@@ -114,7 +146,7 @@ var Directions = L.Class.extend({
             token = this.options.accessToken || L.mapbox.accessToken,
             profile = this.getProfile(),
             points = [this.origin].concat(this._waypoints).concat([this.destination]).map(function (point) {
-                return point.properties.query || point.geometry.coordinates;
+                return point.geometry.coordinates || point.properties.query;
             }).join(';');
 
         if (L.mapbox.feedback) {
@@ -132,46 +164,69 @@ var Directions = L.Class.extend({
         return this.getOrigin() && this.getDestination();
     },
 
-    query: function () {
+    query: function (opts) {
+        if (!opts) opts = {};
         if (!this.queryable()) return this;
 
         if (this._query) {
             this._query.abort();
         }
 
-        this._query = corslite(this.queryURL(), L.bind(function (err, resp) {
-            this._query = null;
+        if (this._geocode) {
+            this._geocode.abort();
+        }
 
-            if (err && err.type === 'abort') {
-                return;
-            }
+        var q = queue();
 
-            resp = resp || err;
+        var pts = [this.origin, this.destination].concat(this._waypoints);
+        for (var i in pts) {
+            if (!pts[i].geometry.coordinates) q.defer(L.bind(this.geocode, this), pts[i], opts.proximity || opts);
+        }
 
-            if (resp && resp.responseText) {
-                try {
-                    resp = JSON.parse(resp.responseText);
-                } catch (e) {
-                    resp = {error: resp.responseText};
+        q.await(L.bind(function(err, res) {
+            this._query = corslite(this.queryURL(), L.bind(function (err, resp) {
+                this._query = null;
+
+                if (err && err.type === 'abort') {
+                    return;
                 }
-            }
 
-            if (err || resp.error) {
-                return this.fire('error', resp);
-            }
+                resp = resp || err;
 
-            this.directions = resp;
-            this.directions.routes.forEach(function (route) {
-                route.geometry = {
-                    type: "LineString",
-                    coordinates: polyline.decode(route.geometry, 6).map(function (c) { return c.reverse(); })
-                };
-            });
+                if (resp && resp.responseText) {
+                    try {
+                        resp = JSON.parse(resp.responseText);
+                    } catch (e) {
+                        resp = {error: resp.responseText};
+                    }
+                }
 
-            this.origin = this.directions.origin;
-            this.destination = this.directions.destination;
+                if (err || resp.error) {
+                    return this.fire('error', resp);
+                }
 
-            this.fire('load', this.directions);
+                this.directions = resp;
+                this.directions.routes.forEach(function (route) {
+                    route.geometry = {
+                        type: "LineString",
+                        coordinates: polyline.decode(route.geometry, 6).map(function (c) { return c.reverse(); })
+                    };
+                });
+
+                if (!this.origin.properties.name) {
+                    this.origin = this.directions.origin;
+                } else {
+                    this.directions.origin = this.origin;
+                }
+
+                if (!this.destination.properties.name) {
+                    this.destination = this.directions.destination;
+                } else {
+                    this.directions.destination = this.destination;
+                }
+
+                this.fire('load', this.directions);
+            }, this), this);
         }, this));
 
         return this;
