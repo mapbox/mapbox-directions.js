@@ -346,13 +346,54 @@ describe("Directions", function () {
             var wp = directions._normalizeWaypoint('San Francisco');
             expect(wp.geometry.coordinates).to.eql(undefined);
 
-            directions.geocode(wp, {lat: 2, lng: 2}, function(err) {
+            directions._geocode(wp, {lat: 2, lng: 2}, function(err) {
                 expect(err).to.eql(null);
                 expect(wp.geometry.coordinates).to.eql([3,3]);
                 done();
             });
 
             server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/San Francisco.json?proximity=2,2&access_token=key",
+                [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
+            server.respond();
+        });
+
+        it("handles no results found", function(done) {
+            var directions = L.mapbox.directions({accessToken: 'key'}),
+                response = {
+                    features:[]
+                    };
+
+            var wp = directions._normalizeWaypoint('asdfjkl');
+            expect(wp.geometry.coordinates).to.eql(undefined);
+
+            directions._geocode(wp, {lat: 2, lng: 2}, function(err) {
+                expect(err.message).to.equal('No results found for query asdfjkl');
+                expect(wp.geometry.coordinates).to.eql(undefined);
+                done();
+            });
+
+            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/asdfjkl.json?proximity=2,2&access_token=key",
+                [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
+            server.respond();
+        });
+
+        it("bad geocoding cancels directions query", function(done) {
+            var directions = L.mapbox.directions({accessToken: 'key'}),
+                response = {
+                    features:[]
+                    };
+
+            directions.on('error', function (e) {
+                expect(e.message).to.eql('No results found for query asdfjkl');
+                done();
+            });
+
+            directions
+                .setOrigin(directions._normalizeWaypoint('asdfjkl'))
+                .setDestination(directions._normalizeWaypoint('San Rafael'))
+                .query();
+
+            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/asdfjkl.json?proximity=2,2&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
             server.respond();
         });

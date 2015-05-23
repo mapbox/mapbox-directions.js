@@ -17,13 +17,13 @@ var Directions = L.Class.extend({
         this._waypoints = [];
     },
 
-    geocode: function(waypoint, proximity, cb) {
-        this._geocode = corslite(L.Util.template(Directions.GEOCODER_TEMPLATE, {
+    _geocode: function(waypoint, proximity, cb) {
+        if (!this._requests) this._requests = [];
+        this._requests.push(corslite(L.Util.template(Directions.GEOCODER_TEMPLATE, {
             query: waypoint.properties.query,
             token: this.options.accessToken || L.mapbox.accessToken,
             proximity: proximity && [proximity.lng, proximity.lat].join(',')
         }), L.bind(function (err, resp) {
-            this._geocode = null;
 
             if (err && err.type === 'abort') {
                 return cb(err);
@@ -43,8 +43,10 @@ var Directions = L.Class.extend({
                 waypoint.geometry.coordinates = resp.features[0].center;
                 waypoint.properties.name = resp.features[0].place_name;
                 return cb(null);
+            } else {
+                return cb(new Error("No results found for query " + waypoint.properties.query));
             }
-        }, this));
+        }, this)));
     },
 
     getOrigin: function () {
@@ -146,7 +148,7 @@ var Directions = L.Class.extend({
             token = this.options.accessToken || L.mapbox.accessToken,
             profile = this.getProfile(),
             points = [this.origin].concat(this._waypoints).concat([this.destination]).map(function (point) {
-                return point.geometry.coordinates || point.properties.query;
+                return point.geometry.coordinates;
             }).join(';');
 
         if (L.mapbox.feedback) {
@@ -172,18 +174,20 @@ var Directions = L.Class.extend({
             this._query.abort();
         }
 
-        if (this._geocode) {
-            this._geocode.abort();
-        }
+        if (this._requests && this._requests.length) this._requests.forEach(function(request) {
+            request.abort();
+        });
+        this._requests = [];
 
         var q = queue();
 
         var pts = [this.origin, this.destination].concat(this._waypoints);
         for (var i in pts) {
-            if (!pts[i].geometry.coordinates) q.defer(L.bind(this.geocode, this), pts[i], opts.proximity || opts);
+            if (!pts[i].geometry.coordinates) q.defer(L.bind(this._geocode, this), pts[i], opts.proximity || opts);
         }
 
-        q.await(L.bind(function(err, res) {
+        q.await(L.bind(function(err) {
+            if (err) return this.fire('error', err);
             this._query = corslite(this.queryURL(), L.bind(function (err, resp) {
                 this._query = null;
 
