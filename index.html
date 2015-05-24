@@ -141,16 +141,15 @@
 <script>
     L.mapbox.accessToken = 'pk.eyJ1IjoiZXhhbXBsZXMiLCJhIjoiZkhzMGlzTSJ9.CFlR0dFRRnXdppGZ5F2CrQ';
 
-    var map = L.mapbox.map('map', 'peterqliu.9d05be4d', {
+    var map = L.mapbox.map('map', null, {
         worldCopyJump: true,
-        zoomControl: false,
-        detectRetina: true
+        zoomControl: false
     }).setView([37.77, -122.44], 13);
 
     map.attributionControl.setPosition('bottomleft');
 
-    var drivingLayer = L.mapbox.tileLayer('peterqliu.9d05be4d');
-    var walkingLayer = L.mapbox.tileLayer('matt.f714d988');
+    var drivingLayer = L.mapbox.tileLayer('mapbox.emerald').addTo(map);
+    var walkingLayer = L.mapbox.tileLayer('mapbox.outdoors');
 
     var directions = L.mapbox.directions();
 
