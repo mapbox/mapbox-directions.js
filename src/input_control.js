@@ -90,7 +90,10 @@ module.exports = function (container, directions) {
         .attr('class', 'mapbox-directions-profile');
 
     var profiles = profile.selectAll('span')
-        .data([['mapbox.driving', 'driving', 'Driving'], ['mapbox.walking', 'walking', 'Walking']])
+        .data([
+            ['mapbox.driving', 'driving', 'Driving'],
+            ['mapbox.walking', 'walking', 'Walking'],
+            ['mapbox.cycling', 'cycling', 'Cycling']])
         .enter()
         .append('span');
 

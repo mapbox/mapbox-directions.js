@@ -113,7 +113,7 @@ input:not(:valid) + .mapbox-close-icon {
     color: rgba(0,0,0,0.5);
     line-height: 20px;
     text-align: center;
-    width: 50%;
+    width: 33.33%;
 }
 
 .mapbox-directions-profile input[type=radio] {
