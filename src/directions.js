@@ -17,28 +17,6 @@ var Directions = L.Class.extend({
         this._waypoints = [];
     },
 
-    _geocode: function(waypoint, proximity, cb) {
-        if (!this._requests) this._requests = [];
-        this._requests.push(request(L.Util.template(Directions.GEOCODER_TEMPLATE, {
-            query: waypoint.properties.query,
-            token: this.options.accessToken || L.mapbox.accessToken,
-            proximity: proximity ? [proximity.lng, proximity.lat].join(',') : ''
-        }), L.bind(function (err, resp) {
-            if (err) {
-                return cb(err);
-            }
-
-            if (!resp.features || !resp.features.length) {
-                return cb(new Error("No results found for query " + waypoint.properties.query));
-            }
-
-            waypoint.geometry.coordinates = resp.features[0].center;
-            waypoint.properties.name = resp.features[0].place_name;
-
-            return cb();
-        }, this)));
-    },
-
     getOrigin: function () {
         return this.origin;
     },
@@ -215,6 +193,28 @@ var Directions = L.Class.extend({
         }, this));
 
         return this;
+    },
+
+    _geocode: function(waypoint, proximity, cb) {
+        if (!this._requests) this._requests = [];
+        this._requests.push(request(L.Util.template(Directions.GEOCODER_TEMPLATE, {
+            query: waypoint.properties.query,
+            token: this.options.accessToken || L.mapbox.accessToken,
+            proximity: proximity ? [proximity.lng, proximity.lat].join(',') : ''
+        }), L.bind(function (err, resp) {
+            if (err) {
+                return cb(err);
+            }
+
+            if (!resp.features || !resp.features.length) {
+                return cb(new Error("No results found for query " + waypoint.properties.query));
+            }
+
+            waypoint.geometry.coordinates = resp.features[0].center;
+            waypoint.properties.name = resp.features[0].place_name;
+
+            return cb();
+        }, this)));
     },
 
     _unload: function () {
