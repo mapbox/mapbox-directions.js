@@ -347,7 +347,7 @@ describe("Directions", function () {
             expect(wp.geometry.coordinates).to.eql(undefined);
 
             directions._geocode(wp, {lat: 2, lng: 2}, function(err) {
-                expect(err).to.eql(null);
+                expect(err).not.to.be.ok();
                 expect(wp.geometry.coordinates).to.eql([3,3]);
                 done();
             });
@@ -384,7 +384,7 @@ describe("Directions", function () {
                     };
 
             directions.on('error', function (e) {
-                expect(e.message).to.eql('No results found for query asdfjkl');
+                expect(e.error).to.eql('No results found for query asdfjkl');
                 done();
             });
 
@@ -393,7 +393,7 @@ describe("Directions", function () {
                 .setDestination(directions._normalizeWaypoint('San Rafael'))
                 .query();
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/asdfjkl.json?proximity=2,2&access_token=key",
+            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/asdfjkl.json?proximity=&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
             server.respond();
         });
