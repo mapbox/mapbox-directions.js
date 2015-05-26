@@ -4,7 +4,8 @@
   "description": "Leaflet plugin for the Mapbox Directions API",
   "main": "index.js",
   "scripts": {
-    "test": "jshint src && mocha-phantomjs test/index.html"
+    "test": "jshint src && npm run build && mocha-phantomjs test/index.html",
+    "build": "browserify --debug index.js > dist/mapbox.directions.js"
   },
   "repository": {
     "type": "git",

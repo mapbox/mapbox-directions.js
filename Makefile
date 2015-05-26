@@ -9,7 +9,7 @@ dist:
 	mkdir -p dist
 
 dist/mapbox.directions.js: node_modules/.install dist $(shell $(BROWSERIFY) --list index.js)
-	$(BROWSERIFY) --debug index.js > $@
+	npm run build
 
 clean:
 	rm -rf dist/mapbox.directions.js
