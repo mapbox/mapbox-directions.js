@@ -41,7 +41,9 @@ module.exports = function (container, directions) {
 
         steps.append('div')
             .attr('class', 'mapbox-directions-step-distance')
-            .text(function (step) { return step.distance ? format.imperial(step.distance) : ''; });
+            .text(function (step) {
+                return step.distance ? format[directions.options.units](step.distance) : '';
+            });
 
         steps.on('mouseover', function (step) {
             directions.highlightStep(step);

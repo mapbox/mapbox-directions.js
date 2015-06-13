@@ -37,7 +37,9 @@ module.exports = function (container, directions) {
 
         routes.append('div')
             .attr('class', 'mapbox-directions-route-details')
-            .text(function (route) { return format.imperial(route.distance) + ', ' + format.duration(route.duration); });
+            .text(function (route) {
+                return format[directions.options.units](route.distance) + ', ' + format.duration(route.duration);
+            });
 
         routes.on('mouseover', function (route) {
             directions.highlightRoute(route);
