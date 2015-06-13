@@ -10,17 +10,16 @@ module.exports = function (container, directions) {
         map = _;
         return control;
     };
-
     container = d3.select(L.DomUtil.get(container))
         .classed('mapbox-directions-routes', true);
+
+
 
     directions.on('error', function () {
         container.html('');
     });
-
-    directions.on('load', function (e) {
+        directions.on('load', function (e) {
         container.html('');
-
         var routes = container.append('ul')
             .selectAll('li')
             .data(e.routes)
@@ -37,7 +36,11 @@ module.exports = function (container, directions) {
 
         routes.append('div')
             .attr('class', 'mapbox-directions-route-details')
-            .text(function (route) { return format.imperial(route.distance) + ', ' + format.duration(route.duration); });
+            .text(function (route) {
+                var units = directions.options.units;
+                var distanceWithUnits = (units == 'metric') ? format.metric(route.distance) : format.imperial(route.distance);
+                return distanceWithUnits +', ' + format.duration(route.duration);
+            });
 
         routes.on('mouseover', function (route) {
             directions.highlightRoute(route);
