@@ -41,7 +41,17 @@ module.exports = function (container, directions) {
 
         steps.append('div')
             .attr('class', 'mapbox-directions-step-distance')
-            .text(function (step) { return step.distance ? format.imperial(step.distance) : ''; });
+
+            .text(function (step) {
+              var distanceWithUnits;
+              if(step.distance){
+                var units = directions.options.units;
+                distanceWithUnits = (units == 'metric') ? format.metric(step.distance) : format.imperial(step.distance);
+              } else {
+                distanceWithUnits = '';
+              }
+              return distanceWithUnits;
+            });
 
         steps.on('mouseover', function (step) {
             directions.highlightStep(step);
