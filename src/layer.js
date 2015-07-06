@@ -4,7 +4,12 @@ var debounce = require('debounce');
 
 var Layer = L.LayerGroup.extend({
     options: {
-        readonly: false
+        readonly: false,
+        routeStyle: {
+            'color': '#3BB2D0',
+            'weight': 4,
+            'opacity': .75
+        }
     },
 
     initialize: function(directions, options) {
@@ -49,8 +54,8 @@ var Layer = L.LayerGroup.extend({
             .on('drag', this._drag, this)
             .on('dragend', this._dragEnd, this);
 
-        this.routeLayer = L.geoJson();
-        this.routeHighlightLayer = L.geoJson();
+        this.routeLayer = L.geoJson(null, {style: this.options.routeStyle});
+        this.routeHighlightLayer = L.geoJson(null, {style: this.options.routeStyle});
 
         this.waypointMarkers = [];
     },

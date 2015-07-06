@@ -268,10 +268,3 @@ input:not(:valid) + .mapbox-close-icon {
 .mapbox-marker-drag-icon-step {
     background-color: #3BB2D0;
 }
-/* leaflet overrides */
-
-path.leaflet-clickable {
-    stroke: #3BB2D0;
-    stroke-width: 4px;
-    stroke-opacity:.75;
-}
