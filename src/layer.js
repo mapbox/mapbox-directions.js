@@ -8,7 +8,7 @@ var Layer = L.LayerGroup.extend({
         routeStyle: {
             'color': '#3BB2D0',
             'weight': 4,
-            'opacity': .75
+            'opacity': 0.75
         }
     },
 
