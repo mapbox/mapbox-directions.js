@@ -4,7 +4,7 @@ var d3 = require('../lib/d3'),
     format = require('./format');
 
 module.exports = function (container, directions) {
-    var control = {}, map, selection = 0;
+    var control = {}, selection = 0;
 
     control.addTo = function (_) {
         map = _;
