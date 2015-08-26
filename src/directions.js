@@ -8,12 +8,14 @@ var Directions = L.Class.extend({
     includes: [L.Mixin.Events],
 
     options: {
-        units: 'imperial'
+        units: 'imperial',
+        geocodeHost: 'https://api.tiles.mapbox.com',
+        directionsHost: 'https://api.tiles.mapbox.com'
     },
 
     statics: {
-        URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/{profile}/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}',
-        GEOCODER_TEMPLATE: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places/{query}.json?proximity={proximity}&access_token={token}'
+        URL_TEMPLATE: '{host}/v4/directions/{profile}/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}',
+        GEOCODER_TEMPLATE: '{host}/v4/geocode/mapbox.places/{query}.json?proximity={proximity}&access_token={token}'
     },
 
     initialize: function(options) {
@@ -117,6 +119,7 @@ var Directions = L.Class.extend({
 
     queryURL: function () {
         var template = Directions.URL_TEMPLATE,
+            host = this.options.directionsHost,
             token = this.options.accessToken || L.mapbox.accessToken,
             profile = this.getProfile(),
             points = [this.origin].concat(this._waypoints).concat([this.destination]).map(function (point) {
@@ -128,6 +131,7 @@ var Directions = L.Class.extend({
         }
 
         return L.Util.template(template, {
+            host: host,
             token: token,
             profile: profile,
             waypoints: points
@@ -199,26 +203,34 @@ var Directions = L.Class.extend({
         return this;
     },
 
-    _geocode: function(waypoint, proximity, cb) {
-        if (!this._requests) this._requests = [];
-        this._requests.push(request(L.Util.template(Directions.GEOCODER_TEMPLATE, {
+    geocodeURL: function(waypoint, proximity) {
+        return L.Util.template(Directions.GEOCODER_TEMPLATE, {
+            host: this.options.geocodeHost,
             query: waypoint.properties.query,
             token: this.options.accessToken || L.mapbox.accessToken,
             proximity: proximity ? [proximity.lng, proximity.lat].join(',') : ''
-        }), L.bind(function (err, resp) {
-            if (err) {
-                return cb(err);
-            }
+        });
+    },
 
-            if (!resp.features || !resp.features.length) {
-                return cb(new Error("No results found for query " + waypoint.properties.query));
-            }
+    _geocode: function(waypoint, proximity, cb) {
+        if (!this._requests) this._requests = [];
+        this._requests.push(request(
+            this.geocodeURL(waypoint, proximity),
+            L.bind(function (err, resp) {
+                if (err) {
+                    return cb(err);
+                }
 
-            waypoint.geometry.coordinates = resp.features[0].center;
-            waypoint.properties.name = resp.features[0].place_name;
+                if (!resp.features || !resp.features.length) {
+                    return cb(new Error("No results found for query " + waypoint.properties.query));
+                }
 
-            return cb();
-        }, this)));
+                waypoint.geometry.coordinates = resp.features[0].center;
+                waypoint.properties.name = resp.features[0].place_name;
+
+                return cb();
+            }, this)
+        ));
     },
 
     _unload: function () {

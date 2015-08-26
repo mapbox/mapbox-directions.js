@@ -4,9 +4,12 @@
 
 <span class='leaflet icon'>_Extends_: `L.Class`</span>
 
-| Options | Value | Description |
-| ---- | ---- | ---- |
-| options | object | `accessToken` is a required property unless `L.mapbox.accessToken` is set globally. `profile` is optional and defaults to `mapbox.driving`. |
+| Option | Description |
+| ---- | ---- |
+| accessToken | Required, unless `L.mapbox.accessToken` is set globally
+| profile | Optional, defaults to `mapbox.driving`, other options `mapbox.walking` and `mapbox.cycling`
+| directionsHost | Optional, overrides directions host, defaults to Mapbox Directions API
+| geocodeHost | Optional, overrives geocode host, defaults to Mapbox Geocode API
 
 ### directions.getOrigin()
 

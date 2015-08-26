@@ -147,10 +147,19 @@ describe("Directions", function () {
     });
 
     describe("queryURL", function () {
-        it("constructs a URL with origin and destination", function () {
+        it("constructs a URL with origin and destination for default host", function () {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
             expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+        });
+
+        it("constructs a URL with different host", function () {
+            var directions = L.mapbox.directions({
+                accessToken: 'key',
+                directionsHost: 'https://directions.example.com'
+            });
+            directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
+            expect(directions.queryURL()).to.eql('https://directions.example.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
         });
 
         it("wraps coordinates", function () {
@@ -320,6 +329,27 @@ describe("Directions", function () {
             server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
             server.respond();
+        });
+    });
+
+    describe("geocodeURL", function () {
+        it("constructs a URL with correct priximity and waypoint for default host", function () {
+            var directions = L.mapbox.directions({accessToken: 'key'});
+            expect(directions.geocodeURL(
+                directions._normalizeWaypoint('San Francisco'),
+                {lat: 2, lng: 2}
+            )).to.eql('https://api.tiles.mapbox.com/v4/geocode/mapbox.places/San Francisco.json?proximity=2,2&access_token=key');
+        });
+
+        it("constructs a URL with different host", function () {
+            var directions = L.mapbox.directions({
+                accessToken: 'key',
+                geocodeHost: 'https://geocode.example.com'
+            });
+            expect(directions.geocodeURL(
+                directions._normalizeWaypoint('San Francisco'),
+                {lat: 2, lng: 2}
+            )).to.eql('https://geocode.example.com/v4/geocode/mapbox.places/San Francisco.json?proximity=2,2&access_token=key');
         });
     });
 
