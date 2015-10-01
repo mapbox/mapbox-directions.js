@@ -1,18 +1,27 @@
-describe("Directions.RoutesControl", function () {
+var test = require('tape');
+
+test("Directions#routesControl", function (t) {
     var container, map, directions;
 
-    beforeEach(function () {
+    function setup() {
         container = document.createElement('div');
         map = L.map(container).setView([0, 0], 0);
         directions = L.mapbox.directions();
-    });
+    };
 
-    describe("on directions error", function () {
-        it("clears routes", function () {
+    t.test("on directions error", function (u) {
+        setup();
+
+        u.test("clears routes", function (v) {
             L.mapbox.directions.routesControl(container, directions).addTo(map);
             container.innerHTML = 'Route 1';
             directions.fire('error');
-            expect(container.innerHTML).to.equal('');
+            v.equal(container.innerHTML, '');
+            v.end();
         });
+
+        u.end();
     });
+
+    t.end();
 });

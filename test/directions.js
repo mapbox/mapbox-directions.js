@@ -1,103 +1,123 @@
-describe("Directions", function () {
-    describe("#setOrigin", function () {
-        it("normalizes latLng", function () {
+var sinon = require('sinon');
+var test = require('tape');
+
+test("Directions", function(t) {
+    t.test("#setOrigin", function(u) {
+        u.plan(6);
+
+        u.test("normalizes latLng", function(v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(L.latLng(1, 2));
-            expect(directions.getOrigin().geometry.coordinates).to.eql([2, 1]);
+            v.deepEqual(directions.getOrigin().geometry.coordinates, [2, 1]);
+            v.end();
         });
 
-        it("wraps latLng", function () {
+        u.test("wraps latLng", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(L.latLng(0, 190));
-            expect(directions.getOrigin().geometry.coordinates).to.eql([-170, 0]);
+            v.deepEqual(directions.getOrigin().geometry.coordinates, [-170, 0]);
+            v.end();
         });
 
-        it("normalizes query string", function () {
+        u.test("normalizes query string", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin('San Francisco');
-            expect(directions.getOrigin().properties.query).to.eql('San Francisco');
+            v.equal(directions.getOrigin().properties.query, 'San Francisco');
+            v.end();
         });
 
-        it("fires event", function (done) {
+        u.test("fires event", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.on('origin', function (e) {
-                expect(e.origin.geometry.coordinates).to.eql([2, 1]);
-                done();
+                v.deepEqual(e.origin.geometry.coordinates, [2, 1]);
+                v.end();
             });
             directions.setOrigin(L.latLng(1, 2));
         });
 
-        it("fires unload on falsy inputs", function (done) {
+        u.test("fires unload on falsy inputs", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
-            directions.on('unload', function() { done(); });
+            directions.on('unload', function() { v.end(); });
             directions.setOrigin(L.latLng(1, 2));
             directions.setOrigin(undefined);
         });
 
-        it("returns this", function () {
+        u.test("returns this", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
-            expect(directions.setOrigin(L.latLng(1, 2))).to.equal(directions);
+            v.deepEqual(directions.setOrigin(L.latLng(1, 2)), directions);
+            v.end();
         });
     });
 
-    describe("#setDestination", function () {
-        it("normalizes latLng", function () {
+    t.test("#setDestination", function (u) {
+        u.plan(6);
+
+        u.test("normalizes latLng", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setDestination(L.latLng(1, 2));
-            expect(directions.getDestination().geometry.coordinates).to.eql([2, 1]);
+            v.deepEqual(directions.getDestination().geometry.coordinates, [2, 1]);
+            v.end();
         });
 
-        it("wraps latLng", function () {
+        u.test("wraps latLng", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setDestination(L.latLng(0, 190));
-            expect(directions.getDestination().geometry.coordinates).to.eql([-170, 0]);
+            v.deepEqual(directions.getDestination().geometry.coordinates, [-170, 0]);
+            v.end();
         });
 
-        it("normalizes query string", function () {
+        u.test("normalizes query string", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setDestination('San Francisco');
-            expect(directions.getDestination().properties.query).to.eql('San Francisco');
+            v.equal(directions.getDestination().properties.query, 'San Francisco');
+            v.end();
         });
 
-        it("fires event", function (done) {
+        u.test("fires event", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.on('destination', function (e) {
-                expect(e.destination.geometry.coordinates).to.eql([2, 1]);
-                done();
+                v.deepEqual(e.destination.geometry.coordinates, [2, 1]);
+                v.end();
             });
             directions.setDestination(L.latLng(1, 2));
         });
 
-        it("fires unload on falsy inputs", function (done) {
+        u.test("fires unload on falsy inputs", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
-            directions.on('unload', function() { done(); });
+            directions.on('unload', function() { v.end(); });
             directions.setDestination(L.latLng(1, 2));
             directions.setDestination(undefined);
         });
 
-        it("returns this", function () {
+        u.test("returns this", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
-            expect(directions.setDestination(L.latLng(1, 2))).to.equal(directions);
+            v.skip(directions.setDestination(L.latLng(1, 2)), directions);
+            v.end();
         });
     });
 
-    describe("#setProfile", function () {
-        it("fires event", function (done) {
+    t.test("#setProfile", function (u) {
+        u.plan(2);
+
+        u.test("fires event", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.on('profile', function (e) {
-                expect(e.profile).to.eql('mapbox.walking');
-                done();
+                v.equal(e.profile, 'mapbox.walking');
+                v.end();
             });
             directions.setProfile('mapbox.walking');
         });
 
-        it("returns this", function () {
+        u.test("returns this", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
-            expect(directions.setProfile('mapbox.walking')).to.equal(directions);
+            v.deepEqual(directions.setProfile('mapbox.walking'), directions);
+            v.end();
         });
     });
 
-    describe("reverse", function () {
+    t.test("reverse", function (u) {
+        u.plan(3);
+
         var a = {
             type: 'Feature',
             geometry: {
@@ -114,80 +134,84 @@ describe("Directions", function () {
             properties: {}
         };
 
-        it("swaps origin and destination", function () {
+        u.test("swaps origin and destination", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(a);
             directions.setDestination(b);
             directions.reverse();
-            expect(directions.getOrigin()).to.equal(b);
-            expect(directions.getDestination()).to.equal(a);
+            v.deepEqual(directions.getOrigin(), b);
+            v.deepEqual(directions.getDestination(), a);
+            v.end();
         });
 
-        it("fires events", function (done) {
+        u.test("fires events", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(a);
             directions.setDestination(b);
 
             directions.on('origin', function (e) {
-                expect(e.origin).to.equal(b);
+                v.deepEqual(e.origin, b);
             });
 
             directions.on('destination', function (e) {
-                expect(e.destination).to.equal(a);
-                done();
+                v.deepEqual(e.destination, a);
+                v.end();
             });
 
             directions.reverse();
         });
 
-        it("returns this", function () {
+        u.test("returns this", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
-            expect(directions.reverse()).to.equal(directions);
+            v.deepEqual(directions.reverse(), directions);
+            v.end();
         });
     });
 
-    describe("queryURL", function () {
-        it("constructs a URL with origin and destination", function () {
+    t.test("queryURL", function (u) {
+        u.plan(3);
+
+        u.test("constructs a URL with origin and destination", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
-            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+            v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+            v.end();
         });
 
-        it("wraps coordinates", function () {
+        u.test("wraps coordinates", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(L.latLng(0, 190)).setDestination(L.latLng(0, -195));
-            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v4/directions/mapbox.driving/-170,0;165,0.json?instructions=html&geometry=polyline&access_token=key');
+            v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/-170,0;165,0.json?instructions=html&geometry=polyline&access_token=key');
+            v.end();
         });
 
-        it("sets profile", function () {
+        u.test("sets profile", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key', profile: 'mapbox.walking'});
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
-            expect(directions.queryURL()).to.eql('https://api.tiles.mapbox.com/v4/directions/mapbox.walking/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+            v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.walking/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+            v.end();
         });
     });
 
-    describe("query", function () {
-        var server;
+    t.test("query", function (u) {
+        u.plan(8);
 
-        beforeEach(function() {
-            server = sinon.fakeServer.create();
-        });
-
-        afterEach(function() {
+        u.test("returns self", function (v) {
+            var server = sinon.fakeServer.create();
+            var directions = L.mapbox.directions({accessToken: 'key'});
+            v.deepEqual(directions.query(), directions);
+            v.end();
             server.restore();
         });
 
-        it("returns self", function () {
-            var directions = L.mapbox.directions({accessToken: 'key'});
-            expect(directions.query()).to.equal(directions);
-        });
-
-        it("fires error if response is an HTTP error", function (done) {
+        u.test("fires error if response is an HTTP error", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'});
 
             directions.on('error', function (e) {
-                expect(e.error).to.be.ok();
-                done();
+                v.ok(e.error);
+                v.end();
+                server.restore();
             });
 
             directions
@@ -200,12 +224,14 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("fires error if response is an API error", function (done) {
+        u.test("fires error if response is an API error", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'});
 
             directions.on('error', function (e) {
-                expect(e.error).to.eql('error');
-                done();
+                v.equal(e.error, 'error');
+                v.end();
+                server.restore();
             });
 
             directions
@@ -218,12 +244,14 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("fires load if response is successful", function (done) {
+        u.test("fires load if response is successful", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'});
 
             directions.on('load', function (e) {
-                expect(e.routes).to.eql([]);
-                done();
+                v.deepEqual(e.routes, []);
+                v.end();
+                server.restore();
             });
 
             directions
@@ -236,7 +264,8 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("aborts currently pending request", function () {
+        u.test("aborts currently pending request", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'});
 
             directions
@@ -245,18 +274,22 @@ describe("Directions", function () {
                 .query()
                 .query();
 
-            expect(server.requests[0].aborted).to.be(true);
+            v.ok(server.requests[0].aborted);
+            v.end();
+            server.restore();
         });
 
-        it("decodes polyline geometries", function (done) {
+        u.test("decodes polyline geometries", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'});
 
             directions.on('load', function (e) {
-                expect(e.routes[0].geometry).to.eql({
+                v.deepEqual(e.routes[0].geometry, {
                     type: 'LineString',
                     coordinates: [[-120.2, 38.5], [-120.95, 40.7], [-126.453, 43.252]]
                 });
-                done();
+                v.end();
+                server.restore();
             });
 
             directions
@@ -269,7 +302,8 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("replaces origin and destination with the response values if not set by geocoding", function (done) {
+        u.test("replaces origin and destination with the response values if not set by geocoding", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'}),
                 response = {
                     origin: {properties: {name: 'origin'}},
@@ -278,9 +312,10 @@ describe("Directions", function () {
                 };
 
             directions.on('load', function () {
-                expect(directions.getOrigin()).to.eql(response.origin);
-                expect(directions.getDestination()).to.eql(response.destination);
-                done();
+                v.deepEqual(directions.getOrigin(), response.origin);
+                v.deepEqual(directions.getDestination(), response.destination);
+                v.end();
+                server.restore();
             });
 
             directions
@@ -293,7 +328,8 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("does not replaces origin and destination with the response values if set by geocoding", function (done) {
+        u.test("does not replaces origin and destination with the response values if set by geocoding", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'}),
                 origin = directions._normalizeWaypoint('somewhere'),
                 response = {
@@ -307,9 +343,10 @@ describe("Directions", function () {
             origin.geometry.coordinates = [2,1];
 
             directions.on('load', function () {
-                expect(directions.getOrigin()).to.eql(origin);
-                expect(directions.getDestination()).to.eql(response.destination);
-                done();
+                v.deepEqual(directions.getOrigin(), origin);
+                v.deepEqual(directions.getDestination(), response.destination);
+                v.end();
+                server.restore();
             });
 
             directions
@@ -323,18 +360,21 @@ describe("Directions", function () {
         });
     });
 
-    describe("geocode", function () {
+    t.test("geocode", function (u) {
+        u.plan(3);
+
         var server;
 
-        beforeEach(function() {
+        function run(runTest) {
             server = sinon.fakeServer.create();
-        });
 
-        afterEach(function() {
-            server.restore();
-        });
+            runTest(function() {
+                server.restore();
+            });
+        }
 
-        it("returns geocoded response", function (done) {
+        u.test("returns geocoded response", function (v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'}),
                 response = {
                     features:[{
@@ -344,12 +384,13 @@ describe("Directions", function () {
                     };
 
             var wp = directions._normalizeWaypoint('San Francisco');
-            expect(wp.geometry.coordinates).to.eql(undefined);
+            v.equal(wp.geometry.coordinates, undefined);
 
             directions._geocode(wp, {lat: 2, lng: 2}, function(err) {
-                expect(err).not.to.be.ok();
-                expect(wp.geometry.coordinates).to.eql([3,3]);
-                done();
+                v.ifError(err);
+                v.deepEqual(wp.geometry.coordinates, [3,3]);
+                v.end();
+                server.restore();
             });
 
             server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/San Francisco.json?proximity=2,2&access_token=key",
@@ -357,19 +398,21 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("handles no results found", function(done) {
+        u.test("handles no results found", function(v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'}),
                 response = {
                     features:[]
                     };
 
             var wp = directions._normalizeWaypoint('asdfjkl');
-            expect(wp.geometry.coordinates).to.eql(undefined);
+            v.equal(wp.geometry.coordinates, undefined);
 
             directions._geocode(wp, {lat: 2, lng: 2}, function(err) {
-                expect(err.message).to.equal('No results found for query asdfjkl');
-                expect(wp.geometry.coordinates).to.eql(undefined);
-                done();
+                v.equal(err.message, 'No results found for query asdfjkl');
+                v.equal(wp.geometry.coordinates, undefined);
+                v.end();
+                server.restore();
             });
 
             server.respondWith("GET", "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/asdfjkl.json?proximity=2,2&access_token=key",
@@ -377,15 +420,17 @@ describe("Directions", function () {
             server.respond();
         });
 
-        it("bad geocoding cancels directions query", function(done) {
+        u.test("bad geocoding cancels directions query", function(v) {
+            var server = sinon.fakeServer.create();
             var directions = L.mapbox.directions({accessToken: 'key'}),
                 response = {
                     features:[]
                     };
 
             directions.on('error', function (e) {
-                expect(e.error).to.eql('No results found for query asdfjkl');
-                done();
+                v.equal(e.error, 'No results found for query asdfjkl');
+                v.end();
+                server.restore();
             });
 
             directions
@@ -398,4 +443,6 @@ describe("Directions", function () {
             server.respond();
         });
     });
+
+    t.end();
 });
