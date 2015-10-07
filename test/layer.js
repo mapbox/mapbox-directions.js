@@ -1,59 +1,87 @@
-describe("Directions.Layer", function () {
+var test = require('tape');
+
+test("Directions#layer", function(t) {
     var container, map, directions;
 
-    beforeEach(function () {
+    function setup () {
         container = document.createElement('div');
         map = L.map(container).setView([0, 0], 0);
         directions = L.mapbox.directions();
-    });
+    };
 
-    describe("on map click", function () {
-        it("firsts sets origin", function () {
+    t.test("on map click", function (u) {
+        u.plan(2);
+
+        u.test("first sets origin", function(v) {
+            setup();
+            v.plan(1);
+
             L.mapbox.directions.layer(directions).addTo(map);
             map.fire('click', {latlng: L.latLng(1, 2)});
-            expect(directions.getOrigin().geometry.coordinates).to.eql([2, 1]);
+            v.deepEqual(directions.getOrigin().geometry.coordinates, [2, 1]);
         });
 
-        it("then sets destination and queries", function (done) {
+        u.test("then sets destination and queries", function(v) {
+            setup();
+            v.plan(1);
+
             L.mapbox.directions.layer(directions).addTo(map);
             map.fire('click', {latlng: L.latLng(1, 2)});
-            directions.query = done;
+            directions.query = function() {};
             map.fire('click', {latlng: L.latLng(3, 4)});
-            expect(directions.getDestination().geometry.coordinates).to.eql([4, 3]);
+            v.deepEqual(directions.getDestination().geometry.coordinates, [4, 3]);
         });
     });
 
-    describe("on directions origin", function () {
-        it("sets origin marker", function () {
+    t.test("on directions origin", function (u) {
+        u.plan(2);
+
+        u.test("sets origin marker", function(v) {
+            setup();
+            v.plan(1);
+
             var layer = L.mapbox.directions.layer(directions).addTo(map);
             directions.fire('origin', {origin: directions._normalizeWaypoint(L.latLng(1, 2))});
-            expect(layer.originMarker.getLatLng()).to.eql(L.latLng(1, 2));
+            v.deepEqual(layer.originMarker.getLatLng(), L.latLng(1, 2));
         });
 
-        it("updates origin marker", function () {
+        u.test("updates origin marker", function(v) {
+            setup();
+            v.plan(1);
+
             var layer = L.mapbox.directions.layer(directions).addTo(map);
             directions.fire('origin', {origin: directions._normalizeWaypoint(L.latLng(1, 2))});
             directions.fire('origin', {origin: directions._normalizeWaypoint(L.latLng(3, 4))});
-            expect(layer.originMarker.getLatLng()).to.eql(L.latLng(3, 4));
+            v.deepEqual(layer.originMarker.getLatLng(), L.latLng(3, 4));
         });
     });
 
-    describe("on directions destination", function () {
-        it("sets destination marker", function () {
+    t.test("on directions destination", function (u) {
+        u.plan(2);
+
+        u.test("sets destination marker", function(v) {
+            setup();
+            v.plan(1);
+
             var layer = L.mapbox.directions.layer(directions).addTo(map);
             directions.fire('destination', {destination: directions._normalizeWaypoint(L.latLng(1, 2))});
-            expect(layer.destinationMarker.getLatLng()).to.eql(L.latLng(1, 2));
+            v.deepEqual(layer.destinationMarker.getLatLng(), L.latLng(1, 2));
         });
 
-        it("updates destination marker", function () {
+        u.test("updates destination marker", function(v) {
+            setup();
+            v.plan(1);
+
             var layer = L.mapbox.directions.layer(directions).addTo(map);
             directions.fire('destination', {destination: directions._normalizeWaypoint(L.latLng(1, 2))});
             directions.fire('destination', {destination: directions._normalizeWaypoint(L.latLng(3, 4))});
-            expect(layer.destinationMarker.getLatLng()).to.eql(L.latLng(3, 4));
+            v.deepEqual(layer.destinationMarker.getLatLng(), L.latLng(3, 4));
         });
     });
 
-    describe("on directions load", function () {
+    t.test("on directions load", function (u) {
+        u.plan(1);
+
         var response = {
             origin: {
                 type: "Feature",
@@ -77,19 +105,28 @@ describe("Directions.Layer", function () {
             }]
         };
 
-        it("shows route", function () {
+        u.test("shows route", function(v) {
+            setup();
+            v.plan(1);
+
             var layer = L.mapbox.directions.layer(directions).addTo(map);
             directions.fire('load', response);
-            expect(layer.routeLayer).to.be.ok();
+            v.ok(layer.routeLayer, "shows route");
         });
     });
 
-    describe("options param", function () {
-        it("map clicking disabled in readonly mode", function () {
+    t.test("options param", function (u) {
+        u.plan(1);
+
+        u.test("map clicking disabled in readonly mode", function(v) {
+            v.plan(1);
+
+            setup();
             L.mapbox.directions.layer(directions, {readonly:true}).addTo(map);
             map.fire('click', {latlng: L.latLng(1, 2)});
-            expect(directions.getOrigin()).to.eql(undefined);
+            v.equal(directions.getOrigin(), undefined);
         });
     });
 
+    t.end();
 });

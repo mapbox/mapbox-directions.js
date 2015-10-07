@@ -4,7 +4,8 @@
   "description": "Leaflet plugin for the Mapbox Directions API",
   "main": "index.js",
   "scripts": {
-    "test": "jshint src && npm run build && mocha-phantomjs test/index.html",
+    "test": "jshint src && npm run build && browserify --debug test/test.js | tap-closer | smokestack -b firefox | tap-spec",
+    "test:cr": "jshint src && npm run build && browserify --debug test/test.js | tap-closer | smokestack -b chrome | tap-spec",
     "build": "browserify --debug index.js > dist/mapbox.directions.js"
   },
   "repository": {
@@ -20,13 +21,14 @@
     "queue-async": "^1.0.7"
   },
   "devDependencies": {
-    "mocha": "1",
-    "mocha-phantomjs": "3",
-    "expect.js": "0.2.0",
-    "sinon": "1.7.3",
     "browserify": "2",
     "jshint": "2",
-    "smash": "0.0"
+    "sinon": "^1.17.1",
+    "smash": "0.0",
+    "smokestack": "^3.4.1",
+    "tap-closer": "^1.0.0",
+    "tap-spec": "^4.1.0",
+    "tape": "^4.2.1"
   },
   "license": "BSD-2-Clause"
 }
