@@ -113,7 +113,10 @@ module.exports = function (container, directions) {
         .attr('type', 'radio')
         .attr('name', 'profile')
         .attr('id', function (d) { return 'mapbox-directions-profile-' + d[1]; })
-        .property('checked', function (d, i) { return i === 0; })
+        .property('checked', function (d, i) {
+            if (directions.options.profile) return directions.options.profile === d[0];
+            else return i === 0;
+        })
         .on('change', function (d) {
             directions.setProfile(d[0]).query();
         });

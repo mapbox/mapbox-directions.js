@@ -95,5 +95,17 @@ test("Directions#inputControl", function (t) {
         u.end();
     });
 
+    t.test("directions profile set on initialization", function(u) {
+        setup();
+
+        u.test("checks the appropriate input", function(v) {
+            directions = L.mapbox.directions({accessToken: 'key', profile: 'mapbox.cycling'});
+            L.mapbox.directions.inputControl(container, directions).addTo(map);
+            v.equal(container.querySelector('#mapbox-directions-profile-walking').checked, false);
+            v.equal(container.querySelector('#mapbox-directions-profile-cycling').checked, true);
+            v.end();
+        });
+    });
+
     t.end();
 });
