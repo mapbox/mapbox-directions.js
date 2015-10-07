@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "browserify": "2",
-    "expect.js": "0.2.0",
     "jshint": "2",
     "sinon": "^1.17.1",
     "smash": "0.0",
