@@ -31,11 +31,8 @@ dependencies and installs a local copy when you run `npm install`.
 
 ### Tests
 
-Test with [phantomjs](http://phantomjs.org/):
+Test with [smokestack](https://www.npmjs.com/package/smokestack):
 
 ``` sh
 npm test
 ```
-
-To test in a browser, run a [local development server](https://gist.github.com/tmcw/4989751)
-and go to `/test`.
