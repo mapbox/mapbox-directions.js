@@ -4,9 +4,17 @@
 
 <span class='leaflet icon'>_Extends_: `L.Class`</span>
 
-| Options | Value | Description |
+| Options | Type | Description |
 | ---- | ---- | ---- |
-| options | object | `accessToken` is a required property unless `L.mapbox.accessToken` is set globally. `profile` is optional and defaults to `mapbox.driving`. |
+| options | object | [Directions options](#directions-options) object |
+
+## Directions options
+
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `accessToken` | String | `null` | Required unless `L.mapbox.accessToken` is set globally |
+| `profile` | String | `mapbox.driving` | Routing profile to use. Options: `mapbox.driving`, `mapbox.walking`, `mapbox.cycling` |
+| `units` | String | `imperial` | Measurement system to be used in navigation instructions. Options: `imperial`, `metric` |
 
 ### directions.getOrigin()
 
@@ -71,7 +79,14 @@ on a map.
 
 | Options | Value | Description |
 | ---- | ---- | ---- |
-| options | object | `readonly` (optional). If set to `true` marker and linestring interaction is disabled. |
+| options | object | [Layer options](#layer-options) object |
+
+## Layer options
+
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `readonly` | Boolean | `false` | Optional. If set to `true` marker and linestring interaction is disabled. |
+| `routeStyle` | Object | `{color: '#3BB2D0', weight: 4, opacity: .75}` | [GeoJSON style](http://leafletjs.com/reference.html#geojson-style) to specify `color`, `weight` and `opacity` of route polyline. |
 
 ## L.mapbox.directions.inputControl
 

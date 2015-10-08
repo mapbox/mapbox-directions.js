@@ -107,16 +107,44 @@ test("Directions#layer", function(t) {
 
         u.test("shows route", function(v) {
             setup();
-            v.plan(1);
+            v.plan(2);
 
             var layer = L.mapbox.directions.layer(directions).addTo(map);
             directions.fire('load', response);
             v.ok(layer.routeLayer, "shows route");
+            v.deepEqual(layer.routeLayer.options.style, {
+                color: '#3BB2D0',
+                weight: 4,
+                opacity: 0.75
+            }, "displays route with default style options");
         });
     });
 
     t.test("options param", function (u) {
-        u.plan(1);
+        u.plan(2);
+
+        var response = {
+            origin: {
+                type: "Feature",
+                geometry: {
+                    "type": "Point",
+                    "coordinates": [0, 0]
+                },
+                properties: {}
+            },
+            destination: {
+                type: "Feature",
+                geometry: {
+                    "type": "Point",
+                    "coordinates": [0, 0]
+                },
+                properties: {}
+            },
+            waypoints: [],
+            routes: [{
+                geometry: {type: "LineString", coordinates: []}
+            }]
+        };
 
         u.test("map clicking disabled in readonly mode", function(v) {
             v.plan(1);
@@ -125,6 +153,21 @@ test("Directions#layer", function(t) {
             L.mapbox.directions.layer(directions, {readonly:true}).addTo(map);
             map.fire('click', {latlng: L.latLng(1, 2)});
             v.equal(directions.getOrigin(), undefined);
+        });
+
+        u.test("shows route with custom style", function(v) {
+            setup();
+            v.plan(2);
+
+            var routeStyle = {
+                color: '#f00',
+                weight: 2,
+                opacity: 0.5
+            };
+            var layer = L.mapbox.directions.layer(directions, {routeStyle: routeStyle}).addTo(map);
+            directions.fire('load', response);
+            v.ok(layer.routeLayer, "shows route");
+            v.deepEqual(layer.routeLayer.options.style, routeStyle, "displays route with custom style");
         });
     });
 
