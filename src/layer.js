@@ -213,10 +213,13 @@ var Layer = L.LayerGroup.extend({
             });
 
             waypointMarker
-                .on('click', this._removeWaypoint, this)
                 .on('dragstart', this._dragStart, this)
                 .on('drag', this._drag, this)
                 .on('dragend', this._dragEnd, this);
+
+            if(!this.options.readonly){
+                waypointMarker.on('click', this._removeWaypoint, this);
+            }
 
             this.waypointMarkers.push(waypointMarker);
             this.addLayer(waypointMarker);
