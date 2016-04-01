@@ -40,6 +40,20 @@ Sets the destination of the current route.
 
 _Returns_: `this`
 
+### directions.query(opts, callback)
+
+After you've set an origin and destination, `query` fires the query to geocoding
+and sets results in the controller.
+
+Options is an optional options object, which can specify:
+
+* `proximity`: a L.LatLng object that is fed into the geocoder and biases
+  matches around a point
+
+Callback is an optional callback that will be called with `(err, results)`
+
+_Returns_: `this`
+
 ### directions.addWaypoint(index, waypoint)
 
 Add a waypoint to the route at the given index. `waypoint` can be a GeoJSON Point Feature or a `L.LatLng`.

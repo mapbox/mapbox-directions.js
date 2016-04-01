@@ -209,15 +209,18 @@ test("Directions", function(t) {
             var directions = L.mapbox.directions({accessToken: 'key'});
 
             directions.on('error', function (e) {
-                v.ok(e.error);
+                v.ok(e.error, 'error was in error event');
+                v.ok(callback.called, 'callback was called');
                 v.end();
                 server.restore();
             });
 
+            var callback = sinon.spy();
+
             directions
                 .setOrigin(L.latLng(1, 2))
                 .setDestination(L.latLng(3, 4))
-                .query();
+                .query({}, callback);
 
             server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
                 [400, { "Content-Type": "application/json" }, JSON.stringify({error: 'error'})]);

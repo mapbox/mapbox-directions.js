@@ -14,6 +14,12 @@ This is a Mapbox.js plugin for the Mapbox Directions API. Its main features incl
 
 Managed as Markdown in `API.md`, following the standards in `DOCUMENTING.md`
 
+## Development
+
+Run `npm install` to install dependencies.
+
+The `npm start` task will start up a live-reloading and regenerating development server.
+
 ## Building
 
 Requires [node.js](http://nodejs.org/) installed on your system.

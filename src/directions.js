@@ -138,9 +138,10 @@ var Directions = L.Class.extend({
         return this.getOrigin() && this.getDestination();
     },
 
-    query: function (opts) {
+    query: function (opts, callback) {
         if (!opts) opts = {};
         if (!this.queryable()) return this;
+        if (callback === undefined) callback = function() {};
 
         if (this._query) {
             this._query.abort();
@@ -169,6 +170,7 @@ var Directions = L.Class.extend({
                 this._query = null;
 
                 if (err) {
+                    callback(err);
                     return this.fire('error', {error: err.message});
                 }
 
@@ -191,6 +193,8 @@ var Directions = L.Class.extend({
                 } else {
                     this.directions.destination = this.destination;
                 }
+
+                callback(null, this.directions);
 
                 this.fire('load', this.directions);
             }, this), this);

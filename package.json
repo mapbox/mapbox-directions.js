@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jshint src && npm run build && browserify --debug test/test.js | tap-closer | smokestack -b firefox | tap-spec",
     "test:cr": "jshint src && npm run build && browserify --debug test/test.js | tap-closer | smokestack -b chrome | tap-spec",
-    "build": "browserify --debug index.js > dist/mapbox.directions.js"
+    "build": "browserify --debug index.js > dist/mapbox.directions.js",
+    "start": "budo index.js --live --serve=dist/mapbox.directions.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,8 @@
     "queue-async": "^1.0.7"
   },
   "devDependencies": {
-    "browserify": "2",
+    "browserify": "^13.0.0",
+    "budo": "^8.1.0",
     "jshint": "2",
     "sinon": "^1.17.1",
     "smash": "0.0",
