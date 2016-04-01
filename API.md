@@ -16,6 +16,19 @@
 | `profile` | String | `mapbox.driving` | Routing profile to use. Options: `mapbox.driving`, `mapbox.walking`, `mapbox.cycling` |
 | `units` | String | `imperial` | Measurement system to be used in navigation instructions. Options: `imperial`, `metric` |
 
+## Directions events
+
+| Event | Content |
+| ----- | ------- |
+| `origin` | Fired when the origin is selected. |
+| `destination` | Fired when the destination is selected. |
+| `profile` | Fired when a profile is selected. |
+| `selectRoute` | Fired when a route is selected. |
+| `highlightRoute` | Fired when a route is highlighted. |
+| `highlightStep` | Fired when a step is highlighted. |
+| `load` | Fired when directions load. |
+| `error` | Fired when remote requests result in an error. |
+
 ### directions.getOrigin()
 
 Returns the origin of the current route.
@@ -39,6 +52,11 @@ _Returns_: the destination
 Sets the destination of the current route.
 
 _Returns_: `this`
+
+### directions.queryable()
+
+_Returns_: `boolean`, whether both the destination and the origin are set properly
+and directions can be retrieved at this time.
 
 ### directions.query(opts, callback)
 
