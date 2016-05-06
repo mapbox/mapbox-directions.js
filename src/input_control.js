@@ -103,9 +103,9 @@ module.exports = function (container, directions) {
 
     var profiles = profile.selectAll('span')
         .data([
-            ['mapbox.driving', 'driving', 'Driving'],
-            ['mapbox.walking', 'walking', 'Walking'],
-            ['mapbox.cycling', 'cycling', 'Cycling']])
+            ['mapbox/driving', 'driving', 'Driving'],
+            ['mapbox/walking', 'walking', 'Walking'],
+            ['mapbox/cycling', 'cycling', 'Cycling']])
         .enter()
         .append('span');
 

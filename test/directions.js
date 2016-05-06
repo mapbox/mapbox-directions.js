@@ -174,21 +174,21 @@ test("Directions", function(t) {
         u.test("constructs a URL with origin and destination", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
-            v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+            v.equal(directions.queryURL(), 'https://api.mapbox.com/directions/v5/mapbox/driving/2,1;4,3.json?steps=true&alternatives=true&access_token=key');
             v.end();
         });
 
         u.test("wraps coordinates", function (v) {
             var directions = L.mapbox.directions({accessToken: 'key'});
             directions.setOrigin(L.latLng(0, 190)).setDestination(L.latLng(0, -195));
-            v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/-170,0;165,0.json?instructions=html&geometry=polyline&access_token=key');
+            v.equal(directions.queryURL(), 'https://api.mapbox.com/directions/v5/mapbox/driving/-170,0;165,0.json?steps=true&alternatives=true&access_token=key');
             v.end();
         });
 
         u.test("sets profile", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key', profile: 'mapbox.walking'});
+            var directions = L.mapbox.directions({accessToken: 'key', profile: 'mapbox/walking'});
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
-            v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.walking/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
+            v.equal(directions.queryURL(), 'https://api.mapbox.com/directions/v5/mapbox/walking/2,1;4,3.json?steps=true&alternatives=true&access_token=key');
             v.end();
         });
     });
@@ -222,7 +222,7 @@ test("Directions", function(t) {
                 .setDestination(L.latLng(3, 4))
                 .query({}, callback);
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+            server.respondWith("GET", "https://api.mapbox.com/directions/v5/mapbox/driving/2,1;4,3.json?steps=true&alternatives=true&access_token=key",
                 [400, { "Content-Type": "application/json" }, JSON.stringify({error: 'error'})]);
             server.respond();
         });
@@ -242,7 +242,7 @@ test("Directions", function(t) {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+            server.respondWith("GET", "https://api.mapbox.com/directions/v5/mapbox/driving/2,1;4,3.json?steps=true&alternatives=true&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({error: 'error'})]);
             server.respond();
         });
@@ -262,7 +262,7 @@ test("Directions", function(t) {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+            server.respondWith("GET", "https://api.mapbox.com/directions/v5/mapbox/driving/2,1;4,3.json?steps=true&alternatives=true&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({routes: []})]);
             server.respond();
         });
@@ -300,7 +300,7 @@ test("Directions", function(t) {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+            server.respondWith("GET", "https://api.mapbox.com/directions/v5/mapbox/driving/2,1;4,3.json?steps=true&alternatives=true&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify({routes: [{geometry: '_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI'}]})]);
             server.respond();
         });
@@ -326,7 +326,7 @@ test("Directions", function(t) {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+            server.respondWith("GET", "https://api.mapbox.com/directions/v5/mapbox/driving/2,1;4,3.json?steps=true&alternatives=true&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
             server.respond();
         });
@@ -357,7 +357,7 @@ test("Directions", function(t) {
                 .setDestination(L.latLng(3, 4))
                 .query();
 
-            server.respondWith("GET", "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key",
+            server.respondWith("GET", "https://api.mapbox.com/directions/v5/mapbox/driving/2,1;4,3.json?steps=true&alternatives=true&access_token=key",
                 [200, { "Content-Type": "application/json" }, JSON.stringify(response)]);
             server.respond();
         });

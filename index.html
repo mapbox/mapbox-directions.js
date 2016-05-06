@@ -206,7 +206,7 @@
     };
 
     directions.on('profile', function(e) {
-        if (e.profile === 'mapbox.driving') {
+        if (e.profile === 'mapbox/driving') {
             map.addLayer(drivingLayer).removeLayer(walkingLayer);
         } else {
             map.addLayer(walkingLayer).removeLayer(drivingLayer);
@@ -246,7 +246,6 @@
         function toLatLng(waypoint) {
             return L.latLng(waypoint.split(',').reverse());
         }
-
         directions
                 .setOrigin(toLatLng(waypoints[0]))
                 .setDestination(toLatLng(waypoints[waypoints.length - 1]))

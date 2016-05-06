@@ -23,16 +23,26 @@ module.exports = function (container, directions) {
 
         container.html('');
 
+        var allSteps = [].concat.apply([], route.legs.map(function(e) {
+            return e.steps;
+        }));
+
         var steps = container.append('ol')
             .attr('class', 'mapbox-directions-steps')
             .selectAll('li')
-            .data(route.steps)
+            .data(allSteps)
             .enter().append('li')
             .attr('class', 'mapbox-directions-step');
 
-        steps.append('span')
-            .attr('class', function (step) {
-                return 'mapbox-directions-icon mapbox-' + step.maneuver.type.replace(/\s+/g, '-').toLowerCase() + '-icon';
+        steps
+            .append('img')
+            .attr('width', '25px')
+            .attr('src', function (step) {
+                if (step.maneuver.modifier) {
+                    return 'dist/icons/direction_'+ step.maneuver.type.replace(/ /gi, '_') + '_' + step.maneuver.modifier.replace(/ /gi, '_') + '.png';
+                } else {
+                    return 'dist/icons/direction_'+ step.maneuver.type.replace(/ /gi, '_') + '.png';
+                }
             });
 
         steps.append('div')
@@ -54,7 +64,7 @@ module.exports = function (container, directions) {
         });
 
         steps.on('click', function (step) {
-            map.panTo(L.GeoJSON.coordsToLatLng(step.maneuver.location.coordinates));
+            map.panTo(L.GeoJSON.coordsToLatLng(step.maneuver.location));
         });
     });
 

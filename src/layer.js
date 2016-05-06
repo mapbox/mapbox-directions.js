@@ -194,7 +194,7 @@ var Layer = L.LayerGroup.extend({
         this._destination(e);
 
         function waypointLatLng(i) {
-            return L.GeoJSON.coordsToLatLng(e.waypoints[i].geometry.coordinates);
+            return L.GeoJSON.coordsToLatLng(e.waypoints[i].location);
         }
 
         var l = Math.min(this.waypointMarkers.length, e.waypoints.length),
@@ -257,7 +257,7 @@ var Layer = L.LayerGroup.extend({
 
     _highlightStep: function(e) {
         if (e.step) {
-            this.stepMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.step.maneuver.location.coordinates));
+            this.stepMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.step.maneuver.location));
             this.addLayer(this.stepMarker);
         } else {
             this.removeLayer(this.stepMarker);

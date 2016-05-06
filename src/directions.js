@@ -12,7 +12,7 @@ var Directions = L.Class.extend({
     },
 
     statics: {
-        URL_TEMPLATE: 'https://api.tiles.mapbox.com/v4/directions/{profile}/{waypoints}.json?instructions=html&geometry=polyline&access_token={token}',
+        URL_TEMPLATE: 'https://api.mapbox.com/directions/v5/{profile}/{waypoints}.json?steps=true&alternatives=true&access_token={token}',
         GEOCODER_TEMPLATE: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places/{query}.json?proximity={proximity}&access_token={token}'
     },
 
@@ -31,7 +31,6 @@ var Directions = L.Class.extend({
 
     setOrigin: function (origin) {
         origin = this._normalizeWaypoint(origin);
-
         this.origin = origin;
         this.fire('origin', {origin: origin});
 
@@ -56,7 +55,7 @@ var Directions = L.Class.extend({
     },
 
     getProfile: function() {
-        return this.profile || this.options.profile || 'mapbox.driving';
+        return this.profile || this.options.profile || 'mapbox/driving';
     },
 
     setProfile: function (profile) {
@@ -177,22 +176,46 @@ var Directions = L.Class.extend({
                 this.directions = resp;
                 this.directions.routes.forEach(function (route) {
                     route.geometry = {
-                        type: "LineString",
-                        coordinates: polyline.decode(route.geometry, 6).map(function (c) { return c.reverse(); })
+                        type: 'LineString',
+                        coordinates: polyline.decode(route.geometry).map(function (c) { return c.reverse(); })
                     };
                 });
 
                 if (!this.origin.properties.name) {
-                    this.origin = this.directions.origin;
+                    this.directions.origin = {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: this.directions.waypoints[0].location
+                        },
+                        properties: {
+                            name: this.directions.waypoints[0].name
+                        }
+                    };
                 } else {
                     this.directions.origin = this.origin;
                 }
 
                 if (!this.destination.properties.name) {
-                    this.destination = this.directions.destination;
+                    this.directions.destination = {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: this.directions.waypoints[this.directions.waypoints.length - 1].location
+                        },
+                        properties: {
+                            name: this.directions.waypoints[this.directions.waypoints.length - 1].location
+                        }
+                    };
                 } else {
                     this.directions.destination = this.destination;
                 }
+
+                var waypoints = [];
+                for (var i = 0; i < this.directions.waypoints.length; i++) {
+                    if (i !== 0 && i < this.directions.waypoints.length - 1) waypoints.push(this.directions.waypoints[i]);
+                }
+                this.directions.waypoints = waypoints;
 
                 callback(null, this.directions);
 
