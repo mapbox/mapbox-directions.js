@@ -37,6 +37,7 @@ module.exports = function (container, directions) {
         steps
             .append('img')
             .attr('width', '25px')
+            .attr('class', 'mapbox-directions-icon')
             .attr('src', function (step) {
                 if (step.maneuver.modifier) {
                     return 'dist/icons/direction_'+ step.maneuver.type.replace(/ /gi, '_') + '_' + step.maneuver.modifier.replace(/ /gi, '_') + '.png';
