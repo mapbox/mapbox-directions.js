@@ -37,7 +37,9 @@ module.exports = function (container, directions) {
 
         steps.append('div')
             .attr('class', 'mapbox-directions-step-maneuver')
-            .html(function (step) { return step.maneuver.instruction; });
+            .html(function (step) { 
+                return step.maneuver.instruction ? format[directions.options.language](step.maneuver.instruction) : ''; 
+            });
 
         steps.append('div')
             .attr('class', 'mapbox-directions-step-distance')
