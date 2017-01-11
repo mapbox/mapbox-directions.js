@@ -139,6 +139,10 @@ var Layer = L.LayerGroup.extend({
     },
 
     _origin: function(e) {
+        if(e.originMarker){
+            this.originMarker = e.originMarker;
+            this.originMarker.on('drag', this._drag, this);
+        }
         if (e.origin && e.origin.geometry.coordinates) {
             this.originMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.origin.geometry.coordinates));
             this.addLayer(this.originMarker);
@@ -148,6 +152,10 @@ var Layer = L.LayerGroup.extend({
     },
 
     _destination: function(e) {
+        if(e.destinationMarker){
+            this.destinationMarker = e.destinationMarker;
+            this.destinationMarker.on('drag', this._drag, this);
+        }
         if (e.destination && e.destination.geometry.coordinates) {
             this.destinationMarker.setLatLng(L.GeoJSON.coordsToLatLng(e.destination.geometry.coordinates));
             this.addLayer(this.destinationMarker);

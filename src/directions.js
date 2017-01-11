@@ -30,10 +30,16 @@ var Directions = L.Class.extend({
     },
 
     setOrigin: function (origin) {
-        origin = this._normalizeWaypoint(origin);
-
-        this.origin = origin;
-        this.fire('origin', {origin: origin});
+        var originCoords; 
+        var originMarker;
+        if(origin.lat && origin.lng){ //Find a better way to check if origin is a L.marker or not?
+            originCoords = this._normalizeWaypoint(origin);
+        }else{
+            originCoords = this._normalizeWaypoint(origin.getLatLng());
+            originMarker = origin;
+        }
+        this.origin = originCoords;
+        this.fire('origin', {origin: originCoords, originMarker: originMarker});
 
         if (!origin) {
             this._unload();
@@ -43,10 +49,17 @@ var Directions = L.Class.extend({
     },
 
     setDestination: function (destination) {
-        destination = this._normalizeWaypoint(destination);
+        var destinationCoords;
+        var destinationMarker;
+        if(destination.lat && destination.lng){ //Find a better way to check if destination is a L.marker or not?
+            destinationCoords = this._normalizeWaypoint(destination);
+        }else{
+           destinationCoords = this._normalizeWaypoint(destination.getLatLng());
+           destinationMarker = destination;
+        }
 
-        this.destination = destination;
-        this.fire('destination', {destination: destination});
+        this.destination = destinationCoords;
+        this.fire('destination', {destination: destinationCoords, destinationMarker: destinationMarker});
 
         if (!destination) {
             this._unload();
